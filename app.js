@@ -56,8 +56,29 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/dashboard', (req, res) => {
-    if (req.session.loggedin) {
-        res.sendFile(path.join(__dirname, 'views', 'dashboard.ejs'));
+    if (req.session.loggedin) {     
+        const query = `
+        SELECT
+            (SELECT SUM(CASE WHEN \`201 Status2\` = 'active' THEN 1 ELSE 0 END) FROM masterlist) AS activeCount,
+            (SELECT SUM(CASE WHEN \`201 Status2\` = 'inactive' THEN 1 ELSE 0 END) FROM masterlist) AS inactiveCount,
+            (SELECT COUNT(*) FROM masterlist) AS TotalEmployees,
+            (SELECT COUNT(*) FROM users) AS RegisteredUsers
+    `;
+        db.query(query, (err, results) => {
+            if (err) {
+                res.send('Error fetching data'); // Sending error response
+                // No return here, which can lead to multiple sends
+            }
+            const { activeCount, inactiveCount, TotalEmployees, RegisteredUsers } = results[0];
+            res.render('dashboard', { 
+                username: req.session.username, 
+                activeCount, 
+                inactiveCount, 
+                TotalEmployees, 
+                RegisteredUsers 
+            });
+
+        });
     } else {
         res.redirect('/login');
     }
@@ -114,6 +135,36 @@ app.post('/login', (req, res) => {
         } else {
             res.redirect('/login?error=' + encodeURIComponent('User not found!'));
         }
+    });
+});
+
+
+
+app.get('/data', (req, res) => {
+    const chartId = req.query.chartId;
+    let query = '';
+
+    if (chartId === 'chart3') {
+        query = `
+            SELECT 
+                YEAR(\`Commencement of Work\`) AS year,
+                COUNT(*) AS number_of_employees
+            FROM 
+                geninfolist
+            WHERE 
+                \`Commencement of Work\` IS NOT NULL 
+                AND \`Commencement of Work\` != ''
+                AND \`Commencement of Work\` REGEXP '^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$'
+            GROUP BY 
+                YEAR(\`Commencement of Work\`)
+            ORDER BY 
+                year;
+        `;
+    }
+
+    db.query(query, (error, results) => {
+        if (error) throw error;
+        res.json(results);
     });
 });
 
