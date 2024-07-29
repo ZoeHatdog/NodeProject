@@ -1,0 +1,70 @@
+/* Custom styles for the HR Dashboard */
+body {
+    background-color: #F4F1EB;
+    height: 100vh;
+    margin: 0;
+  }
+  
+  
+  .navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .display-4 {
+    font-weight: bold;
+  }
+  
+  .lead {
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .lower-content {
+    margin-top: 100px; /* Adjust this value to control how far down the content is moved */
+  }
+  
+  footer {
+    background-color: #343a40;
+  }
+  
+  footer p {
+    margin-bottom: 0;
+  }
+  .login-button{
+    border-radius: 20px;
+    background-color: black;
+    
+  }
+  .login-card{
+    background-color: #A2A2A2;
+    border-radius: 40px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .username-label{
+    font-weight: bold;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+  }
+  .password-label{
+    font-weight: bold;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+  }
+  .rememberMe-label{
+    font-weight: lighter;
+    
+  }
+  .password-box{
+    border-radius: 20px;
+  }
+  .username-box{
+    border-radius: 20px;
+  }
+  .login-label{
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+  }
+  .foot-card{
+   
+  }
+
+  
