@@ -10,9 +10,12 @@
 
     <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="/css/sample.css">
+
+    <!-- ApexCharts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.3/apexcharts.min.js"></script>
 </head>
 <body>
     <div class="grid-container">
@@ -28,7 +31,12 @@
             <div class="header-right">
                 <span class="material-icons-outlined">notifications</span>
                 <span class="material-icons-outlined">email</span>
-                <span class="material-icons-outlined">account_circle</span>
+                <span class="material-icons-outlined" id="accountCircle" onclick="toggleDropdown()">account_circle</span>
+                <div id="dropdownMenu" class="dropdown">
+                    <a href="#">Profile</a>
+                    <a href="#">Settings</a>
+                    <a class="dropdown-item" href="/logout">Logout</a>
+                </div>
             </div>
         </header>
         <!-- End Header -->
@@ -49,10 +57,10 @@
                     </a>
                 </li>
                 <li class="sidebar-list-item">
-                    <a href="#" target="_blank">
+                    <a href="/registration" target="_self">
                         <span class="material-icons-outlined">inventory_2</span> Add Employee
                     </a>
-                </li>
+                </li>                
                 <li class="sidebar-list-item">
                     <a href="#" target="_blank">
                         <span class="material-icons-outlined">fact_check</span> Delete Employee
@@ -87,11 +95,10 @@
             <div class="main-title">
                 <p class="font-weight-bold">DASHBOARD</p>
             </div>
-            <div class = "see-user">
+            <div class="see-user">
                 <h1>Welcome, <%= username %>!</h1>
             </div>
             <div class="main-cards">
-
                 <div class="card">
                     <div class="card-inner">
                         <p class="text-primary">Total Employees</p>
@@ -99,7 +106,6 @@
                     </div>
                     <span class="text-primary font-weight-bold"> <%= TotalEmployees %></span>
                 </div>
-
                 <div class="card">
                     <div class="card-inner">
                         <p class="text-primary"> Active Employees </p>
@@ -107,7 +113,6 @@
                     </div>
                     <span class="text-primary font-weight-bold"> <%= activeCount %></span>
                 </div>
-
                 <div class="card">
                     <div class="card-inner">
                         <p class="text-primary"> Inactive Employees </p>
@@ -115,7 +120,6 @@
                     </div>
                     <span class="text-primary font-weight-bold"> <%= inactiveCount %> </span>
                 </div>
-
                 <div class="card">
                     <div class="card-inner">
                         <p class="text-primary">Registered Users</p>
@@ -123,77 +127,114 @@
                     </div>
                     <span class="text-primary font-weight-bold"><%= RegisteredUsers %></span>
                 </div>
-
             </div>
 
             <div class="charts">
-
                 <div class="charts-card">
                     <p class="chart-title">No. of Employees Added</p>
-                    <canvas id="chart3" width="200" height="200"></canvas>
+                    <div id="chart3" style="height: 300px;"></div>
                     <script>
                         document.addEventListener('DOMContentLoaded', function() {
                             fetch('/data?chartId=chart3')
                                 .then(response => response.json())
                                 .then(data => {
-                                    const labels = data.map(item => item.year);
-                                    const values = data.map(item => item.number_of_employees);
-                
-                                    const ctx = document.getElementById('chart3').getContext('2d');
-                                    new Chart(ctx, {
-                                        type: 'bar',
-                                        data: {
-                                            labels: labels,
-                                            datasets: [
-                                                {
-                                                    type: 'bar',
-                                                    label: 'Number of Employees',
-                                                    data: values,
-                                                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                                                    borderColor: 'rgba(75, 192, 192, 1)',
-                                                    borderWidth: 1
-                                                },
-                                                {
-                                                    type: 'line',
-                                                    label: 'Trend',
-                                                    data: values,
-                                                    borderColor: 'rgba(255, 99, 132, 1)',
-                                                    borderWidth: 2,
-                                                    fill: false
-                                                }
-                                            ]
+                                    const years = data.map(item => item.year);
+                                    const numberOfEmployees = data.map(item => item.number_of_employees);
+
+                                    var options = {
+                                        chart: {
+                                            type: 'line',
+                                            height: 300
                                         },
-                                        options: {
-                                            scales: {
-                                                y: {
-                                                    beginAtZero: true
-                                                }
+                                        series: [{
+                                            name: 'Number of Employees',
+                                            data: numberOfEmployees
+                                        }],
+                                        xaxis: {
+                                            categories: years,
+                                            title: {
+                                                text: 'Year'
                                             }
+                                        },
+                                        yaxis: {
+                                            title: {
+                                                text: 'Number of Employees'
+                                            },
+                                            min: 0
+                                        },
+                                        title: {
+                                            text: 'No. of Employees Added',
+                                            align: 'left'
+                                        },
+                                        markers: {
+                                            size: 4
+                                        },
+                                        tooltip: {
+                                            shared: true,
+                                            intersect: false
                                         }
-                                    });
+                                    };
+
+                                    var chart = new ApexCharts(document.querySelector("#chart3"), options);
+                                    chart.render();
                                 });
                         });
                     </script>
-                    <!--- <div id="bar-chart"></div> -->
                 </div>
 
                 <div class="charts-card">
-                    <p class="chart-title">Purchase and Sales Orders</p>
-                    <div id="area-chart"></div>
-                </div>
+                    <p class="chart-title">Length of Service</p>
+                    <div id="lengthOfServiceChart" style="height: 300px;"></div>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            fetch('/data?chartId=chart5')
+                                .then(response => response.json())
+                                .then(data => {
+                                    const serviceLengths = data.map(item => item.service_length);
+                                    const counts = data.map(item => item.number_of_employees);
 
+                                    var options = {
+                                        chart: {
+                                            type: 'bar',
+                                            height: 300
+                                        },
+                                        series: [{
+                                            name: 'Number of Employees',
+                                            data: counts
+                                        }],
+                                        xaxis: {
+                                            categories: serviceLengths,
+                                            title: {
+                                                text: 'Length of Service (Years)'
+                                            }
+                                        },
+                                        yaxis: {
+                                            title: {
+                                                text: 'Number of Employees'
+                                            },
+                                            min: 0
+                                        },
+                                        title: {
+                                            text: 'Length of Service of Employees',
+                                            align: 'left'
+                                        },
+                                        tooltip: {
+                                            shared: true,
+                                            intersect: false
+                                        }
+                                    };
+
+                                    var chart = new ApexCharts(document.querySelector("#lengthOfServiceChart"), options);
+                                    chart.render();
+                                });
+                        });
+                    </script>
+                </div>
             </div>
         </main>
         <!-- End Main -->
 
     </div>
-
-    <!-- Scripts -->
-
-
-
-    <!-- ApexCharts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.3/apexcharts.min.js"></script>
 
     <!-- Custom JS -->
     <script src="/js/scripts.js"></script>

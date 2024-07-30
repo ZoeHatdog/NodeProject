@@ -55,6 +55,10 @@ app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'login.html'));
 });
 
+app.get('/registration', (req, res) => {
+    res.render('registration.ejs'); // Renders the 'registration.ejs' file
+});
+
 app.get('/dashboard', (req, res) => {
     if (req.session.loggedin) {     
         const query = `
@@ -138,6 +142,25 @@ app.post('/login', (req, res) => {
     });
 });
 
+app.get('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            return res.status(500).send('Failed to log out.');
+        }
+        res.redirect('/login'); // Redirect to login page after logout
+    });
+});
+
+app.post('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            return res.status(500).send('Failed to log out.');
+        }
+        res.redirect('/login'); // Redirect to login page after logout
+    });
+});
+
+
 
 
 app.get('/data', (req, res) => {
@@ -159,6 +182,21 @@ app.get('/data', (req, res) => {
                 YEAR(\`Commencement of Work\`)
             ORDER BY 
                 year;
+        `;
+    } else if (chartId === 'chart5') {
+        query = `
+            SELECT 
+                \`length of service\` AS service_length,
+                COUNT(*) AS number_of_employees
+            FROM 
+                geninfolist
+            WHERE 
+                \`length of service\` IS NOT NULL 
+                AND \`length of service\` != ''
+            GROUP BY 
+                \`length of service\`
+            ORDER BY 
+                service_length;
         `;
     }
 
