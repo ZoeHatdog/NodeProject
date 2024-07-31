@@ -173,10 +173,7 @@ body {
     margin: 20px 0;
     
   }
-  .card:hover{
-    transform: translateY(-10px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
+  
   
   .card {
     display: flex;
@@ -344,15 +341,37 @@ body {
 .show {
     display: block;
 }
-
-.card-container a {
-  text-decoration: none;
-  color: inherit; /* Inherits the color from the parent */
+.btn-personal-info {
+    text-decoration: none;
+    color: inherit; /* Change this to your preferred color */
+    font-weight: bold; /* Optional: make the text bold */
+}
+.btn-personal-info:hover {
+    color: inherit; /* Optional: change color on hover */
 }
 
-.card-container a:hover {
-  color: inherit; /* Keeps the color the same on hover */
+.btn-other-information{
+    text-decoration: none;
+    color: inherit; /* Change this to your preferred color */
+    font-weight: bold; /
 }
-.card-container a:visited {
-  color: inherit; /* Keeps the color the same for visited links */
+.btn-other-information :hover{
+    color:inherit;
+}
+.btn-educational-background{
+    text-decoration: inherit;
+    color: inherit;
+    font-weight: bold;
+}
+.btn-educational-background :hover{
+    color:inherit
+}
+.btn-danger{
+    
+    width: 150px; 
+    padding: 10px 20px; 
+    border-radius: 5px; 
+    margin-left: auto;
+ 
+
 }

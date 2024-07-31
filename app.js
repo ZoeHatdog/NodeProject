@@ -58,6 +58,10 @@ app.get('/login', (req, res) => {
 app.get('/registration', (req, res) => {
     res.render('registration.ejs'); // Renders the 'registration.ejs' file
 });
+app.get('/add',  (req, res) => {
+    res.render(path.join(__dirname, 'views', 'add.ejs'));
+
+});
 
 app.get('/dashboard', (req, res) => {
     if (req.session.loggedin) {     
