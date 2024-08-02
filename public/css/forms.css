@@ -366,12 +366,30 @@ body {
 .btn-educational-background :hover{
     color:inherit
 }
+
+.btn-company-details{
+  text-decoration: inherit;
+  color: inherit;
+  font-weight: bold;
+}
+.btn-company-details :hover{
+  color:inherit
+}
+
+
+
 .btn-danger{
     
     width: 150px; 
     padding: 10px 20px; 
     border-radius: 5px; 
     margin-left: auto;
- 
+
+}
+.btn-warning{
+  width: 150px; 
+  padding: 10px 20px; 
+  border-radius: 5px; 
+  margin-right: auto;
 
 }

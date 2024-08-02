@@ -102,139 +102,196 @@
         <!-- Main -->
         <main class="main-container">
             <div class="container mt-4">
-                <div class="card">
+                <!-- Employee Information Card -->
+                <div class="card" id="employeeInfoCard">
                     <div class="card-header">
                         <h5 class="mb-0 d-flex justify-content-between align-items-center">
                             Employee Information
                         </h5>
                     </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                            <button class="btn btn-link w-100 d-flex justify-content-between align-items-center btn-personal-info" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePersonal" aria-expanded="false" aria-controls="collapsePersonal">
-                                Personal Information
-                                <span id="personalToggleIcon" class="material-icons-outlined rotate-0">expand_more</span>
-                            </button>
-                            <div id="collapsePersonal" class="collapse">
-                                <div class="card-body">
-                                    <div class="mb-3">
-                                        <div class="row">
-                                            <div class="col">
-                                                <label for="empNumber" class="form-label">Employee Number</label>
-                                                <input type="text" class="form-control" id="empNumber" placeholder="Enter employee number">
+                    <div id="collapseInfo" class="collapse show">
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <!-- Personal Information Section -->
+                                <li class="list-group-item">
+                                    <button class="btn btn-link w-100 d-flex justify-content-between align-items-center btn-personal-info" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePersonal" aria-expanded="true" aria-controls="collapsePersonal">
+                                        Personal Information
+                                        <span id="personalToggleIcon" class="material-icons-outlined rotate-0">expand_more</span>
+                                    </button>
+                                    <div id="collapsePersonal" class="collapse">
+                                        <div class="mb-3">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label for="empNumber" class="form-label">Employee Number</label>
+                                                    <input type="text" class="form-control" id="empNumber" placeholder="Enter employee number">
+                                                </div>
+                                                <div class="col">
+                                                    <label for="empID" class="form-label">Employee ID</label>
+                                                    <input type="text" class="form-control" id="empID" placeholder="Enter employee ID">
+                                                </div>
                                             </div>
-                                            <div class="col">
-                                                <label for="empID" class="form-label">Employee ID</label>
-                                                <input type="text" class="form-control" id="empID" placeholder="Enter employee ID">
+                                            <br>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label for="firstName" class="form-label">First Name</label>
+                                                    <input type="text" class="form-control" id="firstName" placeholder="Enter first name">
+                                                </div>
+                                                <div class="col">
+                                                    <label for="middleName" class="form-label">Middle Name</label>
+                                                    <input type="text" class="form-control" id="middleName" placeholder="Enter middle name">
+                                                </div>
+                                                <div class="col">
+                                                    <label for="lastName" class="form-label">Last Name</label>
+                                                    <input type="text" class="form-control" id="lastName" placeholder="Enter last name">
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label for="birthday" class="form-label">Birthday</label>
+                                                    <input type="date" class="form-control" id="birthday" placeholder="Enter birthday" onchange="calculateAge()">
+                                                </div>
+                                                <div class="col">
+                                                    <label for="age" class="form-label">Age</label>
+                                                    <input type="text" class="form-control" id="age" placeholder="Age" disabled="true">
+                                                </div>
+                                                <div class="col">
+                                                    <label for="gender" class="form-label">Gender</label>
+                                                    <select class="form-select" id="gender">
+                                                        <option selected>Choose...</option>
+                                                        <option value="male">Male</option>
+                                                        <option value="female">Female</option>
+                                                        <option value="other">Other</option>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
-                                        <br>
-                                        <div class="row">
-                                            <div class="col">
-                                                <label for="firstName" class="form-label">First Name</label>
-                                                <input type="text" class="form-control" id="firstName" placeholder="Enter first name">
-                                            </div>
-                                            <div class="col">
-                                                <label for="middleName" class="form-label">Middle Name</label>
-                                                <input type="text" class="form-control" id="middleName" placeholder="Enter middle name">
-                                            </div>
-                                            <div class="col">
-                                                <label for="lastName" class="form-label">Last Name</label>
-                                                <input type="text" class="form-control" id="lastName" placeholder="Enter last name">
-                                            </div>
-                                        </div>
-                                        <br>
-                                        <div class="row">
-                                            <div class="col">
-                                                <label for="birthday" class="form-label">Birthday</label>
-                                                <input type="date" class="form-control" id="birthday" placeholder="Enter birthday" onchange="calculateAge()">
-                                            </div>
-                                            <div class="col">
-                                                <label for="age" class="form-label">Age</label>
-                                                <input type="text" class="form-control" id="age" placeholder="Age" readonly>
-                                            </div>
-                                            <div class="col">
-                                                <label for="gender" class="form-label">Gender</label>
-                                                <select class="form-select" id="gender">
-                                                    <option selected>Choose...</option>
-                                                    <option value="male">Male</option>
-                                                    <option value="female">Female</option>
-                                                    <option value="other">Other</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="nickname" class="form-label">Nickname</label>
-                                        <input type="text" class="form-control" id="nickname" placeholder="Enter nickname">
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <button class="btn btn-link w-100 d-flex justify-content-between align-items-center btn-other-information" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOther" aria-expanded="false" aria-controls="collapseOther">
-                                Other Information
-                                <span id="otherToggleIcon" class="material-icons-outlined rotate-0">expand_more</span>
-                            </button>
-                            <div id="collapseOther" class="collapse">
-                                <div class="card-body">
-                                    <div class="mb-3">
                                         <div class = "row">
-                                            <div class = "col">
+                                            <div class="col">
+                                                <label for="nickname" class="form-label">Nickname</label>
+                                                <input type="text" class="form-control" id="nickname" placeholder="Enter nickname">
+                                            </div>
+                                            <div class="col">
+                                                <label for="nickname" class="form-label">Mobile Number</label>
+                                                <input type="text" class="form-control" id="mobilenumber" placeholder="Enter number">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <!-- Other Information Section -->
+                                <li class="list-group-item">
+                                    <button class="btn btn-link w-100 d-flex justify-content-between align-items-center btn-other-information" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOther" aria-expanded="false" aria-controls="collapseOther">
+                                        Other Information
+                                        <span id="otherToggleIcon" class="material-icons-outlined rotate-0">expand_more</span>
+                                    </button>
+                                    <div id="collapseOther" class="collapse">
+                                        <div class="card-body">
+                                            <div class="mb-3">
                                                 <label for="religion" class="form-label">Religion</label>
                                                 <input type="text" class="form-control" id="religion" placeholder="Enter religion">
                                             </div>
-                                            <div class = "col">
+                                            <div class="mb-3">
                                                 <label for="email" class="form-label">Email</label>
-                                                <input type="email" class="form-control" id="email" placeholder="Enter email, eg:sample-email@gmail.com">
+                                                <input type="email" class="form-control" id="email" placeholder="Enter email">
                                             </div>
-                                        </div>
-                                        <br>
-                                        <div class = "row">
-                                            <div class = "col">
-                                                <label for="emergencyContactPerson" class="form-label">Person to Notify in Case of Emergency</label>
-                                                <input type="text" class="form-control" id="emergencyContactPerson" placeholder="Enter name">
+                                            <div class="mb-3">
+                                                <label for="emergencyContact" class="form-label">Person to Notify in Case of Emergency</label>
+                                                <input type="text" class="form-control" id="emergencyContact" placeholder="Enter emergency contact person">
                                             </div>
-                                            <div class = "col">
-                                                <label for="emergencyContactNumber" class="form-label">Number to Contact</label>
-                                                <input type="tel" class="form-control" id="emergencyContactNumber" placeholder="Enter phone number for person to notify in case of emergency">
+                                            <div class="mb-3">
+                                                <label for="emergencyNumber" class="form-label">Emergency Contact Number</label>
+                                                <input type="tel" class="form-control" id="emergencyNumber" placeholder="Enter emergency contact number">
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </li>
-                        
-                        <li class="list-group-item">
-                            <button class="btn btn-link w-100 d-flex justify-content-between align-items-center btn-educational-background" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEducation" aria-expanded="false" aria-controls="collapseEducation">
-                                Educational Background
-                                <span id="educationToggleIcon" class="material-icons-outlined rotate-0">expand_more</span>
-                            </button>
-                            <div id="collapseEducation" class="collapse">
-                                <div class="card-body">
-                                    <div class = "row">
-                                        <div class = "col">
+                                </li>
+
+                                <!-- Educational Background Section -->
+                                <li class="list-group-item">
+                                    <button class="btn btn-link w-100 d-flex justify-content-between align-items-center btn-educational-background" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEducation" aria-expanded="false" aria-controls="collapseEducation">
+                                        Educational Background
+                                        <span id="educationToggleIcon" class="material-icons-outlined rotate-0">expand_more</span>
+                                    </button>
+                                    
+                                    <div id="collapseEducation" class="collapse">
+                                        <div class="card-body">
                                             <div class="mb-3">
                                                 <label for="educationalAttainment" class="form-label">Educational Attainment</label>
                                                 <input type="text" class="form-control" id="educationalAttainment" placeholder="Enter educational attainment">
                                             </div>
-                                        </div>
-                                        <div class = "col">
                                             <div class="mb-3">
                                                 <label for="course" class="form-label">Course</label>
                                                 <input type="text" class="form-control" id="course" placeholder="Enter course">
                                             </div>
                                         </div>
                                     </div>
+                                </li>
+
+                                <!-- Next Button -->
+                                <div class="d-flex justify-content-end mt-3">
+                                    <button id="nextButton" class="btn btn-danger" type="button">Next</button>
                                 </div>
-                            </div>
-                            
-                        </li> 
-                        <br>
-                        <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#nextModal">
-                            Next
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Company Details Card -->
+                <div class="card mt-4 d-none" id="companyDetailsCard">
+                    <div class="card-header">
+                        <button class="btn btn-link w-100 d-flex justify-content-between align-items-center btn-company-details" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePersonal" aria-expanded="true" aria-controls="collapsePersonal">
+                            Company Details
+                            <span id="personalToggleIcon" class="material-icons-outlined rotate-0">expand_more</span>
                         </button>
+                    </div>
+                    <div class="card-body">
                         
-                    </ul>
+                        <div class="col">
+                            <label for="department" class="form-label">Department</label>
+                            <select class="form-select" id="department">
+                                <option value="ADMIN">Admin</option>
+                                <option value="TOP MANAGEMENT">Top Management</option>
+                                <option value="R&D">R&D</option>
+                                <option value="Manifacturing">Manifacturiing</option>
+                                <option value="QA">QA</option>
+                                <option value="SALES">Sales</option>
+                                <option value="FEME">FEME</option>
+                                <option value="ENGINEERING">Engineering</option>
+                                <option value="IT">IT</option>
+                            </select>
+                        </div>
+                        <br>
+                      
+                        <div class="mb-3">
+                            <label for="position" class="form-label">Work Schedule</label>
+                            <input type="text" class="form-control" id="position" placeholder="Enter Work Schedule">
+                        </div>
+                        <div class="mb-3">
+                            <label for="department" class="form-label">Job Grade</label>
+                            <input type="text" class="form-control" id="department" placeholder="Enter Job Grade (E.g. Grade 1-12)   ">
+                        </div>
+                        <div class="mb-3">
+                            <label for="department" class="form-label">Job Level Classification</label>
+                            <input type="text" class="form-control" id="department" placeholder="Enter Job Lvl Classification (E.g. M&P-3 Career)">
+                        </div>
+                        <div class="mb-3">
+                            <label for="department" class="form-label">Classification</label>
+                            <input type="text" class="form-control" id="department" placeholder="Enter Classification (E.g. Entry Lvl, Staff, Team Leader, etc.)">
+                        </div>
+                        
+
+                        <div class="mb-3">
+                            <label for="Commencement" class="form-label">Commencement of Work</label>
+                            <input type="date" class="form-control" id="Commencement" placeholder="Enter hire date" onchange="calculateLOS()">
+                        </div>
+                        <div class="mb-3">
+                            <label for="LOS" class="form-label">Length of Service </label>
+                            <input type="text" class="form-control" id="LOS" placeholder="In years" disabled="true">
+                        </div>
+                    </div>
+                    
+                    <button type="button" id = "backBtn" class="btn btn-warning">Back</button>
                 </div>
             </div>
         </main>
@@ -258,6 +315,21 @@
                     ageInput.value = age;
                 }
             }
+            function calculateLOS() {
+                var comm = document.getElementById('Commencement').value;
+                var los = document.getElementById('LOS');
+                if (comm) {
+                    var commDate = new Date(comm);
+                    var today = new Date();
+                    var age = today.getFullYear() - commDate.getFullYear();
+                    var month = today.getMonth() - commDate.getMonth();
+                    if (month < 0 || (month === 0 && today.getDate() < commDate.getDate())) {
+                        age--;
+                    }
+                    los.value = age;
+                }
+            }
+           
 
             document.addEventListener('DOMContentLoaded', function () {
                 var collapsePersonal = document.getElementById('collapsePersonal');
@@ -300,7 +372,17 @@
                     educationToggleIcon.classList.remove('rotate-90');
                     educationToggleIcon.classList.add('rotate-0');
                 });
+                
             });
+            document.getElementById('nextButton').addEventListener('click', function() {
+                document.getElementById('employeeInfoCard').classList.add('d-none');
+                document.getElementById('companyDetailsCard').classList.remove('d-none');
+        });
+            document.getElementById('backBtn').addEventListener('click', function() {
+                document.getElementById('employeeInfoCard').classList.remove('d-none');
+                document.getElementById('companyDetailsCard').classList.add('d-none');
+            });
+
         </script>
     </div>
 </body>
