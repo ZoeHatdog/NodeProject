@@ -63,6 +63,13 @@ app.get('/add',  (req, res) => {
 
 });
 
+
+app.post('/submit', (req, res) =>{
+
+    const {firstName, middleName, lastName} = req.body;
+    console.log(firstName,middleName,lastName)
+});
+
 app.get('/dashboard', (req, res) => {
     if (req.session.loggedin) {     
         const query = `

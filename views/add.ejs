@@ -103,6 +103,7 @@
         <main class="main-container">
             <div class="container mt-4">
                 <!-- Employee Information Card -->
+                <form action="/submit" method="POST">
                 <div class="card" id="employeeInfoCard">
                     <div class="card-header">
                         <h5 class="mb-0 d-flex justify-content-between align-items-center">
@@ -123,41 +124,41 @@
                                             <div class="row">
                                                 <div class="col">
                                                     <label for="empNumber" class="form-label">Employee Number</label>
-                                                    <input type="text" class="form-control" id="empNumber" placeholder="Enter employee number">
+                                                    <input type="text" class="form-control" id="empNumber" name = "employeeNumber" placeholder="Enter employee number">
                                                 </div>
                                                 <div class="col">
                                                     <label for="empID" class="form-label">Employee ID</label>
-                                                    <input type="text" class="form-control" id="empID" placeholder="Enter employee ID">
+                                                    <input type="text" class="form-control" id="empID" name = "employeeID" placeholder="Enter employee ID">
                                                 </div>
                                             </div>
                                             <br>
                                             <div class="row">
                                                 <div class="col">
                                                     <label for="firstName" class="form-label">First Name</label>
-                                                    <input type="text" class="form-control" id="firstName" placeholder="Enter first name">
+                                                    <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Enter first name">
                                                 </div>
                                                 <div class="col">
                                                     <label for="middleName" class="form-label">Middle Name</label>
-                                                    <input type="text" class="form-control" id="middleName" placeholder="Enter middle name">
+                                                    <input type="text" class="form-control" id="middleName" name = "middleName" placeholder="Enter middle name">
                                                 </div>
                                                 <div class="col">
                                                     <label for="lastName" class="form-label">Last Name</label>
-                                                    <input type="text" class="form-control" id="lastName" placeholder="Enter last name">
+                                                    <input type="text" class="form-control" id="lastName"  name ="lastName" placeholder="Enter last name">
                                                 </div>
                                             </div>
                                             <br>
                                             <div class="row">
                                                 <div class="col">
                                                     <label for="birthday" class="form-label">Birthday</label>
-                                                    <input type="date" class="form-control" id="birthday" placeholder="Enter birthday" onchange="calculateAge()">
+                                                    <input type="date" class="form-control" id="birthday" name = "birthday" placeholder="Enter birthday" onchange="calculateAge()">
                                                 </div>
                                                 <div class="col">
                                                     <label for="age" class="form-label">Age</label>
-                                                    <input type="text" class="form-control" id="age" placeholder="Age" disabled="true">
+                                                    <input type="text" class="form-control" id="age" placeholder="Age" name = "age" disabled="true">
                                                 </div>
                                                 <div class="col">
                                                     <label for="gender" class="form-label">Gender</label>
-                                                    <select class="form-select" id="gender">
+                                                    <select class="form-select" name="gender" id="gender">
                                                         <option selected>Choose...</option>
                                                         <option value="male">Male</option>
                                                         <option value="female">Female</option>
@@ -169,11 +170,11 @@
                                         <div class = "row">
                                             <div class="col">
                                                 <label for="nickname" class="form-label">Nickname</label>
-                                                <input type="text" class="form-control" id="nickname" placeholder="Enter nickname">
+                                                <input type="text" class="form-control" id="nickname" name = "nickname" placeholder="Enter nickname">
                                             </div>
                                             <div class="col">
                                                 <label for="nickname" class="form-label">Mobile Number</label>
-                                                <input type="text" class="form-control" id="mobilenumber" placeholder="Enter number">
+                                                <input type="text" class="form-control" id="mobilenumber" name = "mobilenumber" placeholder="Enter number">
                                             </div>
                                         </div>
                                     </div>
@@ -189,19 +190,19 @@
                                         <div class="card-body">
                                             <div class="mb-3">
                                                 <label for="religion" class="form-label">Religion</label>
-                                                <input type="text" class="form-control" id="religion" placeholder="Enter religion">
+                                                <input type="text" class="form-control" id="religion" name = "religion" placeholder="Enter religion">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="email" class="form-label">Email</label>
-                                                <input type="email" class="form-control" id="email" placeholder="Enter email">
+                                                <input type="email" class="form-control" id="email" name = "email" placeholder="Enter email">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="emergencyContact" class="form-label">Person to Notify in Case of Emergency</label>
-                                                <input type="text" class="form-control" id="emergencyContact" placeholder="Enter emergency contact person">
+                                                <input type="text" class="form-control" id="emergencyContact" name = "emergencyContact" placeholder="Enter emergency contact person">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="emergencyNumber" class="form-label">Emergency Contact Number</label>
-                                                <input type="tel" class="form-control" id="emergencyNumber" placeholder="Enter emergency contact number">
+                                                <input type="tel" class="form-control" id="emergencyNumber" name = "emergencyNumber" placeholder="Enter emergency contact number">
                                             </div>
                                         </div>
                                     </div>
@@ -218,11 +219,11 @@
                                         <div class="card-body">
                                             <div class="mb-3">
                                                 <label for="educationalAttainment" class="form-label">Educational Attainment</label>
-                                                <input type="text" class="form-control" id="educationalAttainment" placeholder="Enter educational attainment">
+                                                <input type="text" class="form-control" id="educationalAttainment" name = "educationalAttainment" placeholder="Enter educational attainment">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="course" class="form-label">Course</label>
-                                                <input type="text" class="form-control" id="course" placeholder="Enter course">
+                                                <input type="text" class="form-control" id="course" name="course" placeholder="Enter course">
                                             </div>
                                         </div>
                                     </div>
@@ -256,7 +257,7 @@
                                 <li class="list-group-item">
                                     <div class="col">
                                         <label for="department" class="form-label">Department</label>
-                                        <select class="form-select" id="department">
+                                        <select class="form-select" name="department" id="department">
                                             <option value="ADMIN">Admin</option>
                                             <option value="TOP MANAGEMENT">Top Management</option>
                                             <option value="R&D">R&D</option>
@@ -272,28 +273,28 @@
                 
                                     <div class="mb-3">
                                         <label for="position" class="form-label">Work Schedule</label>
-                                        <input type="text" class="form-control" id="position" placeholder="Enter Work Schedule">
+                                        <input type="text" class="form-control" name="workSchedule" id="position" placeholder="Enter Work Schedule">
                                     </div>
                                     <div class="mb-3">
                                         <label for="jobGrade" class="form-label">Job Grade</label>
-                                        <input type="text" class="form-control" id="jobGrade" placeholder="Enter Job Grade (E.g. Grade 1-12)">
+                                        <input type="text" class="form-control" id="jobGrade" name="jobGrade" placeholder="Enter Job Grade (E.g. Grade 1-12)">
                                     </div>
                                     <div class="mb-3">
                                         <label for="jobLevel" class="form-label">Job Level Classification</label>
-                                        <input type="text" class="form-control" id="jobLevel" placeholder="Enter Job Lvl Classification (E.g. M&P-3 Career)">
+                                        <input type="text" class="form-control" id="jobLevel" name="jobLevel" placeholder="Enter Job Lvl Classification (E.g. M&P-3 Career)">
                                     </div>
                                     <div class="mb-3">
                                         <label for="classification" class="form-label">Classification</label>
-                                        <input type="text" class="form-control" id="classification" placeholder="Enter Classification (E.g. Entry Lvl, Staff, Team Leader, etc.)">
+                                        <input type="text" class="form-control" id="classification" name = "classification" placeholder="Enter Classification (E.g. Entry Lvl, Staff, Team Leader, etc.)">
                                     </div>
                 
                                     <div class="mb-3">
                                         <label for="Commencement" class="form-label">Commencement of Work</label>
-                                        <input type="date" class="form-control" id="Commencement" placeholder="Enter hire date" onchange="calculateLOS()">
+                                        <input type="date" class="form-control" id="Commencement" name="commencement" placeholder="Enter hire date" onchange="calculateLOS()">
                                     </div>
                                     <div class="mb-3">
                                         <label for="LOS" class="form-label">Length of Service </label>
-                                        <input type="text" class="form-control" id="LOS" placeholder="In years" disabled="true">
+                                        <input type="text" class="form-control" id="LOS"  name= "los" placeholder="In years" disabled="true">
                                     </div>
                                 </li>
                             </ul>
@@ -311,11 +312,11 @@
                             <div class = "row">
                                 <div class="col">
                                     <label for="pafInfo1" class="form-label">Tin Number #:</label>
-                                    <input type="text" class="form-control" id="pafInfo1" placeholder="Enter Tin">
+                                    <input type="text" class="form-control" id="TinNumber" name = "tinNumber" placeholder="Enter Tin">
                                 </div>
                                 <div class="col">
                                     <label for="TaxStatus" class="form-label">Tax Status:</label>
-                                    <input type="text" class="form-control" id="TaxStatus" placeholder="Enter Tax Status">
+                                    <input type="text" class="form-control" id="TaxStatus" name="taxStatus" placeholder="Enter Tax Status">
                                 </div>
                             </div>
                             <div class="mb-3">
@@ -332,7 +333,7 @@
                                             </label>
                                         </div>
                                         <div id="inputGroup1" class="d-none">
-                                            <input type="text" class="form-control mt-2" placeholder="Input 2021 PAF amount">
+                                            <input type="text" class="form-control mt-2" name="PAF2021"  placeholder="Input 2021 PAF amount">
                                         </div>
                                     </div>
                             
@@ -345,7 +346,7 @@
                                             </label>
                                         </div>
                                         <div id="inputGroup2" class="d-none">
-                                            <input type="text" class="form-control mt-2" placeholder="Input 2022 PAF amount">
+                                            <input type="text" class="form-control mt-2" type ="PAF2022" placeholder="Input 2022 PAF amount">
                                         </div>
                                     </div>
                                 </div>
@@ -360,7 +361,7 @@
                                             </label>
                                         </div>
                                         <div id="inputGroup3" class="d-none">
-                                            <input type="text" class="form-control mt-2" placeholder="Input 2023 amount">
+                                            <input type="text" class="form-control mt-2" name="PAF2023" placeholder="Input 2023 amount">
                                         </div>
                                     </div>
                             
@@ -373,7 +374,7 @@
                                             </label>
                                         </div>
                                         <div id="inputGroup4" class="d-none">
-                                            <input type="text" class="form-control mt-2" placeholder="Input 2024 amount">
+                                            <input type="text" class="form-control mt-2" name="PAF2024" placeholder="Input 2024 amount">
                                         </div>
                                     </div>
                                 </div>
@@ -386,18 +387,18 @@
                                     
                                 </div>
                                 <div id="allowanceInputGroup" class="d-none mt-2">
-                                    <input type="text" class="form-control" id="allowanceInput" placeholder="Enter allowance amount">
+                                    <input type="text" class="form-control" id="allowanceInput" name = "allowance" placeholder="Enter allowance amount">
                                 </div>
                             </div>
                             <div>
                                 <label for="rate" class="form-label mb-0 font-weight-bold"> Rate </label>
-                                <input type="text" class="form-control" id="RateInput" placeholder="Enter Rate amount">
+                                <input type="text" class="form-control" id="RateInput" name="rate" placeholder="Enter Rate amount">
                             </div>
                             <br>
                             
                             <div class="mb-3">
                                 <label for="isActive" class="form-label mb-0 font-weight-bold">Is Active</label>
-                                <select class="form-select" id="Active" onchange="toggleSeparationFields()">
+                                <select name="isActive" class="form-select" id="Active" onchange="toggleSeparationFields()">
                                     <option value="plsSelect">Please Select</option>
                                     <option value="Yes">Yes</option>
                                     <option value="No">No</option>
@@ -407,15 +408,15 @@
                             <div id="separationFields" class="d-none">
                                 <div class="mb-3">
                                     <label for="separationDate" class="form-label">Date of Separation</label>
-                                    <input type="date" class="form-control" id="separationDate">
+                                    <input type="date" name = "DOS" class="form-control" id="separationDate">
                                 </div>
                                 <div class="mb-3">
                                     <label for="separationCategory" class="form-label">Separation Category</label>
-                                    <input type="text" class="form-control" id="separationCategory" placeholder="Enter Separation Category">
+                                    <input type="text" name="separationCategory"class="form-control" id="separationCategory" placeholder="Enter Separation Category">
                                 </div>
                                 <div class="mb-3">
                                     <label for="reasonOfSeparation" class="form-label">Reason of Separation</label>
-                                    <input type="text" class="form-control" id="reasonOfSeparation" placeholder="Enter Reason of Separation">
+                                    <input type="text" class="form-control" name="reasonOfSeparation" id="reasonOfSeparation" placeholder="Enter Reason of Separation">
                                 </div>
                             </div>
                             
@@ -424,8 +425,10 @@
                     </div>
                     <div  class="d-flex justify-content-between">
                         <button type="button" id="backBtn" class="btn btn-warning">Back</button>
-                        <button type="button" class="btn btn-success btn-success-2">Submit</button>
+                        <button type="button" type = "submit" class="btn btn-success btn-success-2">Submit</button>
                     </div>
+                    </div>
+                </form>
                 </div>
             </div>
             </div>
@@ -528,7 +531,7 @@
                 var CollapsePAF = document.getElementById('CollapsePAF');
                 var PAFToggleIcon = document.getElementById('PAFToggleIcon');
 
-                collapseCompany.addEventListener('show.bs.collapse', )
+               
 
                 CollapsePAF.addEventListener('show.bs.collapse', function () {
                     PAFToggleIcon.classList.remove('rotate-0');
