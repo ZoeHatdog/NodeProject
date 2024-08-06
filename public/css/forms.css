@@ -376,6 +376,15 @@ body {
   color:inherit
 }
 
+.btn-paf-info{
+  text-decoration: inherit;
+  color: inherit;
+  font-weight: bold;
+}
+
+.btn-paf-info :hover{
+  color:inherit
+}
 
 
 .btn-danger{
@@ -391,5 +400,21 @@ body {
   padding: 10px 20px; 
   border-radius: 5px; 
   margin-right: auto;
+}
+.btn-success-2{
+  width: 150px; 
+  padding: 10px 20px; 
+  border-radius: 5px; 
+  margin-left: auto;
 
+}
+.custom-checkbox {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgb(97, 85, 85);
+  border-radius: 4px; /* Optional: to give it a slight round edge */
+}
+.custom-checkbox:checked {
+  background-color: #6b5a5a; /* Change the fill color if needed */
+  border-color: rgb(94, 80, 80); 
 }

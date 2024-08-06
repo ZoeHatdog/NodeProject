@@ -240,61 +240,198 @@
                 <!-- Company Details Card -->
                 <div class="card mt-4 d-none" id="companyDetailsCard">
                     <div class="card-header">
-                        <button class="btn btn-link w-100 d-flex justify-content-between align-items-center btn-company-details" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePersonal" aria-expanded="true" aria-controls="collapsePersonal">
-                            Company Details
-                            <span id="personalToggleIcon" class="material-icons-outlined rotate-0">expand_more</span>
-                        </button>
+                        <h5 class="mb-0 d-flex justify-content-between align-items-center">
+                            PAF Information
+                        </h5>
                     </div>
-                    <div class="card-body">
-                        
-                        <div class="col">
-                            <label for="department" class="form-label">Department</label>
-                            <select class="form-select" id="department">
-                                <option value="ADMIN">Admin</option>
-                                <option value="TOP MANAGEMENT">Top Management</option>
-                                <option value="R&D">R&D</option>
-                                <option value="Manifacturing">Manifacturiing</option>
-                                <option value="QA">QA</option>
-                                <option value="SALES">Sales</option>
-                                <option value="FEME">FEME</option>
-                                <option value="ENGINEERING">Engineering</option>
-                                <option value="IT">IT</option>
-                            </select>
-                        </div>
-                        <br>
-                      
-                        <div class="mb-3">
-                            <label for="position" class="form-label">Work Schedule</label>
-                            <input type="text" class="form-control" id="position" placeholder="Enter Work Schedule">
-                        </div>
-                        <div class="mb-3">
-                            <label for="department" class="form-label">Job Grade</label>
-                            <input type="text" class="form-control" id="department" placeholder="Enter Job Grade (E.g. Grade 1-12)   ">
-                        </div>
-                        <div class="mb-3">
-                            <label for="department" class="form-label">Job Level Classification</label>
-                            <input type="text" class="form-control" id="department" placeholder="Enter Job Lvl Classification (E.g. M&P-3 Career)">
-                        </div>
-                        <div class="mb-3">
-                            <label for="department" class="form-label">Classification</label>
-                            <input type="text" class="form-control" id="department" placeholder="Enter Classification (E.g. Entry Lvl, Staff, Team Leader, etc.)">
-                        </div>
-                        
-
-                        <div class="mb-3">
-                            <label for="Commencement" class="form-label">Commencement of Work</label>
-                            <input type="date" class="form-control" id="Commencement" placeholder="Enter hire date" onchange="calculateLOS()">
-                        </div>
-                        <div class="mb-3">
-                            <label for="LOS" class="form-label">Length of Service </label>
-                            <input type="text" class="form-control" id="LOS" placeholder="In years" disabled="true">
+                
+                    <button class="btn btn-link w-100 d-flex justify-content-between align-items-center btn-company-details" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCompany" aria-expanded="true" aria-controls="collapseCompany">
+                        Company Details
+                        <span id="CompanyToggleIcon" class="material-icons-outlined rotate-0">expand_more</span>
+                    </button>
+                
+                    <div id="collapseCompany" class="collapse">
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <div class="col">
+                                        <label for="department" class="form-label">Department</label>
+                                        <select class="form-select" id="department">
+                                            <option value="ADMIN">Admin</option>
+                                            <option value="TOP MANAGEMENT">Top Management</option>
+                                            <option value="R&D">R&D</option>
+                                            <option value="Manufacturing">Manufacturing</option>
+                                            <option value="QA">QA</option>
+                                            <option value="SALES">Sales</option>
+                                            <option value="FEME">FEME</option>
+                                            <option value="ENGINEERING">Engineering</option>
+                                            <option value="IT">IT</option>
+                                        </select>
+                                    </div>
+                                    <br>
+                
+                                    <div class="mb-3">
+                                        <label for="position" class="form-label">Work Schedule</label>
+                                        <input type="text" class="form-control" id="position" placeholder="Enter Work Schedule">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="jobGrade" class="form-label">Job Grade</label>
+                                        <input type="text" class="form-control" id="jobGrade" placeholder="Enter Job Grade (E.g. Grade 1-12)">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="jobLevel" class="form-label">Job Level Classification</label>
+                                        <input type="text" class="form-control" id="jobLevel" placeholder="Enter Job Lvl Classification (E.g. M&P-3 Career)">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="classification" class="form-label">Classification</label>
+                                        <input type="text" class="form-control" id="classification" placeholder="Enter Classification (E.g. Entry Lvl, Staff, Team Leader, etc.)">
+                                    </div>
+                
+                                    <div class="mb-3">
+                                        <label for="Commencement" class="form-label">Commencement of Work</label>
+                                        <input type="date" class="form-control" id="Commencement" placeholder="Enter hire date" onchange="calculateLOS()">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="LOS" class="form-label">Length of Service </label>
+                                        <input type="text" class="form-control" id="LOS" placeholder="In years" disabled="true">
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
                     </div>
-                    
-                    <button type="button" id = "backBtn" class="btn btn-warning">Back</button>
+                
+                    <button class="btn btn-link w-100 d-flex justify-content-between align-items-center btn-paf-info" type="button" data-bs-toggle="collapse" data-bs-target="#CollapsePAF" aria-expanded="false" aria-controls="CollapsePAF">
+                        Tax Information
+                        <span id="PAFToggleIcon" class="material-icons-outlined rotate-0">expand_more</span>
+                    </button>
+                
+                    <div id="CollapsePAF" class="collapse">
+                        <div class="card-body">
+                            <!-- PAF Information Form Contents Here -->
+                            <div class = "row">
+                                <div class="col">
+                                    <label for="pafInfo1" class="form-label">Tin Number #:</label>
+                                    <input type="text" class="form-control" id="pafInfo1" placeholder="Enter Tin">
+                                </div>
+                                <div class="col">
+                                    <label for="TaxStatus" class="form-label">Tax Status:</label>
+                                    <input type="text" class="form-control" id="TaxStatus" placeholder="Enter Tax Status">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <br>
+                                <label for="pafInfo1" class="form-label font-weight-bold">PAF</label>
+                                
+                                <div class="row">
+                                    <!-- Checkbox 1 -->
+                                    <div class="col-md-6">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="checkbox1" onclick="toggleInputs('inputGroup1')">
+                                            <label class="form-check-label" for="checkbox1">
+                                                2021
+                                            </label>
+                                        </div>
+                                        <div id="inputGroup1" class="d-none">
+                                            <input type="text" class="form-control mt-2" placeholder="Input 2021 PAF amount">
+                                        </div>
+                                    </div>
+                            
+                                    <!-- Checkbox 2 -->
+                                    <div class="col-md-6">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="checkbox2" onclick="toggleInputs('inputGroup2')">
+                                            <label class="form-check-label" for="checkbox2">
+                                                2022
+                                            </label>
+                                        </div>
+                                        <div id="inputGroup2" class="d-none">
+                                            <input type="text" class="form-control mt-2" placeholder="Input 2022 PAF amount">
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="row">
+                                    <!-- Checkbox 3 -->
+                                    <div class="col-md-6">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="checkbox3" onclick="toggleInputs('inputGroup3')">
+                                            <label class="form-check-label" for="checkbox3">
+                                                2023
+                                            </label>
+                                        </div>
+                                        <div id="inputGroup3" class="d-none">
+                                            <input type="text" class="form-control mt-2" placeholder="Input 2023 amount">
+                                        </div>
+                                    </div>
+                            
+                                    <!-- Checkbox 4 -->
+                                    <div class="col-md-6">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="checkbox4" onclick="toggleInputs('inputGroup4')">
+                                            <label class="form-check-label" for="checkbox4">
+                                                2024
+                                            </label>
+                                        </div>
+                                        <div id="inputGroup4" class="d-none">
+                                            <input type="text" class="form-control mt-2" placeholder="Input 2024 amount">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="d-flex align-items-center">
+                                    <label for="allowance" class="form-label font-weight-bold mb-0">Allowance</label>
+                                    <span> (check if applicable)</span>
+                                    <input class="form-check-input ms-2 custom-checkbox" type="checkbox" id="allowanceCheckbox" onclick="toggleAllowanceInput()">
+                                    
+                                </div>
+                                <div id="allowanceInputGroup" class="d-none mt-2">
+                                    <input type="text" class="form-control" id="allowanceInput" placeholder="Enter allowance amount">
+                                </div>
+                            </div>
+                            <div>
+                                <label for="rate" class="form-label mb-0 font-weight-bold"> Rate </label>
+                                <input type="text" class="form-control" id="RateInput" placeholder="Enter Rate amount">
+                            </div>
+                            <br>
+                            
+                            <div class="mb-3">
+                                <label for="isActive" class="form-label mb-0 font-weight-bold">Is Active</label>
+                                <select class="form-select" id="Active" onchange="toggleSeparationFields()">
+                                    <option value="plsSelect">Please Select</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                            
+                            <div id="separationFields" class="d-none">
+                                <div class="mb-3">
+                                    <label for="separationDate" class="form-label">Date of Separation</label>
+                                    <input type="date" class="form-control" id="separationDate">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="separationCategory" class="form-label">Separation Category</label>
+                                    <input type="text" class="form-control" id="separationCategory" placeholder="Enter Separation Category">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="reasonOfSeparation" class="form-label">Reason of Separation</label>
+                                    <input type="text" class="form-control" id="reasonOfSeparation" placeholder="Enter Reason of Separation">
+                                </div>
+                            </div>
+                            
+                            
+                        </div>
+                    </div>
+                    <div  class="d-flex justify-content-between">
+                        <button type="button" id="backBtn" class="btn btn-warning">Back</button>
+                        <button type="button" class="btn btn-success btn-success-2">Submit</button>
+                    </div>
                 </div>
             </div>
-        </main>
+            </div>
+                         
+        </div>
+    </main>
 
         <!-- Bootstrap JS and dependencies -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -313,6 +450,35 @@
                         age--;
                     }
                     ageInput.value = age;
+                }
+            }
+            function toggleInputs(groupId) {
+                const inputGroup = document.getElementById(groupId);
+                if (inputGroup.classList.contains('d-none')) {
+                    inputGroup.classList.remove('d-none');
+                } else {
+                    inputGroup.classList.add('d-none');
+                }
+            }
+            function toggleSeparationFields() {
+                    var select = document.getElementById('Active');
+                    var separationFields = document.getElementById('separationFields');
+                                
+                    if (select.value === 'No') {
+                        separationFields.classList.remove('d-none');
+                        } else {
+                    separationFields.classList.add('d-none');
+                        }
+            }
+
+            function toggleAllowanceInput() {
+                var checkbox = document.getElementById("allowanceCheckbox");
+                var inputGroup = document.getElementById("allowanceInputGroup");
+
+                if (checkbox.checked) {
+                    inputGroup.classList.remove("d-none");
+                } else {
+                    inputGroup.classList.add("d-none");
                 }
             }
             function calculateLOS() {
@@ -334,6 +500,9 @@
             document.addEventListener('DOMContentLoaded', function () {
                 var collapsePersonal = document.getElementById('collapsePersonal');
                 var personalToggleIcon = document.getElementById('personalToggleIcon');
+                var collapseCompany = document.getElementById('collapseCompany');
+                var CompanyToggleIcon = document.getElementById('CompanyToggleIcon');
+                
                 
                 // Add event listeners to toggle icon
                 collapsePersonal.addEventListener('show.bs.collapse', function () {
@@ -345,10 +514,33 @@
                     personalToggleIcon.classList.remove('rotate-90');
                     personalToggleIcon.classList.add('rotate-0');
                 });
-                
+                collapseCompany.addEventListener('show.bs.collapse', function() {
+                    CompanyToggleIcon.classList.remove('rotate-0');
+                    CompanyToggleIcon.classList.add('rotate-90');
+                })
+                collapseCompany.addEventListener('hide.bs.collapse', function() {
+                    CompanyToggleIcon.classList.remove('rotate-90');
+                    CompanyToggleIcon.classList.add('rotate-0');
+                })
                 // Repeat for other collapsibles
                 var collapseOther = document.getElementById('collapseOther');
                 var otherToggleIcon = document.getElementById('otherToggleIcon');
+                var CollapsePAF = document.getElementById('CollapsePAF');
+                var PAFToggleIcon = document.getElementById('PAFToggleIcon');
+
+                collapseCompany.addEventListener('show.bs.collapse', )
+
+                CollapsePAF.addEventListener('show.bs.collapse', function () {
+                    PAFToggleIcon.classList.remove('rotate-0');
+                    PAFToggleIcon.classList.add('rotate-90');
+                });
+
+                CollapsePAF.addEventListener('hide.bs.collapse', function () {
+                    PAFToggleIcon.classList.remove('rotate-90');
+                    PAFToggleIcon.classList.add('rotate-0');
+                });
+
+
 
                 collapseOther.addEventListener('show.bs.collapse', function () {
                     otherToggleIcon.classList.remove('rotate-0');
