@@ -63,11 +63,22 @@ app.get('/add',  (req, res) => {
 
 });
 
+app.get('/delete',  (req, res) => {
+    res.render('delete');
+});
 
 app.post('/submit', (req, res) =>{
 
-    const {firstName, middleName, lastName} = req.body;
-    console.log(firstName,middleName,lastName)
+    const {employeeNumber, employeeID, firstName, middleName, lastName, designation,department, workSchedule,jobGrade,classification,educationalAttainment, 
+        course,commencement, sss,philhealth,taxStatus,tinNumber,pagibig,birthday,age, religion, contactNumber, email,companyEmail,
+        emergencyContact, emergencyNumber, los, gender, regularization, pafSchedule, employmentStatus,PAF2021,PAF2022,PAF2023,
+        PAF2024, allowance, rate
+    } = req.body;
+    console.log(employeeNumber, employeeID, firstName, middleName, lastName, designation,department, workSchedule,jobGrade,classification,educationalAttainment, 
+        course,commencement, sss,philhealth,taxStatus,tinNumber,pagibig,birthday,age, religion, contactNumber, email,companyEmail,
+        emergencyContact, emergencyNumber, los, gender, regularization, pafSchedule, employmentStatus,PAF2021,PAF2022,PAF2023,
+        PAF2024, allowance, rate)
+
 });
 
 app.get('/dashboard', (req, res) => {
@@ -218,6 +229,50 @@ app.get('/data', (req, res) => {
 });
 
 
+
+// Endpoint to fetch employees
+app.get('/api/employees', (req, res) => {
+    const query = `
+        SELECT 
+            \`EMP ID #.\` AS emp_id, 
+            \`name\`, 
+            \`Middle Name\` AS middle_name, 
+            \`Surname\` AS surname, 
+            \`Designation\`, 
+            \`Department\`, 
+            \`Work Schedule\` AS work_schedule 
+        FROM masterlist
+    `;
+
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Error fetching employees:', err.message);
+            res.status(500).json({ error: 'Server Error', details: err.message });
+            return;
+        }
+        res.json(results);
+    });
+});
+
+
+// Endpoint to handle employee deletion
+app.post('/delete-employee', express.json(), (req, res) => {
+    const emp_id = req.body.emp_id;
+    const query = 'DELETE FROM masterlist WHERE `EMP ID #.` = ?';
+
+    db.query(query, [emp_id], (err, results) => {
+        if (err) {
+            console.error('Error deleting employee:', err.message);
+            res.status(500).json({ error: 'Server Error', details: err.message });
+            return;
+        }
+        res.json({ message: 'Employee deleted successfully' });
+    });
+});
+
+
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}/`);
 });
+
+
