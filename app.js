@@ -55,6 +55,10 @@ app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'login.html'));
 });
 
+app.get('/seedata',  (req, res) => {
+    res.render(path.join(__dirname, 'views', 'see-data.ejs'));
+});
+
 app.get('/registration', (req, res) => {
     res.render('registration.ejs'); // Renders the 'registration.ejs' file
 });
