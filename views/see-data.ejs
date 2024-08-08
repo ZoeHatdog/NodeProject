@@ -68,7 +68,8 @@
         <aside id="sidebar">
             <div class="sidebar-title">
                 <div class="sidebar-brand">
-                    <span class="material-icons-outlined">groups</span> SPI HR Management
+                    <span class="material-icons-outlined">groups</span>
+                    <a href="https://smartprobegroup.com/" target="_blank">SPI HR Management</a>
                 </div>
                 <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
             </div>
@@ -90,22 +91,22 @@
                     </a>
                 </li>
                 <li class="sidebar-list-item">
-                    <a href="#" target="_blank">
+                    <a href="#" target="_self">
                         <span class="material-icons-outlined">add_shopping_cart</span> Update Employee
                     </a>
                 </li>
                 <li class="sidebar-list-item">
-                    <a href="#" target="_blank">
+                    <a href="/seedata" target="_self">
                         <span class="material-icons-outlined">shopping_cart</span> See Data
                     </a>
                 </li>
                 <li class="sidebar-list-item">
-                    <a href="#" target="_blank">
+                    <a href="#" target="_self">
                         <span class="material-icons-outlined">poll</span> Reports
                     </a>
                 </li>
                 <li class="sidebar-list-item">
-                    <a href="#" target="_blank">
+                    <a href="#" target="_self">
                         <span class="material-icons-outlined">settings</span> Upload 
                     </a>
                 </li>
@@ -115,34 +116,36 @@
 
         <!-- Main -->
         <main class="main-container">
-            <div class="container">
+            <div class="container flex">
                 <div class="card-container">
                     <a href = "#">
                     <div class="card square-card">
+                        <a href="/seeemployee" target="_self">
                         <div class="card-body">
-                            <span class="material-icons-outlined add-employee-icon">inventory_2</span>
+                            <span class="material-icons-outlined add-employee-icon">group</span>
                             <h5 class="card-title">See All Employees</h5>
                             <p class="card-text">See all employees in the database.</p>
                         </div>
+                        </a>
                     </a>
                 </div>
                     <div class="card square-card">
                         <div class="card-body">
-                            <span class="material-icons-outlined add-employee-icon">inventory_2</span>
+                            <span class="material-icons-outlined add-employee-icon">directions_run</span>
                             <h5 class="card-title">See All Inactive Employees</h5>
                             <p class="card-text">See all inactive employees to the database.</p>
                         </div>
                     </div>
                     <div class="card square-card">
                         <div class="card-body">
-                            <span class="material-icons-outlined delete-employee-icon">fact_check</span>
+                            <span class="material-icons-outlined delete-employee-icon">query_stats</span>
                             <h5 class="card-title">See Demo Stat</h5>
                             <p class="card-text">See graphs in Demo Stat.</p>
                         </div>
                     </div>
                     <div class="card square-card">
                         <div class="card-body">
-                            <span class="material-icons-outlined update-employee-icon">add_shopping_cart</span>
+                            <span class="material-icons-outlined update-employee-icon">leaderboard</span>
                             <h5 class="card-title">See Performance Stat</h5>
                             <p class="card-text">See graphs in Performance Stat.</p>
                         </div>
@@ -159,6 +162,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
     <!-- Custom JS -->
-    <script src="/js/scripts.js"></script>
+    <script src="/js/see-data.js"></script>
 </body>
 </html>

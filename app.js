@@ -71,6 +71,10 @@ app.get('/delete',  (req, res) => {
     res.render('delete');
 });
 
+app.get('/seeemployee',  (req, res) => {
+    res.render(path.join(__dirname, 'views', 'see-employee.ejs'));
+
+});
 app.post('/submit', (req, res) =>{
 
     const {employeeNumber, employeeID, firstName, middleName, lastName, designation,department, workSchedule,jobGrade,classification,educationalAttainment, 
@@ -168,6 +172,7 @@ app.post('/login', (req, res) => {
     });
 });
 
+
 app.get('/logout', (req, res) => {
     req.session.destroy((err) => {
         if (err) {
@@ -228,6 +233,76 @@ app.get('/data', (req, res) => {
 
     db.query(query, (error, results) => {
         if (error) throw error;
+        res.json(results);
+    });
+});
+app.get('/api/allemployees', (req, res) => {
+    const query = `
+        SELECT 
+            \`EMP ID #.\` AS emp_id, 
+            \`Name\`, 
+            \`Middle Name\` AS middle_name, 
+            \`Surname\`, 
+            \`Nick Name\` AS nick_name,
+            \`Designation\`, 
+            \`Department\`, 
+            \`Work Schedule\` AS work_schedule,
+            \`Job Grade\`,
+            \`Job Level Classification\` AS job_level_classification,
+            \`Classification\`,
+            \`Educational Attainment\`,
+            \`Course\`,
+            \`Commencement of Work\`,
+            \`SSS number\`,
+            \`PHILHEALTH no.\`,
+            \`Tax Status\`,
+            \`TIN number\`,
+            \`PAG IBIG number\`,
+            \`Birthday\`,
+            \`Age\`,
+            \`Locker No.\`,
+            \`Religion\`,
+            \`Contact #\`,
+            \`PRIMARY EMAIL\`,
+            \`COMPANY EMAIL\`,
+            \`Person to notify in case of emergency\`,
+            \`Number to contact\`,
+            \`Length of Service\`,
+            \`Gender\`,
+            \`NO\`,
+            \`EMP ID #.2\`,
+            \`Name3\`,
+            \`TIN#\`,
+            \`TAX STATUS4\`,
+            \`Regularization\`,
+            \`Commencement\`,
+            \`PAF Schedule\`,
+            \`Employment Status6\`,
+            \`Signature\`,
+            \`Date Received\`,
+            \`PAF 2018\`,
+            \`PAF 2019\`,
+            \`PAF 2020\`,
+            \`PAF 2021\`,
+            \`PAF 2022\`,
+            \`PAF 2023\`,
+            \`PAF 2024\`,
+            \`Allowance\`,
+            \`Rate\`,
+            \`%\`,
+            \`201 Status2\`,
+            \`Date of Separation\`,
+            \`Separation Category\`,
+            \`Reason of Separation\`
+        FROM masterlist
+    `;
+
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Error fetching employees:', err.message);
+            res.status(500).json({ error: 'Server Error', details: err.message });
+            return;
+        }
         res.json(results);
     });
 });
