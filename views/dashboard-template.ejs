@@ -16,84 +16,6 @@
 
     <!-- ApexCharts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.3/apexcharts.min.js"></script>
-
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        table, th, td {
-            border: 1px solid #ddd;
-        }
-        th, td {
-            padding: 12px;
-            text-align: left;
-        }
-        th {
-            background-color: #f4f4f4;
-        }
-        .table-container {
-            overflow-x: auto;
-        }
-        
-
-       .search{
-       position: relative;
-       box-shadow: 0 0 40px rgba(51, 51, 51, .1);
-         
-       }
-
-       .search input{
-
-        height: 60px;
-        text-indent: 25px;
-        border: 2px solid #d6d4d4;
-
-
-       }
-
-
-       .search input:focus{
-
-        box-shadow: none;
-        border: 2px solid blue;
-
-
-       }
-
-       .search .fa-search{
-
-        position: absolute;
-        top: 20px;
-        left: 16px;
-
-       }
-
-       .search button{
-
-        position: absolute;
-        top: 5px;
-        right: 5px;
-        height: 50px;
-        width: 110px;
-        background: blue;
-
-       }
-     
-    </style>
 </head>
 <body>
     <div class="grid-container">
@@ -167,46 +89,16 @@
             </ul>
         </aside>
         <!-- End Sidebar -->
+
+        <!-- Main -->
         <main class="main-container">
-            <div class="container mt-4">
-                <div class="row mb-4">
-                    <div class="col-md-8">
-                        <div class="search d-flex align-items-center">
-                            <i class="fa fa-search mr-2"></i>
-                            <input type="text" id="searchInput" class="form-control" placeholder="Search Employees">
-                            
-                        </div>
-                    </div>
-                   
-                </div>
-                <div class="table-responsive">
-                    <table id = "employeesTable">
-                        <thead>
-                            <tr>
-                                
-                                <th>Employee ID</th>
-                                <th>Name</th>
-                                <th>Middle Name</th>
-                                <th>Surname</th>
-                                <th>Designation</th>
-                                <th>Department</th>
-                                <th>Work Schedule</th>   
-                                <th>Status</th>
-                        
-                            </tr>
-                        </thead>
-                        <tbody>
-                           
-                        </tbody>
-                    </table>
-                    
-                </div>
-            </div>
+          ]
         </main>
-        
+        <!-- End Main -->
+
     </div>
 
     <!-- Custom JS -->
-    <script src="/js/see-data.js"></script>
+    <script src="/js/scripts.js"></script>
 </body>
 </html>

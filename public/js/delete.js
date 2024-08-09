@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <td>${employee.Designation}</td>
                     <td>${employee.Department}</td>
                     <td>${employee.work_schedule}</td>
+                    <td>${employee.Status}</td>
                     <td><button class="btn btn-danger delete-btn" data-id="${employee.emp_id}">Delete</button></td> <!-- Bootstrap delete button -->
                 `;
                 tableBody.appendChild(row);

@@ -37,9 +37,11 @@ function logout() {
 
 // ---------- Header-Icons -------
 
-function toggleDropdown() {
+/*function toggleDropdown() {
   document.getElementById("dropdownMenu").classList.toggle("show");
 }
+
+
 
 window.onclick = function(event) {
   if (!event.target.matches('#accountCircle')) {
@@ -51,7 +53,7 @@ window.onclick = function(event) {
           }
       }
   }
-}
+}*/
 
 // ---------- CHARTS ----------
 

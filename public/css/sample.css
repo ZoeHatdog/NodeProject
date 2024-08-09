@@ -63,8 +63,66 @@ body {
   .menu-icon {
     display: none;
   }
-  
-  
+
+ /* Position the dropdown relative to the icon */
+/* Position the dropdown relative to the icon */
+.accountCircle {
+  cursor: pointer;
+  position: relative;
+  font-size: 36px;
+}
+
+/* Initially hide the dropdown menu */
+#dropdownMenu {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: #ffffff;
+  min-width: 180px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+  padding: 0;
+  margin-top: 10px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
+}
+
+/* Style for dropdown items */
+.dropdown-item {
+  color: #333;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  font-size: 14px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Hover effect for dropdown items */
+.dropdown-item:hover {
+  background-color: #f5f5f5;
+  color: #007bff;
+}
+
+/* Show dropdown menu on hover over the icon or the dropdown */
+.accountCircle:hover + #dropdownMenu,
+#dropdownMenu:hover {
+  display: block;
+}
+
+/* Optional: adding a subtle transition to dropdown appearance */
+#dropdownMenu {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.accountCircle:hover + #dropdownMenu,
+#dropdownMenu:hover {
+  opacity: 1;
+  transform: translateY(0);
+}
+
   /* ---------- SIDEBAR ---------- */
   
   #sidebar {

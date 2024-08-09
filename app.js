@@ -236,64 +236,18 @@ app.get('/data', (req, res) => {
         res.json(results);
     });
 });
+
 app.get('/api/allemployees', (req, res) => {
     const query = `
         SELECT 
             \`EMP ID #.\` AS emp_id, 
             \`Name\`, 
             \`Middle Name\` AS middle_name, 
-            \`Surname\`, 
-            \`Nick Name\` AS nick_name,
+            \`Surname\` AS Surname, 
             \`Designation\`, 
             \`Department\`, 
             \`Work Schedule\` AS work_schedule,
-            \`Job Grade\`,
-            \`Job Level Classification\` AS job_level_classification,
-            \`Classification\`,
-            \`Educational Attainment\`,
-            \`Course\`,
-            \`Commencement of Work\`,
-            \`SSS number\`,
-            \`PHILHEALTH no.\`,
-            \`Tax Status\`,
-            \`TIN number\`,
-            \`PAG IBIG number\`,
-            \`Birthday\`,
-            \`Age\`,
-            \`Locker No.\`,
-            \`Religion\`,
-            \`Contact #\`,
-            \`PRIMARY EMAIL\`,
-            \`COMPANY EMAIL\`,
-            \`Person to notify in case of emergency\`,
-            \`Number to contact\`,
-            \`Length of Service\`,
-            \`Gender\`,
-            \`NO\`,
-            \`EMP ID #.2\`,
-            \`Name3\`,
-            \`TIN#\`,
-            \`TAX STATUS4\`,
-            \`Regularization\`,
-            \`Commencement\`,
-            \`PAF Schedule\`,
-            \`Employment Status6\`,
-            \`Signature\`,
-            \`Date Received\`,
-            \`PAF 2018\`,
-            \`PAF 2019\`,
-            \`PAF 2020\`,
-            \`PAF 2021\`,
-            \`PAF 2022\`,
-            \`PAF 2023\`,
-            \`PAF 2024\`,
-            \`Allowance\`,
-            \`Rate\`,
-            \`%\`,
-            \`201 Status2\`,
-            \`Date of Separation\`,
-            \`Separation Category\`,
-            \`Reason of Separation\`
+            \`Status\` AS status
         FROM masterlist
     `;
 
@@ -319,7 +273,9 @@ app.get('/api/employees', (req, res) => {
             \`Surname\` AS surname, 
             \`Designation\`, 
             \`Department\`, 
-            \`Work Schedule\` AS work_schedule 
+            \`Status\`,
+            \`Work Schedule\` AS work_schedule
+            
         FROM masterlist
     `;
 
