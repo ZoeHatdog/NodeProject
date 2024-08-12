@@ -12,16 +12,22 @@ document.addEventListener('DOMContentLoaded', function() {
             
             data.forEach(employee => {
                 const row = document.createElement('tr');
+
+                row.addEventListener('click', function() {
+                    console.log('Employee ID:', employee.emp_id); // Debugging
+                    handleRowClick(employee.emp_id);
+                });
+
                 row.innerHTML = `
                   <td>${employee.emp_id}</td>
-                    <td>${employee.Name}</td>
-                    <td>${employee.middle_name}</td>
-                    <td>${employee.Surname}</td>
-                    <td>${employee.Designation}</td>
-                    <td>${employee.Department}</td>
-                    <td>${employee.status}</td>
-                    <td>${employee.work_schedule}</td>
-                 
+                  <td>${employee.Name}</td>
+                  <td>${employee.middle_name}</td>
+                  <td>${employee.Surname}</td>
+                  <td>${employee.Designation}</td>
+                  <td>${employee.Department}</td>
+                  <td>${employee.work_schedule}</td>
+                  <td>${employee.status}</td>
+                  
                 `;
 
                 tableBody.appendChild(row);
@@ -30,7 +36,16 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => {
             console.error('Error fetching employees:', error);
         });
+
+    function handleRowClick(employeeID) {
+        if (employeeID) {
+            window.location.href = `/employee-details?employeeID=${employeeID}`;
+        } else {
+            console.error('Invalid Employee ID:', employeeID);
+        }
+    }
 });
+
 
 
 function filterTable() {

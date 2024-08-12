@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+
+    <!-- Montserrat Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="/css/forms.css">
+    <style>
+        .rotate-90 {
+            transform: rotate(90deg);
+            transition: transform 0.3s;
+        }
+        .rotate-0 {
+            transform: rotate(0deg);
+            transition: transform 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="menu-icon" onclick="openSidebar()">
+                <span class="material-icons-outlined">menu</span>
+            </div>
+            <div class="header-left">
+                <span class="material-icons-outlined">search</span>
+            </div>
+            <div class="header-right">
+                
+                <span class="material-icons-outlined accountCircle" id="accountCircle">account_circle</span>
+                <div id="dropdownMenu" class="dropdown">
+                    <a href="#">Profile</a>
+                    <a href="#">Settings</a>
+                    <a class="dropdown-item" href="/logout">Logout</a>
+                </div>
+            </div>
+        </header>
+        <!-- End Header -->
+
+        <!-- Sidebar -->
+        <aside id="sidebar">
+            <div class="sidebar-title">
+                <div class="sidebar-brand">
+                    <span class="material-icons-outlined">groups</span>
+                    <a href="https://smartprobegroup.com/" target="_blank">SPI HR Management</a>
+                </div>
+                <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
+            </div>
+
+            <ul class="sidebar-list">
+                <li class="sidebar-list-item">
+                    <a href="/dashboard" target="_self">
+                        <span class="material-icons-outlined">dashboard</span> Dashboard
+                    </a>
+                </li>
+                <li class="sidebar-list-item">
+                    <a href="/registration" target="_self">
+                        <span class="material-icons-outlined">inventory_2</span> Add Employee
+                    </a>
+                </li>                
+                <li class="sidebar-list-item">
+                    <a href="/delete" target="_self">
+                        <span class="material-icons-outlined">fact_check</span> Delete Employee
+                    </a>
+                </li>
+                <li class="sidebar-list-item">
+                    <a href="#" target="_blank">
+                        <span class="material-icons-outlined">add_shopping_cart</span> Update Employee
+                    </a>
+                </li>
+                <li class="sidebar-list-item">
+                    <a href="/seedata" target="_self">
+                        <span class="material-icons-outlined">shopping_cart</span> See Data
+                    </a>
+                </li>
+                <li class="sidebar-list-item">
+                    <a href="#" target="_blank">
+                        <span class="material-icons-outlined">poll</span> Reports
+                    </a>
+                </li>
+                <li class="sidebar-list-item">
+                    <a href="#" target="_blank">
+                        <span class="material-icons-outlined">settings</span> Upload 
+                    </a>
+                </li>
+            </ul>
+        </aside>
+        <!-- End Sidebar -->
+
+        <!-- Main -->
+        <main class="main-container">
+            <div class="container mt-4">
+                <!-- Employee Information Card -->
+                <form action="/submit" method="POST">
+                <div class="card" id="employeeInfoCard">
+                    <div class="card-header">
+                        <h5 class="mb-0 d-flex justify-content-between align-items-center">
+                            Employee Information
+                        </h5>
+                    </div>
+                    <div id="collapseInfo" class="collapse show">
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <!-- Personal Information Section -->
+                                <li class="list-group-item">
+                                    <button class="btn btn-link w-100 d-flex justify-content-between align-items-center btn-personal-info" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePersonal" aria-expanded="true" aria-controls="collapsePersonal">
+                                        Personal Information
+                                        <span id="personalToggleIcon" class="material-icons-outlined rotate-0">expand_more</span>
+                                    </button>
+                                    <div id="collapsePersonal" class="collapse">
+                                        <div class="mb-3">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label for="empNumber" class="form-label">Employee Number</label>
+                                                    <input type="text" class="form-control" id="empNumber" name = "employeeNumber" placeholder="Enter employee number" value = <%= employee.emp_id %> disabled = "true">
+                                                </div>
+                                                <div class="col">
+                                                    <label for="empID" class="form-label">Employee ID</label>
+                                                    <input type="text" class="form-control" id="empID" name = "employeeID" placeholder="Enter employee ID">
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label for="firstName" class="form-label">First Name</label>
+                                                    <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Enter first name" disabled = "true"  value = <%= employee.Name %> >
+                                                </div>
+                                                <div class="col">
+                                                    <label for="middleName" class="form-label">Middle Name</label>
+                                                    <input type="text" class="form-control" id="middleName" name = "middleName" placeholder="Enter middle name" disabled = "true" value = <%= employee.middle_name %>>
+                                                </div>
+                                                <div class="col">
+                                                    <label for="lastName" class="form-label">Last Name</label>
+                                                    <input type="text" class="form-control" id="lastName"  name ="lastName" placeholder="Enter last name" disabled="True"  value = <%=employee.surname%>>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label for="birthday" class="form-label">Birthday</label>
+                                                    <input type="date" class="form-control" id="birthday" name = "birthday" placeholder="Enter birthday" onchange="calculateAge()">
+                                                </div>
+                                                <div class="col">
+                                                    <label for="age" class="form-label">Age</label>
+                                                    <input type="text" class="form-control" id="age" placeholder="Age" name = "age" disabled="true">
+                                                </div>
+                                                <div class="col">
+                                                    <label for="gender" class="form-label">Gender</label>
+                                                    <select class="form-select" name="gender" id="gender" disabled="true">
+                                                        <option selected><%=employee.gender%></option>
+                                                        <option value="male">Male</option>
+                                                        <option value="female">Female</option>
+                                                        <option value="other">Other</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class = "row">
+                                            <div class="col">
+                                                <label for="nickname" class="form-label">Nickname</label>
+                                                <input type="text" class="form-control" id="nickname" name = "nickname" placeholder="Enter nickname" disabled="true" value=<%=employee.nick_name%>>
+                                            </div>
+                                            <div class="col">
+                                                <label for="nickname" class="form-label">Contact Number</label>
+                                                <input type="text" class="form-control" id="contactNumber" name = "mobilenumber" placeholder="Enter number" disabled="true" value=<%=employee.contact_number%>>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <!-- Other Information Section -->
+                                <li class="list-group-item">
+                                    <button class="btn btn-link w-100 d-flex justify-content-between align-items-center btn-other-information" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOther" aria-expanded="false" aria-controls="collapseOther">
+                                        Other Information
+                                        <span id="otherToggleIcon" class="material-icons-outlined rotate-0">expand_more</span>
+                                    </button>
+                                    <div id="collapseOther" class="collapse">
+                                        <div class="card-body">
+                                            <div class="mb-3">
+                                                <label for="religion" class="form-label">Religion</label>
+                                                <input type="text" class="form-control" id="religion" name = "religion" placeholder="Enter religion" disabled="true" value=<%=employee.religion%> >
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="email" class="form-label">Email</label>
+                                                <input type="email" class="form-control" id="email" name = "email" placeholder="Enter email">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="emergencyContact" class="form-label">Person to Notify in Case of Emergency</label>
+                                                <input type="text" class="form-control" id="emergencyContact" name = "emergencyContact" placeholder="Enter emergency contact person">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="emergencyNumber" class="form-label">Emergency Contact Number</label>
+                                                <input type="tel" class="form-control" id="emergencyNumber" name = "emergencyNumber" placeholder="Enter emergency contact number">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <!-- Educational Background Section -->
+                                <li class="list-group-item">
+                                    <button class="btn btn-link w-100 d-flex justify-content-between align-items-center btn-educational-background" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEducation" aria-expanded="false" aria-controls="collapseEducation">
+                                        Educational Background
+                                        <span id="educationToggleIcon" class="material-icons-outlined rotate-0">expand_more</span>
+                                    </button>
+                                    
+                                    <div id="collapseEducation" class="collapse">
+                                        <div class="card-body">
+                                            <div class="mb-3">
+                                                <label for="educationalAttainment" class="form-label">Educational Attainment</label>
+                                                <input type="text" class="form-control" id="educationalAttainment" name = "educationalAttainment" placeholder="Enter educational attainment">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="course" class="form-label">Course</label>
+                                                <input type="text" class="form-control" id="course" name="course" placeholder="Enter course">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <!-- Next Button -->
+                                <div class="d-flex justify-content-end mt-3">
+                                    <button id="nextButton" class="btn btn-danger" type="button">Next</button>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Company Details Card -->
+                <div class="card mt-4 d-none" id="companyDetailsCard">
+                    <div class="card-header">
+                        <h5 class="mb-0 d-flex justify-content-between align-items-center">
+                            PAF Information
+                        </h5>
+                    </div>
+                
+                    <ul class="list-group list-group-flush">
+                        <!-- Company Details Section -->
+                        <li class="list-group-item">
+                            <button class="btn btn-link w-100 d-flex justify-content-between align-items-center btn-company-details" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCompany" aria-expanded="true" aria-controls="collapseCompany">
+                                Company Details
+                                <span id="CompanyToggleIcon" class="material-icons-outlined rotate-0">expand_more</span>
+                            </button>
+                            <div id="collapseCompany" class="collapse">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <label for="department" class="form-label">Department</label>
+                                            <select class="form-select" name="department" id="department">
+                                                <option value="ADMIN">Admin</option>
+                                                <option value="TOP MANAGEMENT">Top Management</option>
+                                                <option value="R&D">R&D</option>
+                                                <option value="Manufacturing">Manufacturing</option>
+                                                <option value="QA">QA</option>
+                                                <option value="SALES">Sales</option>
+                                                <option value="FEME">FEME</option>
+                                                <option value="ENGINEERING">Engineering</option>
+                                                <option value="IT">IT</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col mb-3 pt-2">
+                                            <label for="position" class="form-label">Designation</label>
+                                            <input type="text" class="form-control" name="designation" id="designation" placeholder="Enter Designation">
+                                        </div>
+                                        <div class="col mb-3 pt-2">
+                                            <label for="position" class="form-label">Work Schedule</label>
+                                            <input type="text" class="form-control" name="workSchedule" id="position" placeholder="Enter Work Schedule">
+                                        </div>
+                                        <div class="col mb-3 pt-2">
+                                            <label for="companyEmail" class="form-label">Company Email</label>
+                                            <input type="text" class="form-control" name="companyEmail" id="position" placeholder="Enter Company Email">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col mb-3">
+                                            <label for="jobGrade" class="form-label">Job Grade</label>
+                                            <input type="text" class="form-control" id="jobGrade" name="jobGrade" placeholder="Enter Job Grade (E.g. Grade 1-12)">
+                                        </div>
+                                        <div class="col mb-3">
+                                            <label for="jobLevel" class="form-label">Job Level Classification</label>
+                                            <input type="text" class="form-control" id="jobLevel" name="jobLevel" placeholder="Enter Job Lvl Classification (E.g. M&P-3 Career)">
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="classification" class="form-label">Classification</label>
+                                        <input type="text" class="form-control" id="classification" name="classification" placeholder="Enter Classification (E.g. Entry Lvl, Staff, Team Leader, etc.)">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col mb-3">
+                                            <label for="Commencement" class="form-label">Commencement of Work</label>
+                                            <input type="date" class="form-control" id="Commencement" name="commencement" placeholder="Enter hire date" onchange="calculateLOS()">
+                                        </div>
+                                        <div class="col mb-3">
+                                            <label for="LOS" class="form-label">Length of Service </label>
+                                            <input type="text" class="form-control" id="LOS" name="los" placeholder="In years" disabled="true">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                
+                        <!-- Tax Information Section -->
+                        <li class="list-group-item">
+                            <button class="btn btn-link w-100 d-flex justify-content-between align-items-center btn-paf-info" type="button" data-bs-toggle="collapse" data-bs-target="#CollapsePAF" aria-expanded="false" aria-controls="CollapsePAF">
+                                Tax Information
+                                <span id="PAFToggleIcon" class="material-icons-outlined rotate-0">expand_more</span>
+                            </button>
+                            <div id="CollapsePAF" class="collapse">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <label for="pafInfo1" class="form-label">Tin Number #:</label>
+                                            <input type="text" class="form-control" id="TinNumber" name="tinNumber" placeholder="Enter Tin">
+                                        </div>
+                                        <div class="col">
+                                            <label for="TaxStatus" class="form-label">Tax Status:</label>
+                                            <input type="text" class="form-control" id="TaxStatus" name="taxStatus" placeholder="Enter Tax Status">
+                                        </div>
+                                        <div class="col">
+                                            <label for="pafSchedule" class="form-label">PAF schedule</label>
+                                            <input type="text" class="form-control" id="pafSchedule" name="pafSchedule" placeholder="Enter PAF Schedule (e.g. Q1, Q2)">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col mb-3 pt-2">
+                                            <label for="philhealth" class="form-label">Philhealth No.</label>
+                                            <input type="text" class="form-control" id="philhealth" name="philhealth" placeholder="Enter Philhealth">
+                                        </div>
+                                        <div class="col mb-3 pt-2">
+                                            <label for="SSS" class="form-label">SSS No.</label>
+                                            <input type="text" class="form-control" id="SSS" name="sss" placeholder="Enter SSS no.">
+                                        </div>
+                                        <div class="col mb-3 pt-2">
+                                            <label for="Pag-ibig" class="form-label">Pag-ibig No.</label>
+                                            <input type="text" class="form-control" id="Pag-ibig" name="pagibig" placeholder="Enter Pag-ibig No.">
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="pafInfo1" class="form-label font-weight-bold">PAF</label>
+                                        <div class="row">
+                                            <!-- Checkbox 1 -->
+                                            <div class="col-md-6">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="checkbox1" onclick="toggleInputs('inputGroup1')">
+                                                    <label class="form-check-label" for="checkbox1">2021</label>
+                                                </div>
+                                                <div id="inputGroup1" class="d-none">
+                                                    <input type="text" class="form-control mt-2" name="PAF2021" placeholder="Input 2021 PAF amount">
+                                                </div>
+                                            </div>
+                
+                                            <!-- Checkbox 2 -->
+                                            <div class="col-md-6">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="checkbox2" onclick="toggleInputs('inputGroup2')">
+                                                    <label class="form-check-label" for="checkbox2">2022</label>
+                                                </div>
+                                                <div id="inputGroup2" class="d-none">
+                                                    <input type="text" class="form-control mt-2" name="PAF2022" placeholder="Input 2022 PAF amount">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <!-- Checkbox 3 -->
+                                            <div class="col-md-6">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="checkbox3" onclick="toggleInputs('inputGroup3')">
+                                                    <label class="form-check-label" for="checkbox3">2023</label>
+                                                </div>
+                                                <div id="inputGroup3" class="d-none">
+                                                    <input type="text" class="form-control mt-2" name="PAF2023" placeholder="Input 2023 amount">
+                                                </div>
+                                            </div>
+                
+                                            <!-- Checkbox 4 -->
+                                            <div class="col-md-6">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="checkbox4" onclick="toggleInputs('inputGroup4')">
+                                                    <label class="form-check-label" for="checkbox4">2024</label>
+                                                </div>
+                                                <div id="inputGroup4" class="d-none">
+                                                    <input type="text" class="form-control mt-2" name="PAF2024" placeholder="Input 2024 amount">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="d-flex align-items-center">
+                                            <label for="allowance" class="form-label font-weight-bold mb-0">Allowance</label>
+                                            <span> (check if applicable)</span>
+                                            <input class="form-check-input ms-2 custom-checkbox" type="checkbox" id="allowanceCheckbox" onclick="toggleAllowanceInput()">
+                                            
+                                        </div>
+                                        <div id="allowanceInputGroup" class="d-none mt-2">
+                                            <input type="text" class="form-control" id="allowanceInput" name = "allowance" placeholder="Enter allowance amount">
+                                        </div>
+                                    </div>
+                                    <div class = "row">
+                                        <div class = "col mb-3">
+                                            <label for="rate" class="form-label mb-0 font-weight-bold"> Rate </label>
+                                            <input type="text" class="form-control" id="RateInput" name="rate" placeholder="Enter Rate amount">
+                                        </div>
+                                        
+                                        
+                                        <div class="col mb-3">
+                                            <label for="isActive" class="form-label mb-0 font-weight-bold">Is Active</label>
+                                            <select name="isActive" class="form-select" id="Active" onchange="toggleSeparationFields()">
+                                                <option value="plsSelect">Please Select</option>
+                                                <option value="Yes">Yes</option>
+                                                <option value="No">No</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                        
+                                    <div id="separationFields" class="d-none">
+                                        <div class="mb-3">
+                                            <label for="separationDate" class="form-label">Date of Separation</label>
+                                            <input type="date" name = "DOS" class="form-control" id="separationDate">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="separationCategory" class="form-label">Separation Category</label>
+                                            <input type="text" name="separationCategory"class="form-control" id="separationCategory" placeholder="Enter Separation Category">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="reasonOfSeparation" class="form-label">Reason of Separation</label>
+                                            <input type="text" class="form-control" name="reasonOfSeparation" id="reasonOfSeparation" placeholder="Enter Reason of Separation">
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                </div>
+                            </div>
+                            <div  class="d-flex justify-content-between">
+                                <button type="button" id="backBtn" class="btn btn-warning">Back</button>
+                                <button type = "submit" class="btn btn-success btn-success-2">Submit</button>
+                            </div>
+                            </div>
+                        </form>
+                    </div>
+                        </div>
+                    </div>
+                    </div>
+                </form>
+            </div>
+                </div>
+            </div>
+            </div>
+                         
+        </div>
+    </main>
+
+        <!-- Bootstrap JS and dependencies -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+        <script>
+            // Calculate Age based on Birthday
+            function calculateAge() {
+                var birthday = document.getElementById('birthday').value;
+                var ageInput = document.getElementById('age');
+                if (birthday) {
+                    var birthDate = new Date(birthday);
+                    var today = new Date();
+                    var age = today.getFullYear() - birthDate.getFullYear();
+                    var month = today.getMonth() - birthDate.getMonth();
+                    if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+                        age--;
+                    }
+                    ageInput.value = age;
+                }
+            }
+            function toggleInputs(groupId) {
+                const inputGroup = document.getElementById(groupId);
+                if (inputGroup.classList.contains('d-none')) {
+                    inputGroup.classList.remove('d-none');
+                } else {
+                    inputGroup.classList.add('d-none');
+                }
+            }
+            function toggleSeparationFields() {
+                    var select = document.getElementById('Active');
+                    var separationFields = document.getElementById('separationFields');
+                                
+                    if (select.value === 'No') {
+                        separationFields.classList.remove('d-none');
+                        } else {
+                    separationFields.classList.add('d-none');
+                        }
+            }
+
+            function toggleAllowanceInput() {
+                var checkbox = document.getElementById("allowanceCheckbox");
+                var inputGroup = document.getElementById("allowanceInputGroup");
+
+                if (checkbox.checked) {
+                    inputGroup.classList.remove("d-none");
+                } else {
+                    inputGroup.classList.add("d-none");
+                }
+            }
+            function calculateLOS() {
+                var comm = document.getElementById('Commencement').value;
+                var los = document.getElementById('LOS');
+                if (comm) {
+                    var commDate = new Date(comm);
+                    var today = new Date();
+                    var age = today.getFullYear() - commDate.getFullYear();
+                    var month = today.getMonth() - commDate.getMonth();
+                    if (month < 0 || (month === 0 && today.getDate() < commDate.getDate())) {
+                        age--;
+                    }
+                    los.value = age;
+                }
+            }
+           
+
+            document.addEventListener('DOMContentLoaded', function () {
+                var collapsePersonal = document.getElementById('collapsePersonal');
+                var personalToggleIcon = document.getElementById('personalToggleIcon');
+                var collapseCompany = document.getElementById('collapseCompany');
+                var CompanyToggleIcon = document.getElementById('CompanyToggleIcon');
+                
+                
+                // Add event listeners to toggle icon
+                collapsePersonal.addEventListener('show.bs.collapse', function () {
+                    personalToggleIcon.classList.remove('rotate-0');
+                    personalToggleIcon.classList.add('rotate-90');
+                });
+
+                collapsePersonal.addEventListener('hide.bs.collapse', function () {
+                    personalToggleIcon.classList.remove('rotate-90');
+                    personalToggleIcon.classList.add('rotate-0');
+                });
+                collapseCompany.addEventListener('show.bs.collapse', function() {
+                    CompanyToggleIcon.classList.remove('rotate-0');
+                    CompanyToggleIcon.classList.add('rotate-90');
+                })
+                collapseCompany.addEventListener('hide.bs.collapse', function() {
+                    CompanyToggleIcon.classList.remove('rotate-90');
+                    CompanyToggleIcon.classList.add('rotate-0');
+                })
+                // Repeat for other collapsibles
+                var collapseOther = document.getElementById('collapseOther');
+                var otherToggleIcon = document.getElementById('otherToggleIcon');
+                var CollapsePAF = document.getElementById('CollapsePAF');
+                var PAFToggleIcon = document.getElementById('PAFToggleIcon');
+
+               
+
+                CollapsePAF.addEventListener('show.bs.collapse', function () {
+                    PAFToggleIcon.classList.remove('rotate-0');
+                    PAFToggleIcon.classList.add('rotate-90');
+                });
+
+                CollapsePAF.addEventListener('hide.bs.collapse', function () {
+                    PAFToggleIcon.classList.remove('rotate-90');
+                    PAFToggleIcon.classList.add('rotate-0');
+                });
+
+
+
+                collapseOther.addEventListener('show.bs.collapse', function () {
+                    otherToggleIcon.classList.remove('rotate-0');
+                    otherToggleIcon.classList.add('rotate-90');
+                });
+
+                collapseOther.addEventListener('hide.bs.collapse', function () {
+                    otherToggleIcon.classList.remove('rotate-90');
+                    otherToggleIcon.classList.add('rotate-0');
+                });
+
+                var collapseEducation = document.getElementById('collapseEducation');
+                var educationToggleIcon = document.getElementById('educationToggleIcon');
+
+                collapseEducation.addEventListener('show.bs.collapse', function () {
+                    educationToggleIcon.classList.remove('rotate-0');
+                    educationToggleIcon.classList.add('rotate-90');
+                });
+
+                collapseEducation.addEventListener('hide.bs.collapse', function () {
+                    educationToggleIcon.classList.remove('rotate-90');
+                    educationToggleIcon.classList.add('rotate-0');
+                });
+                
+            });
+            document.getElementById('nextButton').addEventListener('click', function() {
+                document.getElementById('employeeInfoCard').classList.add('d-none');
+                document.getElementById('companyDetailsCard').classList.remove('d-none');
+        });
+            document.getElementById('backBtn').addEventListener('click', function() {
+                document.getElementById('employeeInfoCard').classList.remove('d-none');
+                document.getElementById('companyDetailsCard').classList.add('d-none');
+            });
+
+        </script>
+    </div>
+</body>
+</html>

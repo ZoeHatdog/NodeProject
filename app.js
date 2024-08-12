@@ -5,6 +5,7 @@ const bcrypt = require('bcryptjs');
 const session = require('express-session');
 const flash = require('connect-flash');
 const path = require('path');
+const { Console } = require('console');
 const port = 3000;
 
 const app = express();
@@ -93,14 +94,14 @@ app.get('/dashboard', (req, res) => {
     if (req.session.loggedin) {     
         const query = `
         SELECT
-            (SELECT SUM(CASE WHEN \`201 Status2\` = 'active' THEN 1 ELSE 0 END) FROM masterlist) AS activeCount,
-            (SELECT SUM(CASE WHEN \`201 Status2\` = 'inactive' THEN 1 ELSE 0 END) FROM masterlist) AS inactiveCount,
+            (SELECT SUM(CASE WHEN \`Status\` = 'active' THEN 1 ELSE 0 END) FROM masterlist) AS activeCount,
+            (SELECT SUM(CASE WHEN \`Status\` = 'inactive' THEN 1 ELSE 0 END) FROM masterlist) AS inactiveCount,
             (SELECT COUNT(*) FROM masterlist) AS TotalEmployees,
             (SELECT COUNT(*) FROM users) AS RegisteredUsers
     `;
         db.query(query, (err, results) => {
             if (err) {
-                res.send('Error fetching data'); // Sending error response
+                return res.send('Error fetching data'); // Sending error response
                 // No return here, which can lead to multiple sends
             }
             const { activeCount, inactiveCount, TotalEmployees, RegisteredUsers } = results[0];
@@ -237,6 +238,12 @@ app.get('/data', (req, res) => {
     });
 });
 
+
+
+
+
+
+//                             ------------------ SEE EMPLOYEE DETAILS in SEE Data FUNCTION ----------
 app.get('/api/allemployees', (req, res) => {
     const query = `
         SELECT 
@@ -247,7 +254,7 @@ app.get('/api/allemployees', (req, res) => {
             \`Designation\`, 
             \`Department\`, 
             \`Work Schedule\` AS work_schedule,
-            \`Status\` AS status
+            \`Status\` as status 
         FROM masterlist
     `;
 
@@ -261,6 +268,49 @@ app.get('/api/allemployees', (req, res) => {
     });
 });
 
+app.get('/employee-details', (req, res) => {
+    const employeeId = req.query.employeeID;
+
+    if (!employeeId) {
+        return res.status(400).send('Employee ID is required');
+    }
+
+    const query = `
+        SELECT 
+            \`EMP ID #.\` AS emp_id, 
+            \`Name\`, 
+            \`Middle Name\` AS middle_name, 
+            \`Surname\` AS surname, 
+            \`Designation\`, 
+            \`Department\`, 
+            \`Work Schedule\` AS work_schedule,
+            \`Status\`, 
+            \`Nick Name\` AS nick_name, 
+            \`Contact #\` As contact_number,
+            \`Gender\` AS gender, 
+            \`Religion\` AS religion
+        FROM masterlist
+        WHERE \`EMP ID #.\` = ?
+    `;
+
+    db.query(query, [employeeId], (err, results) => {
+        if (err) {
+            console.error('Error fetching employee details:', err.message);
+            return res.status(500).send('Server Error');
+        }
+
+        if (results.length === 0) {
+            return res.status(404).send('Employee not found');
+        }
+        console.log(results[0]);
+        res.render('employee-details', { employee: results[0] });
+    });
+});
+
+
+
+
+
 
 
 // Endpoint to fetch employees
@@ -273,7 +323,7 @@ app.get('/api/employees', (req, res) => {
             \`Surname\` AS surname, 
             \`Designation\`, 
             \`Department\`, 
-            \`Status\`,
+            \`Status\` AS Status, 
             \`Work Schedule\` AS work_schedule
             
         FROM masterlist
