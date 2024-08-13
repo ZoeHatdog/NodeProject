@@ -302,8 +302,19 @@ app.get('/employee-details', (req, res) => {
                 \`SSS number\` AS sss_number,
                 \`PHILHEALTH no.\` AS philhealth_number,
                 \`Tax Status\` AS tax_status,
-                \`PAG IBIG number\` AS pagibig_number
-                
+                \`PAG IBIG number\` AS pagibig_number,
+                \`PAF Schedule\` AS paf_schedule,
+                \`PAF 2018\` AS paf_2018,
+                \`PAF 2019\` AS paf_2019,
+                \`PAF 2020\` AS paf_2020,
+                \`PAF 2021\` AS paf_2021,
+                \`PAF 2022\` AS paf_2022,
+                \`PAF 2023\` AS paf_2023,
+                \`PAF 2024\` AS paf_2024,
+                \`Allowance\` AS allowance,
+                \`Rate\` AS rate,
+                \`Separation Category\` AS separation_catergory,
+                \`Reason of Separation\` as ros
             FROM 
                 masterlist
         WHERE \`EMP ID #.\` = ?

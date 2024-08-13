@@ -25,6 +25,61 @@
             transform: rotate(0deg);
             transition: transform 0.3s;
         }
+        /*Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            border-radius: 50%;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+        }
+        
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        
+        .container-edit-mode {
+            background-color: #f0f8ff; /* Light color for edit mode */
+        }
+        
+        .toggle-group {
+            display: flex;
+            align-items: center;
+            gap: 10px; /* Space between the toggle and the button */
+        }
     </style>
 </head>
 <body>
@@ -101,7 +156,7 @@
 
         <!-- Main -->
         <main class="main-container">
-            <div class="container mt-4">
+            <div class="container mt-4" id = "formContainer">
                 <!-- Employee Information Card -->
                 <form action="/submit" method="POST">
                 <div class="card" id="employeeInfoCard">
@@ -135,15 +190,15 @@
                                             <div class="row">
                                                 <div class="col">
                                                     <label for="firstName" class="form-label">First Name</label>
-                                                    <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Enter first name" disabled = "true"  value = <%= employee.Name %> >
+                                                    <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Enter first name" disabled = "true"  value = "<%= employee.Name %>" >
                                                 </div>
                                                 <div class="col">
                                                     <label for="middleName" class="form-label">Middle Name</label>
-                                                    <input type="text" class="form-control" id="middleName" name = "middleName" placeholder="Enter middle name" disabled = "true" value = <%= employee.middle_name %>>
+                                                    <input type="text" class="form-control" id="middleName" name = "middleName" placeholder="Enter middle name" disabled = "true" value = "<%= employee.middle_name %>">
                                                 </div>
                                                 <div class="col">
                                                     <label for="lastName" class="form-label">Last Name</label>
-                                                    <input type="text" class="form-control" id="lastName"  name ="lastName" placeholder="Enter last name" disabled="True"  value = <%=employee.surname%>>
+                                                    <input type="text" class="form-control" id="lastName"  name ="lastName" placeholder="Enter last name" disabled="True"  value = "<%=employee.surname%>">
                                                 </div>
                                             </div>
                                             <br>
@@ -170,11 +225,11 @@
                                         <div class = "row">
                                             <div class="col">
                                                 <label for="nickname" class="form-label">Nickname</label>
-                                                <input type="text" class="form-control" id="nickname" name = "nickname" placeholder="Enter nickname" disabled="true" value=<%=employee.nick_name%>>
+                                                <input type="text" class="form-control" id="nickname" name = "nickname" placeholder="Enter nickname" disabled="true" value="<%=employee.nick_name%>">
                                             </div>
                                             <div class="col">
                                                 <label for="nickname" class="form-label">Contact Number</label>
-                                                <input type="text" class="form-control" id="contactNumber" name = "mobilenumber" placeholder="Enter number" disabled="true" value=<%=employee.contact_number%>>
+                                                <input type="text" class="form-control" id="contactNumber" name = "mobilenumber" placeholder="Enter number" disabled="true" value="<%=employee.contact_number%>">
                                             </div>
                                         </div>
                                     </div>
@@ -190,7 +245,7 @@
                                         <div class="card-body">
                                             <div class="mb-3">
                                                 <label for="religion" class="form-label">Religion</label>
-                                                <input type="text" class="form-control" id="religion" name = "religion" placeholder="Enter religion" disabled="true" value=<%=employee.religion%> >
+                                                <input type="text" class="form-control" id="religion" name = "religion" placeholder="Enter religion" disabled="true" value="<%=employee.religion%>">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="email" class="form-label">Email</label>
@@ -334,7 +389,7 @@
                                         </div>
                                         <div class="col">
                                             <label for="pafSchedule" class="form-label">PAF schedule</label>
-                                            <input type="text" class="form-control" id="pafSchedule" name="pafSchedule" placeholder="Enter PAF Schedule (e.g. Q1, Q2)">
+                                            <input type="text" class="form-control" id="pafSchedule" name="pafSchedule" placeholder="Enter PAF Schedule (e.g. Q1, Q2)" disabled="true" value ="<%=employee.paf_schedule%>">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -351,55 +406,95 @@
                                             <input type="text" class="form-control" id="Pag-ibig" name="pagibig" placeholder="Enter Pag-ibig No." disabled="true" value ="<%=employee.pagibig_number%>">
                                         </div>
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="pafInfo1" class="form-label font-weight-bold">PAF</label>
-                                        <div class="row">
-                                            <!-- Checkbox 1 -->
-                                            <div class="col-md-6">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="checkbox1" onclick="toggleInputs('inputGroup1')">
-                                                    <label class="form-check-label" for="checkbox1">2021</label>
-                                                </div>
-                                                <div id="inputGroup1" class="d-none">
-                                                    <input type="text" class="form-control mt-2" name="PAF2021" placeholder="Input 2021 PAF amount">
-                                                </div>
+                                    <div class="mb-4">
+                                        <div class="card shadow-sm">
+                                            <div class="card-header bg-primary text-white font-weight-bold">
+                                                PAF Information
                                             </div>
-                
-                                            <!-- Checkbox 2 -->
-                                            <div class="col-md-6">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="checkbox2" onclick="toggleInputs('inputGroup2')">
-                                                    <label class="form-check-label" for="checkbox2">2022</label>
-                                                </div>
-                                                <div id="inputGroup2" class="d-none">
-                                                    <input type="text" class="form-control mt-2" name="PAF2022" placeholder="Input 2022 PAF amount">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <!-- Checkbox 3 -->
-                                            <div class="col-md-6">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="checkbox3" onclick="toggleInputs('inputGroup3')">
-                                                    <label class="form-check-label" for="checkbox3">2023</label>
-                                                </div>
-                                                <div id="inputGroup3" class="d-none">
-                                                    <input type="text" class="form-control mt-2" name="PAF2023" placeholder="Input 2023 amount">
-                                                </div>
-                                            </div>
-                
-                                            <!-- Checkbox 4 -->
-                                            <div class="col-md-6">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="checkbox4" onclick="toggleInputs('inputGroup4')">
-                                                    <label class="form-check-label" for="checkbox4">2024</label>
-                                                </div>
-                                                <div id="inputGroup4" class="d-none">
-                                                    <input type="text" class="form-control mt-2" name="PAF2024" placeholder="Input 2024 amount">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <!-- Checkbox 1 -->
+                                                    <div class="col-md-6 mb-3">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="checkbox1" onclick="toggleInputs('inputGroup1')">
+                                                            <label class="form-check-label" for="checkbox1">2018</label>
+                                                        </div>
+                                                        <div id="inputGroup1" class="d-none mt-2">
+                                                            <input type="text" class="form-control" name="PAF2018" placeholder="Input 2018 PAF amount" disabled="true" value="<%=employee.paf_2018%>">
+                                                        </div>
+                                                    </div>
+                                    
+                                                    <!-- Checkbox 2 -->
+                                                    <div class="col-md-6 mb-3">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="checkbox2" onclick="toggleInputs('inputGroup2')">
+                                                            <label class="form-check-label" for="checkbox2">2019</label>
+                                                        </div>
+                                                        <div id="inputGroup2" class="d-none mt-2">
+                                                            <input type="text" class="form-control" name="PAF2019" placeholder="Input 2019 PAF amount" disabled="true" value="<%=employee.paf_2019%>">
+                                                        </div>
+                                                    </div>
+                                    
+                                                    <!-- Checkbox 3 -->
+                                                    <div class="col-md-6 mb-3">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="checkbox3" onclick="toggleInputs('inputGroup3')">
+                                                            <label class="form-check-label" for="checkbox3">2020</label>
+                                                        </div>
+                                                        <div id="inputGroup3" class="d-none mt-2">
+                                                            <input type="text" class="form-control" name="PAF2020" placeholder="Input 2020 PAF amount" disabled="true" value="<%=employee.paf_2020%>">
+                                                        </div>
+                                                    </div>
+                                    
+                                                    <!-- Checkbox 4 -->
+                                                    <div class="col-md-6 mb-3">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="checkbox4" onclick="toggleInputs('inputGroup4')">
+                                                            <label class="form-check-label" for="checkbox4">2021</label>
+                                                        </div>
+                                                        <div id="inputGroup4" class="d-none mt-2">
+                                                            <input type="text" class="form-control" name="PAF2021" placeholder="Input 2021 PAF amount" disabled="true" value="<%=employee.paf_2021%>">
+                                                        </div>
+                                                    </div>
+                                    
+                                                    <!-- Checkbox 5 -->
+                                                    <div class="col-md-6 mb-3">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="checkbox5" onclick="toggleInputs('inputGroup5')">
+                                                            <label class="form-check-label" for="checkbox5">2022</label>
+                                                        </div>
+                                                        <div id="inputGroup5" class="d-none mt-2">
+                                                            <input type="text" class="form-control" name="PAF2022" placeholder="Input 2022 PAF amount" disabled="true" value="<%=employee.paf_2022%>">
+                                                        </div>
+                                                    </div>
+                                    
+                                                    <!-- Checkbox 6 -->
+                                                    <div class="col-md-6 mb-3">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="checkbox6" onclick="toggleInputs('inputGroup6')">
+                                                            <label class="form-check-label" for="checkbox6">2023</label>
+                                                        </div>
+                                                        <div id="inputGroup6" class="d-none mt-2">
+                                                            <input type="text" class="form-control" name="PAF2023" placeholder="Input 2023 PAF amount" disabled="true" value="<%=employee.paf_2023%>">
+                                                        </div>
+                                                    </div>
+                                    
+                                                    <!-- Checkbox 7 -->
+                                                    <div class="col-md-6 mb-3">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="checkbox7" onclick="toggleInputs('inputGroup7')">
+                                                            <label class="form-check-label" for="checkbox7">2024</label>
+                                                        </div>
+                                                        <div id="inputGroup7" class="d-none mt-2">
+                                                            <input type="text" class="form-control" name="PAF2024" placeholder="Input 2024 PAF amount" disabled="true" value="<%=employee.paf_2024%>">
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+            
+                                    
                                     <div class="mb-3">
                                         <div class="d-flex align-items-center">
                                             <label for="allowance" class="form-label font-weight-bold mb-0">Allowance</label>
@@ -408,24 +503,25 @@
                                             
                                         </div>
                                         <div id="allowanceInputGroup" class="d-none mt-2">
-                                            <input type="text" class="form-control" id="allowanceInput" name = "allowance" placeholder="Enter allowance amount">
+                                            <input type="text" class="form-control" id="allowanceInput" name = "allowance" placeholder="Enter allowance amount" disabled="true" value ="<%=employee.allowance%>">
                                         </div>
                                     </div>
                                     <div class = "row">
                                         <div class = "col mb-3">
                                             <label for="rate" class="form-label mb-0 font-weight-bold"> Rate </label>
-                                            <input type="text" class="form-control" id="RateInput" name="rate" placeholder="Enter Rate amount">
+                                            <input type="text" class="form-control" id="RateInput" name="rate" placeholder="Enter Rate amount" disabled="true" value="<%=employee.rate%>">
                                         </div>
                                         
                                         
                                         <div class="col mb-3">
                                             <label for="isActive" class="form-label mb-0 font-weight-bold">Is Active</label>
-                                            <select name="isActive" class="form-select" id="Active" onchange="toggleSeparationFields()">
-                                                <option value="plsSelect">Please Select</option>
+                                            <select name="isActive" class="form-select" id="Active" onchange="toggleSeparationFields()" disabled="true">
+                                                
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                             </select>
                                         </div>
+                                       
                                     </div>
                                         
                                     <div id="separationFields" class="d-none">
@@ -435,21 +531,28 @@
                                         </div>
                                         <div class="mb-3">
                                             <label for="separationCategory" class="form-label">Separation Category</label>
-                                            <input type="text" name="separationCategory"class="form-control" id="separationCategory" placeholder="Enter Separation Category">
+                                            <input type="text" name="separationCategory"class="form-control" id="separationCategory" placeholder="Enter Separation Category" disabled="true" value="<%=employee.separation_catergory%>">
                                         </div>
                                         <div class="mb-3">
                                             <label for="reasonOfSeparation" class="form-label">Reason of Separation</label>
-                                            <input type="text" class="form-control" name="reasonOfSeparation" id="reasonOfSeparation" placeholder="Enter Reason of Separation">
+                                            <input type="text" class="form-control" name="reasonOfSeparation" id="reasonOfSeparation" placeholder="Enter Reason of Separation" disabled="true" value="<%=employee.ros%>">
                                         </div>
                                     </div>
                                     
                                     
                                 </div>
                             </div>
-                            <div  class="d-flex justify-content-between">
-                                <button type="button" id="backBtn" class="btn btn-warning">Back</button>
-                                <button type = "submit" class="btn btn-success btn-success-2">Submit</button>
+                            <div class="d-flex align-items-center mt-3">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="toggleSwitch" onchange="toggleEditMode()">
+                                    <span class="slider"></span>
+                                </label>
+                                <span id="switchText" class="ml-2">Edit</span>
                             </div>
+                    
+                            <div class="d-flex justify-content-between mt-3">
+                                <button type="button" id="backBtn" class="btn btn-warning">Back</button>
+                                <button type="submit" class="btn btn-success">Submit</button>
                             </div>
                         </form>
                     </div>
@@ -493,15 +596,18 @@
                 }
             }
             function toggleSeparationFields() {
-                    var select = document.getElementById('Active');
-                    var separationFields = document.getElementById('separationFields');
-                                
-                    if (select.value === 'No') {
-                        separationFields.classList.remove('d-none');
-                        } else {
+                var select = document.getElementById('Active');
+                var separationFields = document.getElementById('separationFields');
+
+                console.log(select.value); // Check the value of the dropdown
+
+                if (select.value === 'No') {
+                    separationFields.classList.remove('d-none');
+                } else {
                     separationFields.classList.add('d-none');
-                        }
+                }
             }
+
 
             function toggleAllowanceInput() {
                 var checkbox = document.getElementById("allowanceCheckbox");
@@ -606,7 +712,91 @@
                 document.getElementById('employeeInfoCard').classList.remove('d-none');
                 document.getElementById('companyDetailsCard').classList.add('d-none');
             });
+         
+            function toggleInputs(inputGroupId) {
+                const inputGroup = document.getElementById(inputGroupId);
+                inputGroup.classList.toggle('d-none');
+            }
+            
+            // Function to toggle checkboxes based on input values
+        function toggleCheckboxesBasedOnValues() {
+            // Array of checkbox and input IDs
+            const fields = [
+                { checkboxId: 'checkbox1', inputId: 'inputGroup1' },
+                { checkboxId: 'checkbox2', inputId: 'inputGroup2' },
+                { checkboxId: 'checkbox3', inputId: 'inputGroup3' },
+                { checkboxId: 'checkbox4', inputId: 'inputGroup4' },
+                { checkboxId: 'checkbox5', inputId: 'inputGroup5' },
+                { checkboxId: 'checkbox6', inputId: 'inputGroup6' },
+                { checkboxId: 'checkbox7', inputId: 'inputGroup7' },
+                { checkboxId: 'allowanceCheckbox', inputId: 'allowanceInputGroup' }
+            ];
 
+            // Iterate over each field
+            fields.forEach(field => {
+                const inputElement = document.querySelector(`#${field.inputId} input`);
+                const checkboxElement = document.getElementById(field.checkboxId);
+
+                // Get the value from the input field and trim any whitespace
+                const value = inputElement.value.trim();
+
+                // Check if the value is a number
+                if (value !== "" && !isNaN(value) && value.toLowerCase() !== "n/a") {
+                    checkboxElement.checked = true; // Tick the checkbox if it's a valid number
+                    inputElement.closest('.d-none')?.classList.remove('d-none'); // Ensure the input group is visible
+                } else {
+                    checkboxElement.checked = false; // Untick the checkbox
+                    inputElement.closest('.d-none')?.classList.add('d-none'); // Hide the input group
+                }
+            });
+        }
+
+
+            window.onload = function() {
+                toggleCheckboxesBasedOnValues();
+                const status = "<%= employee.Status %>"; // Value returned from the database
+                const rate = "<%=employee.rate%>";
+                const ratebox = document.getElementById('rate');
+                const dropdown = document.getElementById('Active');
+
+                if (status === "Active") {
+                    dropdown.value = "Yes";
+                } else if (status === "Inactive") {
+                    dropdown.value = "No";
+                }
+                if ((rate === isNaN) || (rate === 0.0)){
+                    rate = "No Rate";
+                }
+                
+
+                toggleSeparationFields();
+            };
+        
+                function toggleEditMode() {
+                    const firstName = document.getElementById('firstName');
+                    const middleName = document.getElementById('middleName');
+                    const lastName = document.getElementById('lastName');
+                    const container = document.getElementById('employeeInfoCard');
+                    const switchText = document.getElementById('switchText');
+                    const isChecked = document.getElementById('toggleSwitch').checked;
+                    
+                    // Toggle the disabled attribute
+                    firstName.disabled = !isChecked;
+                    middleName.disabled = !isChecked;
+                    lastName.disabled = !isChecked;
+                    
+                    // Change the container background color
+                    if (isChecked) {
+                        container.classList.add('container-edit-mode');
+                        switchText.textContent = 'Save';
+                    } else {
+                        container.classList.remove('container-edit-mode');
+                        switchText.textContent = 'Edit';
+                    }
+                }
+       
+
+        
         </script>
     </div>
 </body>
