@@ -194,15 +194,15 @@
                                             </div>
                                             <div class="mb-3">
                                                 <label for="email" class="form-label">Email</label>
-                                                <input type="email" class="form-control" id="email" name = "email" placeholder="Enter email">
+                                                <input type="email" class="form-control" id="email" name = "email" placeholder="Enter email" disabled="True" value=<%=employee.email%>>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="emergencyContact" class="form-label">Person to Notify in Case of Emergency</label>
-                                                <input type="text" class="form-control" id="emergencyContact" name = "emergencyContact" placeholder="Enter emergency contact person">
+                                                <input type="text" class="form-control" id="emergencyContact" name = "emergencyContact" placeholder="Enter emergency contact person" disabled="true"  value="<%=employee.PCE%>">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="emergencyNumber" class="form-label">Emergency Contact Number</label>
-                                                <input type="tel" class="form-control" id="emergencyNumber" name = "emergencyNumber" placeholder="Enter emergency contact number">
+                                                <input type="tel" class="form-control" id="emergencyNumber" name = "emergencyNumber" placeholder="Enter emergency contact number" disabled="true" value ="<%=employee.numberPCE%>">
                                             </div>
                                         </div>
                                     </div>
@@ -219,11 +219,12 @@
                                         <div class="card-body">
                                             <div class="mb-3">
                                                 <label for="educationalAttainment" class="form-label">Educational Attainment</label>
-                                                <input type="text" class="form-control" id="educationalAttainment" name = "educationalAttainment" placeholder="Enter educational attainment">
+                                                <input type="text" class="form-control" id="educationalAttainment" name="educationalAttainment" placeholder="Enter educational attainment" disabled="true" value="<%= employee.educational_attainment %>">
+
                                             </div>
                                             <div class="mb-3">
                                                 <label for="course" class="form-label">Course</label>
-                                                <input type="text" class="form-control" id="course" name="course" placeholder="Enter course">
+                                                <input type="text" class="form-control" id="course" name="course" placeholder="Enter course" disabled="True" value="<%=employee.course%>" >
                                             </div>
                                         </div>
                                     </div>
@@ -258,7 +259,8 @@
                                     <div class="row">
                                         <div class="col">
                                             <label for="department" class="form-label">Department</label>
-                                            <select class="form-select" name="department" id="department">
+                                            <select class="form-select" name="department" id="department" disabled="True">
+                                                <option selected><%=employee.Department%></option>
                                                 <option value="ADMIN">Admin</option>
                                                 <option value="TOP MANAGEMENT">Top Management</option>
                                                 <option value="R&D">R&D</option>
@@ -274,30 +276,30 @@
                                     <div class="row">
                                         <div class="col mb-3 pt-2">
                                             <label for="position" class="form-label">Designation</label>
-                                            <input type="text" class="form-control" name="designation" id="designation" placeholder="Enter Designation">
+                                            <input type="text" class="form-control" name="designation" id="designation" placeholder="Enter Designation" disabled="true" value="<%=employee.Designation%>">
                                         </div>
                                         <div class="col mb-3 pt-2">
                                             <label for="position" class="form-label">Work Schedule</label>
-                                            <input type="text" class="form-control" name="workSchedule" id="position" placeholder="Enter Work Schedule">
+                                            <input type="text" class="form-control" name="workSchedule" id="position" placeholder="Enter Work Schedule" disabled="true" value="<%=employee.work_schedule%>">
                                         </div>
                                         <div class="col mb-3 pt-2">
                                             <label for="companyEmail" class="form-label">Company Email</label>
-                                            <input type="text" class="form-control" name="companyEmail" id="position" placeholder="Enter Company Email">
+                                            <input type="text" class="form-control" name="companyEmail" id="position" placeholder="Enter Company Email" disabled="true" value="<%=employee.company_email%>">
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col mb-3">
                                             <label for="jobGrade" class="form-label">Job Grade</label>
-                                            <input type="text" class="form-control" id="jobGrade" name="jobGrade" placeholder="Enter Job Grade (E.g. Grade 1-12)">
+                                            <input type="text" class="form-control" id="jobGrade" name="jobGrade" placeholder="Enter Job Grade (E.g. Grade 1-12)" disabled="true" value="<%=employee.job_grade%>">
                                         </div>
                                         <div class="col mb-3">
                                             <label for="jobLevel" class="form-label">Job Level Classification</label>
-                                            <input type="text" class="form-control" id="jobLevel" name="jobLevel" placeholder="Enter Job Lvl Classification (E.g. M&P-3 Career)">
+                                            <input type="text" class="form-control" id="jobLevel" name="jobLevel" placeholder="Enter Job Lvl Classification (E.g. M&P-3 Career)" disabled="true" value="<%=employee.job_lvl_classification%>">
                                         </div>
                                     </div>
                                     <div class="mb-3">
                                         <label for="classification" class="form-label">Classification</label>
-                                        <input type="text" class="form-control" id="classification" name="classification" placeholder="Enter Classification (E.g. Entry Lvl, Staff, Team Leader, etc.)">
+                                        <input type="text" class="form-control" id="classification" name="classification" placeholder="Enter Classification (E.g. Entry Lvl, Staff, Team Leader, etc.)" disabled="true" value="<%=employee.classification%>">
                                     </div>
                                     <div class="row">
                                         <div class="col mb-3">
@@ -324,11 +326,11 @@
                                     <div class="row">
                                         <div class="col">
                                             <label for="pafInfo1" class="form-label">Tin Number #:</label>
-                                            <input type="text" class="form-control" id="TinNumber" name="tinNumber" placeholder="Enter Tin">
+                                            <input type="text" class="form-control" id="TinNumber" name="tinNumber" placeholder="Enter Tin" disabled = "true" value="<%=employee.tin_number%>">
                                         </div>
                                         <div class="col">
                                             <label for="TaxStatus" class="form-label">Tax Status:</label>
-                                            <input type="text" class="form-control" id="TaxStatus" name="taxStatus" placeholder="Enter Tax Status">
+                                            <input type="text" class="form-control" id="TaxStatus" name="taxStatus" placeholder="Enter Tax Status" disabled="true" value ="<%=employee.tax_status%>">
                                         </div>
                                         <div class="col">
                                             <label for="pafSchedule" class="form-label">PAF schedule</label>
@@ -338,15 +340,15 @@
                                     <div class="row">
                                         <div class="col mb-3 pt-2">
                                             <label for="philhealth" class="form-label">Philhealth No.</label>
-                                            <input type="text" class="form-control" id="philhealth" name="philhealth" placeholder="Enter Philhealth">
+                                            <input type="text" class="form-control" id="philhealth" name="philhealth" placeholder="Enter Philhealth" disabled="true" value ="<%=employee.philhealth_number%>">
                                         </div>
                                         <div class="col mb-3 pt-2">
                                             <label for="SSS" class="form-label">SSS No.</label>
-                                            <input type="text" class="form-control" id="SSS" name="sss" placeholder="Enter SSS no.">
+                                            <input type="text" class="form-control" id="SSS" name="sss" placeholder="Enter SSS no."disabled="true" value ="<%=employee.sss_number%>">
                                         </div>
                                         <div class="col mb-3 pt-2">
                                             <label for="Pag-ibig" class="form-label">Pag-ibig No.</label>
-                                            <input type="text" class="form-control" id="Pag-ibig" name="pagibig" placeholder="Enter Pag-ibig No.">
+                                            <input type="text" class="form-control" id="Pag-ibig" name="pagibig" placeholder="Enter Pag-ibig No." disabled="true" value ="<%=employee.pagibig_number%>">
                                         </div>
                                     </div>
                                     <div class="mb-3">

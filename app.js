@@ -277,19 +277,35 @@ app.get('/employee-details', (req, res) => {
 
     const query = `
         SELECT 
-            \`EMP ID #.\` AS emp_id, 
-            \`Name\`, 
-            \`Middle Name\` AS middle_name, 
-            \`Surname\` AS surname, 
-            \`Designation\`, 
-            \`Department\`, 
-            \`Work Schedule\` AS work_schedule,
-            \`Status\`, 
-            \`Nick Name\` AS nick_name, 
-            \`Contact #\` As contact_number,
-            \`Gender\` AS gender, 
-            \`Religion\` AS religion
-        FROM masterlist
+                \`EMP ID #.\` AS emp_id, 
+                \`Name\`, 
+                \`Middle Name\` AS middle_name, 
+                \`Surname\` AS surname, 
+                \`Designation\`, 
+                \`Department\`, 
+                \`Work Schedule\` AS work_schedule,
+                \`Status\`, 
+                \`Nick Name\` AS nick_name, 
+                \`Contact #\` AS contact_number,
+                \`Gender\` AS gender, 
+                \`Religion\` AS religion,
+                \`PRIMARY EMAIL\` AS email,
+                \`Person to notify in case of emergency\` AS PCE,
+                \`Number to contact\` AS numberPCE,
+                \`Educational Attainment\` AS educational_attainment,
+                \`Course\` AS course,
+                \`COMPANY EMAIL\` AS company_email,
+                \`Job Grade\` AS job_grade,
+                \`Job Level Classification\` AS job_lvl_classification,
+                \`Classification\` AS classification,
+                \`TIN number\` AS tin_number,
+                \`SSS number\` AS sss_number,
+                \`PHILHEALTH no.\` AS philhealth_number,
+                \`Tax Status\` AS tax_status,
+                \`PAG IBIG number\` AS pagibig_number
+                
+            FROM 
+                masterlist
         WHERE \`EMP ID #.\` = ?
     `;
 
