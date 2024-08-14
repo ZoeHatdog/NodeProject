@@ -141,7 +141,7 @@
                     </a>
                 </li>
                 <li class="sidebar-list-item">
-                    <a href="#" target="_blank">
+                    <a href="/seeemployee" target="_self">
                         <span class="material-icons-outlined">add_shopping_cart</span> Update Employee
                     </a>
                 </li>
@@ -545,7 +545,7 @@
                                         </div>
                                         <div class="mb-3">
                                             <label for="reasonOfSeparation" class="form-label">Reason of Separation</label>
-                                            <input type="text" class="form-control" name="reasonOfSeparation" id="reasonOfSeparation" placeholder="Enter Reason of Separation" disabled="true" value="<%=employee.ros%>">
+                                            <input type="text" class="form-control" name="reasonOfSeperation" id="reasonOfSeperation" placeholder="Enter Reason of Separation" disabled="true" value="<%=employee.ros%>">
                                         </div>
                                     </div>
                                     
@@ -557,7 +557,7 @@
                             <div class="button-container">
                                 <div class="d-flex justify-content-between mt-3">
                                     <button type="button" id="backBtn" class="btn btn-warning">Back</button>
-                                    <button type="submit" class="btn btn-success">Submit</button>
+                                    <button type="submit" class="btn btn-success">Edit</button>
                                 </div>
                                 <div class="toggle-group mt-2">
                                     <label class="toggle-switch">
@@ -830,10 +830,10 @@
                     const PAF2024 = document.getElementById('PAF2018');
 
                     const rate = document.getElementById('rate');
-                    const allowance = document.getElementById('allowanceInput')
+                    const allowance = document.getElementById('allowanceInput');
                     const active = document.getElementById('Active');
-                    const reasonOfSeparation = document.getElementById("reasonOfSeperation");
-                    const separationCategory = document.getElementById("separationCategory");
+                    const reasonOfSeparation = document.getElementById('reasonOfSeperation');
+                    const separationCategory = document.getElementById('separationCategory');
 
 
 
@@ -879,8 +879,9 @@
 
                     rate.disabled = !isChecked;
                     active.disabled = !isChecked;
-                    separationCategory = !isChecked;
-                    reasonOfSeparation  = !isChecked;
+                    allowance.disabled = !isChecked;
+                    separationCategory.disabled = !isChecked;
+                    reasonOfSeparation.disabled  = !isChecked;
 
                     
                     
