@@ -26,19 +26,21 @@
             transition: transform 0.3s;
         }
         /*Toggle Switch */
+    
+
         .toggle-switch {
             position: relative;
             display: inline-block;
-            width: 60px;
-            height: 34px;
+            width: 150px; /* Set width to 150px */
+            height: 40px; /* Set height to 40px */
         }
-        
+
         .toggle-switch input {
             opacity: 0;
             width: 0;
             height: 0;
         }
-        
+
         .slider {
             position: absolute;
             cursor: pointer;
@@ -48,37 +50,45 @@
             bottom: 0;
             background-color: #ccc;
             transition: .4s;
-            border-radius: 34px;
+            border-radius: 20px; /* Rounded corners for a height of 40px */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px; /* Adjust font size as needed */
+            padding: 0 15px; /* Adjust padding to fit text */
+            text-align: center;
         }
-        
+
         .slider:before {
             position: absolute;
             content: "";
-            height: 26px;
-            width: 26px;
+            height: 32px; /* Adjust height to match new slider size */
+            width: 32px; /* Adjust width to match new slider size */
             border-radius: 50%;
-            left: 4px;
-            bottom: 4px;
+            left: 4px; /* Adjust position */
+            bottom: 4px; /* Adjust position */
             background-color: white;
             transition: .4s;
         }
-        
+
         input:checked + .slider {
             background-color: #2196F3;
         }
-        
+
         input:checked + .slider:before {
-            transform: translateX(26px);
+            transform: translateX(110px); /* Adjust based on new width and size */
         }
-        
-        .container-edit-mode {
-            background-color: #f0f8ff; /* Light color for edit mode */
-        }
-        
+
         .toggle-group {
             display: flex;
             align-items: center;
             gap: 10px; /* Space between the toggle and the button */
+        }
+
+        #switchText {
+            font-size: 18px; /* Match font size with slider text size */
+            color: white; /* Text color to contrast with slider background */
         }
     </style>
 </head>
@@ -228,7 +238,7 @@
                                                 <input type="text" class="form-control" id="nickname" name = "nickname" placeholder="Enter nickname" disabled="true" value="<%=employee.nick_name%>">
                                             </div>
                                             <div class="col">
-                                                <label for="nickname" class="form-label">Contact Number</label>
+                                                <label for="contactNumber" class="form-label">Contact Number</label>
                                                 <input type="text" class="form-control" id="contactNumber" name = "mobilenumber" placeholder="Enter number" disabled="true" value="<%=employee.contact_number%>">
                                             </div>
                                         </div>
@@ -335,11 +345,11 @@
                                         </div>
                                         <div class="col mb-3 pt-2">
                                             <label for="position" class="form-label">Work Schedule</label>
-                                            <input type="text" class="form-control" name="workSchedule" id="position" placeholder="Enter Work Schedule" disabled="true" value="<%=employee.work_schedule%>">
+                                            <input type="text" class="form-control" name="workSchedule" id="workSchedule" placeholder="Enter Work Schedule" disabled="true" value="<%=employee.work_schedule%>">
                                         </div>
                                         <div class="col mb-3 pt-2">
                                             <label for="companyEmail" class="form-label">Company Email</label>
-                                            <input type="text" class="form-control" name="companyEmail" id="position" placeholder="Enter Company Email" disabled="true" value="<%=employee.company_email%>">
+                                            <input type="text" class="form-control" name="companyEmail" id="companyEmail" placeholder="Enter Company Email" disabled="true" value="<%=employee.company_email%>">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -420,7 +430,7 @@
                                                             <label class="form-check-label" for="checkbox1">2018</label>
                                                         </div>
                                                         <div id="inputGroup1" class="d-none mt-2">
-                                                            <input type="text" class="form-control" name="PAF2018" placeholder="Input 2018 PAF amount" disabled="true" value="<%=employee.paf_2018%>">
+                                                            <input type="text" class="form-control" id = "PAF2018" name="PAF2018" placeholder="Input 2018 PAF amount" disabled="true" value="<%=employee.paf_2018%>">
                                                         </div>
                                                     </div>
                                     
@@ -431,7 +441,7 @@
                                                             <label class="form-check-label" for="checkbox2">2019</label>
                                                         </div>
                                                         <div id="inputGroup2" class="d-none mt-2">
-                                                            <input type="text" class="form-control" name="PAF2019" placeholder="Input 2019 PAF amount" disabled="true" value="<%=employee.paf_2019%>">
+                                                            <input type="text" class="form-control" name="PAF2019" id = "PAF2019" placeholder="Input 2019 PAF amount" disabled="true" value="<%=employee.paf_2019%>">
                                                         </div>
                                                     </div>
                                     
@@ -442,7 +452,7 @@
                                                             <label class="form-check-label" for="checkbox3">2020</label>
                                                         </div>
                                                         <div id="inputGroup3" class="d-none mt-2">
-                                                            <input type="text" class="form-control" name="PAF2020" placeholder="Input 2020 PAF amount" disabled="true" value="<%=employee.paf_2020%>">
+                                                            <input type="text" class="form-control" name="PAF2020" id = "PAF2020" placeholder="Input 2020 PAF amount" disabled="true" value="<%=employee.paf_2020%>">
                                                         </div>
                                                     </div>
                                     
@@ -453,7 +463,7 @@
                                                             <label class="form-check-label" for="checkbox4">2021</label>
                                                         </div>
                                                         <div id="inputGroup4" class="d-none mt-2">
-                                                            <input type="text" class="form-control" name="PAF2021" placeholder="Input 2021 PAF amount" disabled="true" value="<%=employee.paf_2021%>">
+                                                            <input type="text" class="form-control" name="PAF2021" id = "PAF2021" placeholder="Input 2021 PAF amount" disabled="true" value="<%=employee.paf_2021%>">
                                                         </div>
                                                     </div>
                                     
@@ -464,7 +474,7 @@
                                                             <label class="form-check-label" for="checkbox5">2022</label>
                                                         </div>
                                                         <div id="inputGroup5" class="d-none mt-2">
-                                                            <input type="text" class="form-control" name="PAF2022" placeholder="Input 2022 PAF amount" disabled="true" value="<%=employee.paf_2022%>">
+                                                            <input type="text" class="form-control" name="PAF2022" id = "PAF2022" placeholder="Input 2022 PAF amount" disabled="true" value="<%=employee.paf_2022%>">
                                                         </div>
                                                     </div>
                                     
@@ -475,7 +485,7 @@
                                                             <label class="form-check-label" for="checkbox6">2023</label>
                                                         </div>
                                                         <div id="inputGroup6" class="d-none mt-2">
-                                                            <input type="text" class="form-control" name="PAF2023" placeholder="Input 2023 PAF amount" disabled="true" value="<%=employee.paf_2023%>">
+                                                            <input type="text" class="form-control" name="PAF2023" id = "PAF2023" placeholder="Input 2023 PAF amount" disabled="true" value="<%=employee.paf_2023%>">
                                                         </div>
                                                     </div>
                                     
@@ -486,7 +496,7 @@
                                                             <label class="form-check-label" for="checkbox7">2024</label>
                                                         </div>
                                                         <div id="inputGroup7" class="d-none mt-2">
-                                                            <input type="text" class="form-control" name="PAF2024" placeholder="Input 2024 PAF amount" disabled="true" value="<%=employee.paf_2024%>">
+                                                            <input type="text" class="form-control" name="PAF2024" id = "PAF2024" placeholder="Input 2024 PAF amount" disabled="true" value="<%=employee.paf_2024%>">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -509,7 +519,7 @@
                                     <div class = "row">
                                         <div class = "col mb-3">
                                             <label for="rate" class="form-label mb-0 font-weight-bold"> Rate </label>
-                                            <input type="text" class="form-control" id="RateInput" name="rate" placeholder="Enter Rate amount" disabled="true" value="<%=employee.rate%>">
+                                            <input type="text" class="form-control" id="rate" name="rate" placeholder="Enter Rate amount" disabled="true" value="<%=employee.rate%>">
                                         </div>
                                         
                                         
@@ -542,18 +552,25 @@
                                     
                                 </div>
                             </div>
-                            <div class="d-flex align-items-center mt-3">
-                                <label class="toggle-switch">
-                                    <input type="checkbox" id="toggleSwitch" onchange="toggleEditMode()">
-                                    <span class="slider"></span>
-                                </label>
-                                <span id="switchText" class="ml-2">Edit</span>
-                            </div>
+                           
                     
-                            <div class="d-flex justify-content-between mt-3">
-                                <button type="button" id="backBtn" class="btn btn-warning">Back</button>
-                                <button type="submit" class="btn btn-success">Submit</button>
+                            <div class="button-container">
+                                <div class="d-flex justify-content-between mt-3">
+                                    <button type="button" id="backBtn" class="btn btn-warning">Back</button>
+                                    <button type="submit" class="btn btn-success">Submit</button>
+                                </div>
+                                <div class="toggle-group mt-2">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="toggleSwitch" onchange="toggleEditMode()">
+                                        <span class="slider">
+                                            <span id="switchText">View</span>
+                                        </span>
+                                    </label>
+                                </div>
                             </div>
+                            
+                            
+                            
                         </form>
                     </div>
                         </div>
@@ -778,20 +795,106 @@
                     const lastName = document.getElementById('lastName');
                     const container = document.getElementById('employeeInfoCard');
                     const switchText = document.getElementById('switchText');
+                    const nickname = document.getElementById('nickname');
+                    const gender = document.getElementById('gender');
+                    const contactNumber = document.getElementById('contactNumber');
+
+                    const religion = document.getElementById('religion');
+                    const email = document.getElementById('email');
+                    const emergencyContact = document.getElementById('emergencyContact');
+                    const emergencyNumber = document.getElementById('emergencyNumber');
+                    const educationalAttainment = document.getElementById('educationalAttainment');
+                    const course = document.getElementById('course');
+
+                    const department = document.getElementById('department');
+                    const designation = document.getElementById('designation');
+                    const workSchedule = document.getElementById('workSchedule');
+                    const companyEmail = document.getElementById('companyEmail');
+                    const jobGrade = document.getElementById('jobGrade');
+                    const jobLevel = document.getElementById('jobLevel');
+                    const classification = document.getElementById('classification');
+                    
+                    const TinNumber = document.getElementById('TinNumber');
+                    const TaxStatus = document.getElementById('TaxStatus');
+                    const pafSchedule = document.getElementById('pafSchedule');
+                    const philhealth = document.getElementById('philhealth');
+                    const sss = document.getElementById('SSS');
+                    const pagibig = document.getElementById('Pag-ibig');
+
+                    const PAF2018 = document.getElementById('PAF2018');
+                    const PAF2019 = document.getElementById('PAF2019');
+                    const PAF2020 = document.getElementById('PAF2020');
+                    const PAF2021 = document.getElementById('PAF2021');
+                    const PAF2022 = document.getElementById('PAF2022');
+                    const PAF2023 = document.getElementById('PAF2023');
+                    const PAF2024 = document.getElementById('PAF2018');
+
+                    const rate = document.getElementById('rate');
+                    const allowance = document.getElementById('allowanceInput')
+                    const active = document.getElementById('Active');
+                    const reasonOfSeparation = document.getElementById("reasonOfSeperation");
+                    const separationCategory = document.getElementById("separationCategory");
+
+
+
                     const isChecked = document.getElementById('toggleSwitch').checked;
                     
                     // Toggle the disabled attribute
                     firstName.disabled = !isChecked;
                     middleName.disabled = !isChecked;
                     lastName.disabled = !isChecked;
+                    nickname.disabled = !isChecked;
+                    gender.disabled = !isChecked;
+                    contactNumber.disabled = !isChecked;
+                    religion.disabled = !isChecked;
+                    email.disabled = !isChecked;
+                    emergencyContact.disabled = !isChecked;
+                    emergencyNumber.disabled = !isChecked;
+                    educationalAttainment.disabled = !isChecked;
+                    course.disabled = !isChecked;
+
                     
+                    department.disabled = !isChecked;
+                    designation.disabled = !isChecked;
+                    workSchedule.disabled = !isChecked;
+                    companyEmail.disabled = !isChecked;
+                    jobGrade.disabled = !isChecked;
+                    jobLevel.disabled = !isChecked;
+                    classification.disabled = !isChecked;
+                    
+                    TinNumber.disabled = !isChecked;
+                    TaxStatus.disabled = !isChecked;
+                    pafSchedule.disabled = !isChecked;
+                    philhealth.disabled = !isChecked;
+                    sss.disabled = !isChecked;
+                    pagibig.disabled = !isChecked;
+
+                    PAF2018.disabled = !isChecked;
+                    PAF2019.disabled = !isChecked;
+                    PAF2020.disabled = !isChecked;
+                    PAF2021.disabled = !isChecked;
+                    PAF2022.disabled = !isChecked;
+                    PAF2023.disabled = !isChecked;
+                    PAF2024.disabled = !isChecked;
+
+                    rate.disabled = !isChecked;
+                    active.disabled = !isChecked;
+                    separationCategory = !isChecked;
+                    reasonOfSeparation  = !isChecked;
+
+                    
+                    
+
+                    
+
+
                     // Change the container background color
                     if (isChecked) {
                         container.classList.add('container-edit-mode');
-                        switchText.textContent = 'Save';
+                        switchText.textContent = 'Edit';
                     } else {
                         container.classList.remove('container-edit-mode');
-                        switchText.textContent = 'Edit';
+                        switchText.textContent = 'View';
                     }
                 }
        
