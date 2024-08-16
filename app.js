@@ -76,6 +76,11 @@ app.get('/seeemployee',  (req, res) => {
     res.render(path.join(__dirname, 'views', 'see-employee.ejs'));
 
 });
+app.get('/see-inactive', (req, res) => {
+    res.render(path.join(__dirname, 'views', 'see-inactive.ejs'));
+})
+
+
 app.post('/submit', (req, res) =>{
 
     const {employeeNumber, employeeID, firstName, middleName, lastName, designation,department, workSchedule,jobGrade,classification,educationalAttainment, 
@@ -349,10 +354,30 @@ app.get('/employee-details', (req, res) => {
 });
 
 
+// ---------------------- SEE INACTIVE EMPLOYEES ----------------------------------------------
+
+app.get('/api/inactive-employees', (req, res) => {
+    const query = `
+        SELECT \`#\`, \`EMP ID #.\`, \`Name\`, \`Middle Name\`, \`Surname\`, \`Designation\`, \`Job Grade\`, \`Status\` 
+        FROM \`masterlist\` 
+        WHERE \`Status\` = 'Inactive'
+    `;
+    
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Error fetching employees:', err.message);
+            res.status(500).json({ error: 'Server Error', details: err.message });
+            return;
+        }
+        
+        res.json(results); // Send the results as JSON
+    });
+});
 
 
 
 
+// --------------------------------           DELETE FUNCTION ------------------------------------
 
 
 // Endpoint to fetch employees
