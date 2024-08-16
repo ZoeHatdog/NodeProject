@@ -277,6 +277,7 @@ app.get('/employee-details', (req, res) => {
 
     const query = `
         SELECT 
+                \`#\` AS emp_number,
                 \`EMP ID #.\` AS emp_id, 
                 \`Name\`, 
                 \`Middle Name\` AS middle_name, 
@@ -287,6 +288,7 @@ app.get('/employee-details', (req, res) => {
                 \`Status\`, 
                 \`Nick Name\` AS nick_name, 
                 \`Contact #\` AS contact_number,
+                \`Birthday\` AS birthday,
                 \`Gender\` AS gender, 
                 \`Religion\` AS religion,
                 \`PRIMARY EMAIL\` AS email,
@@ -298,6 +300,8 @@ app.get('/employee-details', (req, res) => {
                 \`Job Grade\` AS job_grade,
                 \`Job Level Classification\` AS job_lvl_classification,
                 \`Classification\` AS classification,
+                \`Commencement of Work\` AS COW,
+
                 \`TIN number\` AS tin_number,
                 \`SSS number\` AS sss_number,
                 \`PHILHEALTH no.\` AS philhealth_number,
@@ -313,12 +317,13 @@ app.get('/employee-details', (req, res) => {
                 \`PAF 2024\` AS paf_2024,
                 \`Allowance\` AS allowance,
                 \`Rate\` AS rate,
-                \`Separation Category\` AS separation_catergory,
-                \`Reason of Separation\` as ros
+                \`Separation Category\` AS separation_category,
+                \`Reason of Separation\` AS ros
             FROM 
                 masterlist
         WHERE \`EMP ID #.\` = ?
     `;
+
 
     db.query(query, [employeeId], (err, results) => {
         if (err) {
@@ -329,10 +334,20 @@ app.get('/employee-details', (req, res) => {
         if (results.length === 0) {
             return res.status(404).send('Employee not found');
         }
-        console.log(results[0]);
-        res.render('employee-details', { employee: results[0] });
+
+        // Format the birthday field to YYYY-MM-DD
+        let employeeData = results[0];
+        if (employeeData.birthday) {
+            employeeData.birthday = new Date(employeeData.birthday).toISOString().split('T')[0];
+        }
+        if (employeeData.COW){
+            employeeData.COW = new Date (employeeData.COW).toISOString().split('T')[0];
+        }
+
+        res.render('employee-details', { employee: employeeData });
     });
 });
+
 
 
 

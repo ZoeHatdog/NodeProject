@@ -189,11 +189,11 @@
                                             <div class="row">
                                                 <div class="col">
                                                     <label for="empNumber" class="form-label">Employee Number</label>
-                                                    <input type="text" class="form-control" id="empNumber" name = "employeeNumber" placeholder="Enter employee number" value = <%= employee.emp_id %> disabled = "true">
+                                                    <input type="text" class="form-control" id="empNumber" name = "employeeNumber" placeholder="Enter employee number" value = "<%=employee.emp_number%>" disabled = "true">
                                                 </div>
                                                 <div class="col">
                                                     <label for="empID" class="form-label">Employee ID</label>
-                                                    <input type="text" class="form-control" id="empID" name = "employeeID" placeholder="Enter employee ID">
+                                                    <input type="text" class="form-control" id="empID" name = "employeeID" placeholder="Enter employee ID" value = "<%=employee.emp_id%>" disabled = "true">
                                                 </div>
                                             </div>
                                             <br>
@@ -215,7 +215,7 @@
                                             <div class="row">
                                                 <div class="col">
                                                     <label for="birthday" class="form-label">Birthday</label>
-                                                    <input type="date" class="form-control" id="birthday" name = "birthday" placeholder="Enter birthday" onchange="calculateAge()">
+                                                    <input type="date" class="form-control" id="birthday" name = "birthday" placeholder="Enter birthday" onchange="calculateAge()" disabled = "true" value = "<%=employee.birthday%>">
                                                 </div>
                                                 <div class="col">
                                                     <label for="age" class="form-label">Age</label>
@@ -369,10 +369,10 @@
                                     <div class="row">
                                         <div class="col mb-3">
                                             <label for="Commencement" class="form-label">Commencement of Work</label>
-                                            <input type="date" class="form-control" id="Commencement" name="commencement" placeholder="Enter hire date" onchange="calculateLOS()">
+                                            <input type="date" class="form-control" id="Commencement" name="commencement" placeholder="Enter hire date" onchange="calculateLOS()" disabled = "true" value = "<%=employee.COW%>">
                                         </div>
                                         <div class="col mb-3">
-                                            <label for="LOS" class="form-label">Length of Service </label>
+                                            <label for="LOS" class="form-label">Length of Service (in years)</label>
                                             <input type="text" class="form-control" id="LOS" name="los" placeholder="In years" disabled="true">
                                         </div>
                                     </div>
@@ -787,9 +787,13 @@
                 
 
                 toggleSeparationFields();
+                calculateAge();
+                calculateLOS();
             };
         
                 function toggleEditMode() {
+                    const empNumber = document.getElementById('empNumber');
+                    const empID = document.getElementById('empID');
                     const firstName = document.getElementById('firstName');
                     const middleName = document.getElementById('middleName');
                     const lastName = document.getElementById('lastName');
@@ -798,6 +802,7 @@
                     const nickname = document.getElementById('nickname');
                     const gender = document.getElementById('gender');
                     const contactNumber = document.getElementById('contactNumber');
+                    const birthday = document.getElementById('birthday'); 
 
                     const religion = document.getElementById('religion');
                     const email = document.getElementById('email');
@@ -813,6 +818,7 @@
                     const jobGrade = document.getElementById('jobGrade');
                     const jobLevel = document.getElementById('jobLevel');
                     const classification = document.getElementById('classification');
+                    const commencement = document.getElementById('Commencement');
                     
                     const TinNumber = document.getElementById('TinNumber');
                     const TaxStatus = document.getElementById('TaxStatus');
@@ -840,6 +846,8 @@
                     const isChecked = document.getElementById('toggleSwitch').checked;
                     
                     // Toggle the disabled attribute
+                    empID.disabled = !isChecked;
+                    empNumber.disabled = !isChecked;
                     firstName.disabled = !isChecked;
                     middleName.disabled = !isChecked;
                     lastName.disabled = !isChecked;
@@ -852,6 +860,7 @@
                     emergencyNumber.disabled = !isChecked;
                     educationalAttainment.disabled = !isChecked;
                     course.disabled = !isChecked;
+                    birthday.disabled = !isChecked;
 
                     
                     department.disabled = !isChecked;
@@ -861,6 +870,8 @@
                     jobGrade.disabled = !isChecked;
                     jobLevel.disabled = !isChecked;
                     classification.disabled = !isChecked;
+                    commencement.disabled = !isChecked;
+
                     
                     TinNumber.disabled = !isChecked;
                     TaxStatus.disabled = !isChecked;
