@@ -81,19 +81,59 @@ app.get('/see-inactive', (req, res) => {
 })
 
 
-app.post('/submit', (req, res) =>{
-
-    const {employeeNumber, employeeID, firstName, middleName, lastName, designation,department, workSchedule,jobGrade,classification,educationalAttainment, 
-        course,commencement, sss,philhealth,taxStatus,tinNumber,pagibig,birthday,age, religion, contactNumber, email,companyEmail,
-        emergencyContact, emergencyNumber, los, gender, regularization, pafSchedule, employmentStatus,PAF2021,PAF2022,PAF2023,
-        PAF2024, allowance, rate
+app.post('/submit', (req, res) => {
+    const {
+        employeeNumber, employeeID, firstName, middleName, lastName, nickname, designation, department, workSchedule, jobGrade,
+        jobLevel, classification, educationalAttainment, course, commencement, isActive, RegularizationDate, SSS, philhealth,
+        TaxStatus, tinNumber, pagibig, birthday, age, religion, contactNumber, email, companyEmail, emergencyContact, emergencyNumber,
+        los, pafSchedule, PAF2018, PAF2019, PAF2020, PAF2021, PAF2022, PAF2023, PAF2024, allowance, rate, seperationDate,
+        seperationCategory, reasonOfSeparation
     } = req.body;
-    console.log(employeeNumber, employeeID, firstName, middleName, lastName, designation,department, workSchedule,jobGrade,classification,educationalAttainment, 
-        course,commencement, sss,philhealth,taxStatus,tinNumber,pagibig,birthday,age, religion, contactNumber, email,companyEmail,
-        emergencyContact, emergencyNumber, los, gender, regularization, pafSchedule, employmentStatus,PAF2021,PAF2022,PAF2023,
-        PAF2024, allowance, rate)
+    console.log(reasonOfSeparation, seperationDate,seperationCategory);
 
+    // Function to return "-" if value is empty, undefined, or null
+    function defaultToDash(value) {
+        return value === undefined || value === null || value === '' ? '-' : value;
+    }
+
+    // Ensure specific fields default to "-"
+    const insertValues = [
+        defaultToDash(employeeNumber), defaultToDash(employeeID), defaultToDash(firstName), defaultToDash(middleName), 
+        defaultToDash(lastName), defaultToDash(nickname), defaultToDash(designation), defaultToDash(department), 
+        defaultToDash(workSchedule), defaultToDash(jobGrade), defaultToDash(jobLevel), defaultToDash(classification), 
+        defaultToDash(educationalAttainment), defaultToDash(course), defaultToDash(commencement), defaultToDash(isActive), 
+        defaultToDash(RegularizationDate), defaultToDash(SSS), defaultToDash(philhealth), defaultToDash(TaxStatus), 
+        defaultToDash(tinNumber), defaultToDash(pagibig), defaultToDash(birthday), defaultToDash(age), defaultToDash(religion), 
+        defaultToDash(contactNumber), defaultToDash(email), defaultToDash(companyEmail), defaultToDash(emergencyContact), 
+        defaultToDash(emergencyNumber), defaultToDash(los), defaultToDash(pafSchedule), 
+        defaultToDash(PAF2018), defaultToDash(PAF2019), defaultToDash(PAF2020), defaultToDash(PAF2021), 
+        defaultToDash(PAF2022), defaultToDash(PAF2023), defaultToDash(PAF2024), defaultToDash(allowance), 
+        defaultToDash(rate), defaultToDash(seperationDate), defaultToDash(seperationCategory), defaultToDash(reasonOfSeparation)
+    ];
+
+    // SQL insert statement
+    const insertSql = `
+        INSERT INTO masterlist (
+            \`#\`, \`EMP ID #.\`, \`Name\`, \`Middle Name\`, \`Surname\`, \`Nick Name\`, \`Designation\`, \`Department\`, 
+            \`Work Schedule\`, \`Job Grade\`, \`Job Level Classification\`, \`Classification\`, \`Educational Attainment\`, \`Course\`, 
+            \`Commencement of Work\`, \`Employment Status\`, \`Regularization\`, \`SSS number\`, \`PHILHEALTH no.\`, 
+            \`Tax Status\`, \`TIN number\`, \`PAG IBIG number\`, \`Birthday\`, \`Age\`, \`Religion\`, \`Contact #\`, 
+            \`PRIMARY EMAIL\`, \`COMPANY EMAIL\`, \`Person to notify in case of emergency\`, \`Number to contact\`, 
+            \`Length of Service\`, \`Gender\`, \`PAF Schedule\`, \`PAF 2018\`, \`PAF 2019\`, \`PAF 2020\`, 
+            \`PAF 2021\`, \`PAF 2022\`, \`PAF 2023\`, \`PAF 2024\`, \`Allowance\`, \`Rate\`, 
+            \`Date of Separation\`, \`Separation Category\`, \`Reason of Separation\`
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NULL, NULL,?,?)
+    `;
+
+    db.query(insertSql, insertValues, (insertErr, insertResult) => {
+        if (insertErr) {
+            console.error('Error inserting data:', insertErr);
+            return res.status(500).send('Internal Server Error');
+        }
+        res.redirect('/success'); // Redirect to a success page or another route
+    });
 });
+
 
 app.get('/dashboard', (req, res) => {
     if (req.session.loggedin) {     
@@ -322,6 +362,7 @@ app.get('/employee-details', (req, res) => {
                 \`PAF 2024\` AS paf_2024,
                 \`Allowance\` AS allowance,
                 \`Rate\` AS rate,
+                \`Date of Separation\` AS separationDate,
                 \`Separation Category\` AS separation_category,
                 \`Reason of Separation\` AS ros
             FROM 

@@ -76,7 +76,7 @@
                     </a>
                 </li>
                 <li class="sidebar-list-item">
-                    <a href="/seeemployee" target="-_self">
+                    <a href="/seeemployee" target="_self">
                         <span class="material-icons-outlined">add_shopping_cart</span> Update Employee
                     </a>
                 </li>
@@ -103,7 +103,7 @@
         <main class="main-container">
             <div class="container mt-4">
                 <!-- Employee Information Card -->
-                <form action="/submit" method="POST">
+                <form action="/submit" method="POST" onsubmit="calculateAge()">
                 <div class="card" id="employeeInfoCard">
                     <div class="card-header">
                         <h5 class="mb-0 d-flex justify-content-between align-items-center">
@@ -150,11 +150,11 @@
                                             <div class="row">
                                                 <div class="col">
                                                     <label for="birthday" class="form-label">Birthday</label>
-                                                    <input type="date" class="form-control" id="birthday" name = "birthday" placeholder="Enter birthday" onchange="calculateAge()">
+                                                    <input type="date" class="form-control" id="birthday" name = "birthday" placeholder="Enter birthday" onchange="calculateAge()" required>
                                                 </div>
                                                 <div class="col">
                                                     <label for="age" class="form-label">Age</label>
-                                                    <input type="text" class="form-control" id="age" placeholder="Age" name = "age" disabled="true">
+                                                    <input type="text" class="form-control" id="age" placeholder="Age" name = "age" readonly>
                                                 </div>
                                                 <div class="col">
                                                     <label for="gender" class="form-label">Gender</label>
@@ -174,7 +174,7 @@
                                             </div>
                                             <div class="col">
                                                 <label for="nickname" class="form-label">Contact Number</label>
-                                                <input type="text" class="form-control" id="contactNumber" name = "mobilenumber" placeholder="Enter number">
+                                                <input type="text" class="form-control" id="contactNumber" name = "contactNumber" placeholder="Enter number">
                                             </div>
                                         </div>
                                     </div>
@@ -278,11 +278,11 @@
                                         </div>
                                         <div class="col mb-3 pt-2">
                                             <label for="position" class="form-label">Work Schedule</label>
-                                            <input type="text" class="form-control" name="workSchedule" id="position" placeholder="Enter Work Schedule">
+                                            <input type="text" class="form-control" name="workSchedule" id="workSchedule" placeholder="Enter Work Schedule">
                                         </div>
                                         <div class="col mb-3 pt-2">
                                             <label for="companyEmail" class="form-label">Company Email</label>
-                                            <input type="text" class="form-control" name="companyEmail" id="position" placeholder="Enter Company Email">
+                                            <input type="text" class="form-control" name="companyEmail" id="companyEmail" placeholder="Enter Company Email">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -302,12 +302,16 @@
                                     <div class="row">
                                         <div class="col mb-3">
                                             <label for="Commencement" class="form-label">Commencement of Work</label>
-                                            <input type="date" class="form-control" id="Commencement" name="commencement" placeholder="Enter hire date" onchange="calculateLOS()">
+                                            <input type="date" class="form-control" id="commencement" name="commencement" placeholder="Enter hire date" onchange="calculateLOS(),calculateRegularization()">
                                         </div>
                                         <div class="col mb-3">
                                             <label for="LOS" class="form-label">Length of Service </label>
-                                            <input type="text" class="form-control" id="LOS" name="los" placeholder="In years" disabled="true">
+                                            <input type="text" class="form-control" id="LOS" name="los" placeholder="In years" readonly>
                                         </div>
+                                    </div>
+                                    <div class = "mb-3">
+                                        <label for = "regularization" clsas="form-label"> Regularization Date</label>
+                                        <input type = "date" class = "form-control" id="RegularizationDate" name = "RegularizationDate" placeholder=" Date of Regularization" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -324,11 +328,11 @@
                                     <div class="row">
                                         <div class="col">
                                             <label for="pafInfo1" class="form-label">Tin Number #:</label>
-                                            <input type="text" class="form-control" id="TinNumber" name="tinNumber" placeholder="Enter Tin">
+                                            <input type="text" class="form-control" id="tinNumber" name="tinNumber" placeholder="Enter Tin">
                                         </div>
                                         <div class="col">
                                             <label for="TaxStatus" class="form-label">Tax Status:</label>
-                                            <input type="text" class="form-control" id="TaxStatus" name="taxStatus" placeholder="Enter Tax Status">
+                                            <input type="text" class="form-control" id="taxStatus" name="taxStatus" placeholder="Enter Tax Status">
                                         </div>
                                         <div class="col">
                                             <label for="pafSchedule" class="form-label">PAF schedule</label>
@@ -342,88 +346,127 @@
                                         </div>
                                         <div class="col mb-3 pt-2">
                                             <label for="SSS" class="form-label">SSS No.</label>
-                                            <input type="text" class="form-control" id="SSS" name="sss" placeholder="Enter SSS no.">
+                                            <input type="text" class="form-control" id="SSS" name="SSS" placeholder="Enter SSS no.">
                                         </div>
                                         <div class="col mb-3 pt-2">
                                             <label for="Pag-ibig" class="form-label">Pag-ibig No.</label>
                                             <input type="text" class="form-control" id="Pag-ibig" name="pagibig" placeholder="Enter Pag-ibig No.">
                                         </div>
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="pafInfo1" class="form-label font-weight-bold">PAF</label>
-                                        <div class="row">
-                                            <!-- Checkbox 1 -->
-                                            <div class="col-md-6">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="checkbox1" onclick="toggleInputs('inputGroup1')">
-                                                    <label class="form-check-label" for="checkbox1">2021</label>
-                                                </div>
-                                                <div id="inputGroup1" class="d-none">
-                                                    <input type="text" class="form-control mt-2" name="PAF2021" placeholder="Input 2021 PAF amount">
-                                                </div>
+                                    <div class="mb-4">
+                                        <div class="card shadow-sm">
+                                            <div class="card-header bg-primary text-white font-weight-bold">
+                                                PAF Information
                                             </div>
-                
-                                            <!-- Checkbox 2 -->
-                                            <div class="col-md-6">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="checkbox2" onclick="toggleInputs('inputGroup2')">
-                                                    <label class="form-check-label" for="checkbox2">2022</label>
-                                                </div>
-                                                <div id="inputGroup2" class="d-none">
-                                                    <input type="text" class="form-control mt-2" name="PAF2022" placeholder="Input 2022 PAF amount">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <!-- Checkbox 3 -->
-                                            <div class="col-md-6">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="checkbox3" onclick="toggleInputs('inputGroup3')">
-                                                    <label class="form-check-label" for="checkbox3">2023</label>
-                                                </div>
-                                                <div id="inputGroup3" class="d-none">
-                                                    <input type="text" class="form-control mt-2" name="PAF2023" placeholder="Input 2023 amount">
-                                                </div>
-                                            </div>
-                
-                                            <!-- Checkbox 4 -->
-                                            <div class="col-md-6">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="checkbox4" onclick="toggleInputs('inputGroup4')">
-                                                    <label class="form-check-label" for="checkbox4">2024</label>
-                                                </div>
-                                                <div id="inputGroup4" class="d-none">
-                                                    <input type="text" class="form-control mt-2" name="PAF2024" placeholder="Input 2024 amount">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <!-- Checkbox 1 -->
+                                                    <div class="col-md-6 mb-3">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="checkbox1" onclick="toggleInputs('inputGroup1')">
+                                                            <label class="form-check-label" for="checkbox1">2018</label>
+                                                        </div>
+                                                        <div id="inputGroup1" class="d-none mt-2">
+                                                            <input type="text" class="form-control" id="PAF2018" name="PAF2018" placeholder="Input 2018 PAF amount">
+                                                        </div>
+                                                    </div>
+                            
+                                                    <!-- Checkbox 2 -->
+                                                    <div class="col-md-6 mb-3">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="checkbox2" onclick="toggleInputs('inputGroup2')">
+                                                            <label class="form-check-label" for="checkbox2">2019</label>
+                                                        </div>
+                                                        <div id="inputGroup2" class="d-none mt-2">
+                                                            <input type="text" class="form-control" name="PAF2019" id="PAF2019" placeholder="Input 2019 PAF amount">
+                                                        </div>
+                                                    </div>
+                            
+                                                    <!-- Checkbox 3 -->
+                                                    <div class="col-md-6 mb-3">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="checkbox3" onclick="toggleInputs('inputGroup3')">
+                                                            <label class="form-check-label" for="checkbox3">2020</label>
+                                                        </div>
+                                                        <div id="inputGroup3" class="d-none mt-2">
+                                                            <input type="text" class="form-control" name="PAF2020" id="PAF2020" placeholder="Input 2020 PAF amount">
+                                                        </div>
+                                                    </div>
+                            
+                                                    <!-- Checkbox 4 -->
+                                                    <div class="col-md-6 mb-3">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="checkbox4" onclick="toggleInputs('inputGroup4')">
+                                                            <label class="form-check-label" for="checkbox4">2021</label>
+                                                        </div>
+                                                        <div id="inputGroup4" class="d-none mt-2">
+                                                            <input type="text" class="form-control" name="PAF2021" id="PAF2021" placeholder="Input 2021 PAF amount">
+                                                        </div>
+                                                    </div>
+                            
+                                                    <!-- Checkbox 5 -->
+                                                    <div class="col-md-6 mb-3">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="checkbox5" onclick="toggleInputs('inputGroup5')">
+                                                            <label class="form-check-label" for="checkbox5">2022</label>
+                                                        </div>
+                                                        <div id="inputGroup5" class="d-none mt-2">
+                                                            <input type="text" class="form-control" name="PAF2022" id="PAF2022" placeholder="Input 2022 PAF amount">
+                                                        </div>
+                                                    </div>
+                            
+                                                    <!-- Checkbox 6 -->
+                                                    <div class="col-md-6 mb-3">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="checkbox6" onclick="toggleInputs('inputGroup6')">
+                                                            <label class="form-check-label" for="checkbox6">2023</label>
+                                                        </div>
+                                                        <div id="inputGroup6" class="d-none mt-2">
+                                                            <input type="text" class="form-control" name="PAF2023" id="PAF2023" placeholder="Input 2023 PAF amount">
+                                                        </div>
+                                                    </div>
+                            
+                                                    <!-- Checkbox 7 -->
+                                                    <div class="col-md-6 mb-3">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="checkbox7" onclick="toggleInputs('inputGroup7')">
+                                                            <label class="form-check-label" for="checkbox7">2024</label>
+                                                        </div>
+                                                        <div id="inputGroup7" class="d-none mt-2">
+                                                            <input type="text" class="form-control" name="PAF2024" id="PAF2024" placeholder="Input 2024 PAF amount">
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                            
                                     <div class="mb-3">
                                         <div class="d-flex align-items-center">
                                             <label for="allowance" class="form-label font-weight-bold mb-0">Allowance</label>
                                             <span> (check if applicable)</span>
                                             <input class="form-check-input ms-2 custom-checkbox" type="checkbox" id="allowanceCheckbox" onclick="toggleAllowanceInput()">
-                                            
                                         </div>
                                         <div id="allowanceInputGroup" class="d-none mt-2">
-                                            <input type="text" class="form-control" id="allowanceInput" name = "allowance" placeholder="Enter allowance amount">
+                                            <input type="text" class="form-control" id="allowanceInput" name="allowance" placeholder="Enter allowance amount">
                                         </div>
                                     </div>
+                            
                                     <div class = "row">
                                         <div class = "col mb-3">
                                             <label for="rate" class="form-label mb-0 font-weight-bold"> Rate </label>
-                                            <input type="text" class="form-control" id="RateInput" name="rate" placeholder="Enter Rate amount">
+                                            <input type="text" class="form-control" id="rate" name="rate" placeholder="Enter Rate amount">
                                         </div>
                                         
                                         
                                         <div class="col mb-3">
                                             <label for="isActive" class="form-label mb-0 font-weight-bold">Is Active</label>
-                                            <select name="isActive" class="form-select" id="Active" onchange="toggleSeparationFields()">
-                                                <option value="plsSelect">Please Select</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
+                                            <select name="isActive" class="form-select" name = "isActive" id="isActive" onchange="toggleSeparationFields()">
+                                                <option value="Active">Yes</option>
+                                                <option value="Inactive">No</option>
                                             </select>
                                         </div>
+                                       
                                     </div>
                                         
                                     <div id="separationFields" class="d-none">
@@ -437,13 +480,12 @@
                                         </div>
                                         <div class="mb-3">
                                             <label for="reasonOfSeparation" class="form-label">Reason of Separation</label>
-                                            <input type="text" class="form-control" name="reasonOfSeparation" id="reasonOfSeparation" placeholder="Enter Reason of Separation">
+                                            <input type="text" class="form-control" name="reasonOfSeparation" id="reasonOfSeparation" placeholder="Enter Reason of Separation" >
                                         </div>
                                     </div>
-                                    
-                                    
                                 </div>
                             </div>
+                            
                             <div  class="d-flex justify-content-between">
                                 <button type="button" id="backBtn" class="btn btn-warning">Back</button>
                                 <button type = "submit" class="btn btn-success btn-success-2">Submit</button>
@@ -480,8 +522,10 @@
                         age--;
                     }
                     ageInput.value = age;
+                    console.log(age);   
                 }
             }
+            
             function toggleInputs(groupId) {
                 const inputGroup = document.getElementById(groupId);
                 if (inputGroup.classList.contains('d-none')) {
@@ -491,7 +535,9 @@
                 }
             }
             function toggleSeparationFields() {
-                    var select = document.getElementById('Active');
+                    var select = document.getElementById('isActive');
+                    var separationCategory = document.getElementById('separationCategory');
+                    var reasonOfSeparation = document.getElementById('reasonOfSeparation');
                     var separationFields = document.getElementById('separationFields');
                                 
                     if (select.value === 'No') {
@@ -499,6 +545,10 @@
                         } else {
                     separationFields.classList.add('d-none');
                         }
+                    if (select.value === 'Yes'){
+                        separationCategory.value("-");
+                        reasonOfSeparation.value("-");
+                    }
             }
 
             function toggleAllowanceInput() {
@@ -511,8 +561,9 @@
                     inputGroup.classList.add("d-none");
                 }
             }
+            
             function calculateLOS() {
-                var comm = document.getElementById('Commencement').value;
+                var comm = document.getElementById('commencement').value;
                 var los = document.getElementById('LOS');
                 if (comm) {
                     var commDate = new Date(comm);
@@ -525,6 +576,27 @@
                     los.value = age;
                 }
             }
+            function calculateRegularization() {
+                var commencement = document.getElementById('commencement').value;
+                var regularization = document.getElementById('RegularizationDate');
+
+                if (commencement) {
+                    var commencementDate = new Date(commencement);
+                    
+                    // Add 6 months to the commencement date
+                    commencementDate.setMonth(commencementDate.getMonth() + 6);
+                    
+                    // Format the date to 'YYYY-MM-DD' for input field compatibility
+                    var year = commencementDate.getFullYear();
+                    var month = (commencementDate.getMonth() + 1).toString().padStart(2, '0');
+                    var day = commencementDate.getDate().toString().padStart(2, '0');
+                    var regularizationDate = `${year}-${month}-${day}`;
+
+                    // Set the calculated regularization date
+                    regularization.value = regularizationDate;
+                }
+            }
+
            
 
             document.addEventListener('DOMContentLoaded', function () {

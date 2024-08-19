@@ -537,15 +537,15 @@
                                     <div id="separationFields" class="d-none">
                                         <div class="mb-3">
                                             <label for="separationDate" class="form-label">Date of Separation</label>
-                                            <input type="date" name = "DOS" class="form-control" id="separationDate">
+                                            <input type="date" name = "DOS" class="form-control" id="separationDate" disabled = "true" value ="<%=employee.separationDate%>">
                                         </div>
                                         <div class="mb-3">
                                             <label for="separationCategory" class="form-label">Separation Category</label>
-                                            <input type="text" name="separationCategory"class="form-control" id="separationCategory" placeholder="Enter Separation Category" disabled="true" value="<%=employee.separation_catergory%>">
+                                            <input type="text" name="separationCategory"class="form-control" id="separationCategory" placeholder="Enter Separation Category" disabled="true" value="<%=employee.separation_category%>">
                                         </div>
                                         <div class="mb-3">
                                             <label for="reasonOfSeparation" class="form-label">Reason of Separation</label>
-                                            <input type="text" class="form-control" name="reasonOfSeperation" id="reasonOfSeperation" placeholder="Enter Reason of Separation" disabled="true" value="<%=employee.ros%>">
+                                            <input type="text" class="form-control" name="reasonOfSeparation" id="reasonOfSeparation" placeholder="Enter Reason of Separation" disabled="true" value="<%=employee.ros%>">
                                         </div>
                                     </div>
                                     
@@ -838,7 +838,7 @@
                     const rate = document.getElementById('rate');
                     const allowance = document.getElementById('allowanceInput');
                     const active = document.getElementById('Active');
-                    const reasonOfSeparation = document.getElementById('reasonOfSeperation');
+                    const reasonOfSeparation = document.getElementById('reasonOfSeparation');
                     const separationCategory = document.getElementById('separationCategory');
 
 
