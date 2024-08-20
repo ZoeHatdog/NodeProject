@@ -2,3 +2,4 @@ TO BE NOTED
 
 
 - 201Status02 to Status
+- Address and Permanent Address, Tax Status, Regularization5, Commencment, 3 months and 5 Months Evaluation

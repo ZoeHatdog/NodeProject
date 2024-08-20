@@ -1,10 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Details</title>
 </head>
 <body>
-    <h1>Welcome, <%= username %>!</h1>
-    <p>Total Employees: <%= totalEmployees %></p>
+    <h1>Employee Details</h1>
+    <p><strong>Employee ID:</strong> <%= employee.emp_id %></p>
+    <p><strong>Name:</strong> <%= employee.Name %></p>
+    <p><strong>Middle Name:</strong> <%= employee.middle_name %></p>
+    <p><strong>Surname:</strong> <%= employee.Surname %></p>
+    <p><strong>Designation:</strong> <%= employee.Designation %></p>
+    <p><strong>Department:</strong> <%= employee.Department %></p>
+    <p><strong>Work Schedule:</strong> <%= employee.work_schedule %></p>
+    <p><strong>Status:</strong> <%= employee.status%></p>
+    <a href="/seeemployee">Back to Employee List</a>
 </body>
 </html>

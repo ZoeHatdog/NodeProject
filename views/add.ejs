@@ -160,8 +160,8 @@
                                                     <label for="gender" class="form-label">Gender</label>
                                                     <select class="form-select" name="gender" id="gender">
                                                         <option selected>Choose...</option>
-                                                        <option value="male">Male</option>
-                                                        <option value="female">Female</option>
+                                                        <option value="M">Male</option>
+                                                        <option value="F">Female</option>
                                                         <option value="other">Other</option>
                                                     </select>
                                                 </div>
@@ -188,6 +188,17 @@
                                     </button>
                                     <div id="collapseOther" class="collapse">
                                         <div class="card-body">
+                                            <div class = "row">
+                                                <div class = "col mb-3">
+                                                    <label for="address" class="form-label">Address</label>
+                                                    <input type="text" class="form-control" id="address" name = "address" placeholder="Enter address">
+                                                </div>
+                                                <div class = "col mb-3">
+                                                    <label for="paddress" class="form-label">Permanent Address</label>
+                                                    <input type="text" class="form-control" id="paddress" name = "paddress" placeholder="Enter Permanent Address">
+                                                </div>
+                                            </div>
+
                                             <div class="mb-3">
                                                 <label for="religion" class="form-label">Religion</label>
                                                 <input type="text" class="form-control" id="religion" name = "religion" placeholder="Enter religion">
@@ -331,7 +342,7 @@
                                             <input type="text" class="form-control" id="tinNumber" name="tinNumber" placeholder="Enter Tin">
                                         </div>
                                         <div class="col">
-                                            <label for="TaxStatus" class="form-label">Tax Status:</label>
+                                            <label for="taxStatus" class="form-label">Tax Status:</label>
                                             <input type="text" class="form-control" id="taxStatus" name="taxStatus" placeholder="Enter Tax Status">
                                         </div>
                                         <div class="col">

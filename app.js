@@ -85,15 +85,42 @@ app.post('/submit', (req, res) => {
     const {
         employeeNumber, employeeID, firstName, middleName, lastName, nickname, designation, department, workSchedule, jobGrade,
         jobLevel, classification, educationalAttainment, course, commencement, isActive, RegularizationDate, SSS, philhealth,
-        TaxStatus, tinNumber, pagibig, birthday, age, religion, contactNumber, email, companyEmail, emergencyContact, emergencyNumber,
-        los, pafSchedule, PAF2018, PAF2019, PAF2020, PAF2021, PAF2022, PAF2023, PAF2024, allowance, rate, seperationDate,
+        taxStatus, tinNumber, pagibig, birthday, age, address, paddress, religion, contactNumber, email, companyEmail, emergencyContact, emergencyNumber,
+        los, gender, pafSchedule, PAF2018, PAF2019, PAF2020, PAF2021, PAF2022, PAF2023, PAF2024, allowance, rate, seperationDate,
         seperationCategory, reasonOfSeparation
     } = req.body;
-    console.log(reasonOfSeparation, seperationDate,seperationCategory);
+
+    console.log(reasonOfSeparation, seperationDate, seperationCategory, isActive);
 
     // Function to return "-" if value is empty, undefined, or null
     function defaultToDash(value) {
         return value === undefined || value === null || value === '' ? '-' : value;
+    }
+
+    // Function to add 3 months to a given date
+    function threeMonths(value) {
+        if (value) {
+            var commencementDate = new Date(value);
+            commencementDate.setMonth(commencementDate.getMonth() + 3);
+            var year = commencementDate.getFullYear();
+            var month = (commencementDate.getMonth() + 1).toString().padStart(2, '0');
+            var day = commencementDate.getDate().toString().padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+        return '-';
+    }
+
+    // Function to add 5 months to a given date
+    function fiveMonths(value) {
+        if (value) {
+            var commencementDate = new Date(value);
+            commencementDate.setMonth(commencementDate.getMonth() + 5);
+            var year = commencementDate.getFullYear();
+            var month = (commencementDate.getMonth() + 1).toString().padStart(2, '0');
+            var day = commencementDate.getDate().toString().padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+        return '-';
     }
 
     // Ensure specific fields default to "-"
@@ -102,28 +129,34 @@ app.post('/submit', (req, res) => {
         defaultToDash(lastName), defaultToDash(nickname), defaultToDash(designation), defaultToDash(department), 
         defaultToDash(workSchedule), defaultToDash(jobGrade), defaultToDash(jobLevel), defaultToDash(classification), 
         defaultToDash(educationalAttainment), defaultToDash(course), defaultToDash(commencement), defaultToDash(isActive), 
-        defaultToDash(RegularizationDate), defaultToDash(SSS), defaultToDash(philhealth), defaultToDash(TaxStatus), 
+        defaultToDash(RegularizationDate), defaultToDash(SSS), defaultToDash(philhealth), defaultToDash(taxStatus), 
         defaultToDash(tinNumber), defaultToDash(pagibig), defaultToDash(birthday), defaultToDash(age), defaultToDash(religion), 
         defaultToDash(contactNumber), defaultToDash(email), defaultToDash(companyEmail), defaultToDash(emergencyContact), 
-        defaultToDash(emergencyNumber), defaultToDash(los), defaultToDash(pafSchedule), 
-        defaultToDash(PAF2018), defaultToDash(PAF2019), defaultToDash(PAF2020), defaultToDash(PAF2021), 
-        defaultToDash(PAF2022), defaultToDash(PAF2023), defaultToDash(PAF2024), defaultToDash(allowance), 
-        defaultToDash(rate), defaultToDash(seperationDate), defaultToDash(seperationCategory), defaultToDash(reasonOfSeparation)
+        defaultToDash(emergencyNumber), defaultToDash(los), defaultToDash(gender), 
+        defaultToDash(pafSchedule), defaultToDash(PAF2018), defaultToDash(PAF2019), defaultToDash(PAF2020), 
+        defaultToDash(PAF2021), defaultToDash(PAF2022), defaultToDash(PAF2023), defaultToDash(PAF2024), 
+        defaultToDash(allowance), defaultToDash(rate), defaultToDash(isActive), 
+        defaultToDash(seperationDate), defaultToDash(seperationCategory), defaultToDash(reasonOfSeparation),
+        defaultToDash(employeeNumber), `Q${defaultToDash(employeeID)}`, `${lastName}, ${firstName} ${middleName}`, 
+        defaultToDash(tinNumber), defaultToDash(taxStatus), defaultToDash(RegularizationDate), defaultToDash(commencement), 
+        threeMonths(commencement), fiveMonths(commencement), defaultToDash(address), defaultToDash(paddress)
+        
     ];
 
     // SQL insert statement
     const insertSql = `
-        INSERT INTO masterlist (
-            \`#\`, \`EMP ID #.\`, \`Name\`, \`Middle Name\`, \`Surname\`, \`Nick Name\`, \`Designation\`, \`Department\`, 
-            \`Work Schedule\`, \`Job Grade\`, \`Job Level Classification\`, \`Classification\`, \`Educational Attainment\`, \`Course\`, 
-            \`Commencement of Work\`, \`Employment Status\`, \`Regularization\`, \`SSS number\`, \`PHILHEALTH no.\`, 
-            \`Tax Status\`, \`TIN number\`, \`PAG IBIG number\`, \`Birthday\`, \`Age\`, \`Religion\`, \`Contact #\`, 
-            \`PRIMARY EMAIL\`, \`COMPANY EMAIL\`, \`Person to notify in case of emergency\`, \`Number to contact\`, 
-            \`Length of Service\`, \`Gender\`, \`PAF Schedule\`, \`PAF 2018\`, \`PAF 2019\`, \`PAF 2020\`, 
-            \`PAF 2021\`, \`PAF 2022\`, \`PAF 2023\`, \`PAF 2024\`, \`Allowance\`, \`Rate\`, 
-            \`Date of Separation\`, \`Separation Category\`, \`Reason of Separation\`
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NULL, NULL,?,?)
-    `;
+    INSERT INTO masterlist (
+        \`#\`, \`EMP ID #.\`, \`Name\`, \`Middle Name\`, \`Surname\`, \`Nick Name\`, \`Designation\`, \`Department\`, 
+        \`Work Schedule\`, \`Job Grade\`, \`Job Level Classification\`, \`Classification\`, \`Educational Attainment\`, \`Course\`, 
+        \`Commencement of Work\`, \`Employment Status\`, \`Regularization\`, \`SSS number\`, \`PHILHEALTH no.\`, 
+        \`Tax Status\`, \`TIN number\`, \`PAG IBIG number\`, \`Birthday\`, \`Age\`, \`Religion\`, \`Contact #\`, 
+        \`PRIMARY EMAIL\`, \`COMPANY EMAIL\`, \`Person to notify in case of emergency\`, \`Number to contact\`, 
+        \`Length of Service\`, \`Gender\`, \`PAF Schedule\`, \`PAF 2018\`, \`PAF 2019\`, \`PAF 2020\`, 
+        \`PAF 2021\`, \`PAF 2022\`, \`PAF 2023\`, \`PAF 2024\`, \`Allowance\`, \`Rate\`, \`Status\`,
+        \`Date of Separation\`, \`Separation Category\`, \`Reason of Separation\`, \`NO\`, \`EMP ID #.2\`, \`Name3\`, \`TIN#\`, 
+        \`TAX STATUS4\`, \`Regularization5\`, \`Commencement\`, \`3 Months Evaluation\`,\`5 Months Evaluation\`, \`Address\`, \`Permanent Address\`
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+`;
 
     db.query(insertSql, insertValues, (insertErr, insertResult) => {
         if (insertErr) {
@@ -133,6 +166,7 @@ app.post('/submit', (req, res) => {
         res.redirect('/success'); // Redirect to a success page or another route
     });
 });
+
 
 
 app.get('/dashboard', (req, res) => {
@@ -335,6 +369,8 @@ app.get('/employee-details', (req, res) => {
                 \`Contact #\` AS contact_number,
                 \`Birthday\` AS birthday,
                 \`Gender\` AS gender, 
+                \`Address\` AS address,
+                \`Permanent Address\` AS paddress,
                 \`Religion\` AS religion,
                 \`PRIMARY EMAIL\` AS email,
                 \`Person to notify in case of emergency\` AS PCE,

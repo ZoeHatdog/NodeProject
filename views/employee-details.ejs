@@ -253,13 +253,24 @@
                                     </button>
                                     <div id="collapseOther" class="collapse">
                                         <div class="card-body">
+                                            <div class = "row">
+                                                <div class = "col mb-3">
+                                                    <label for="address" class="form-label">Address</label>
+                                                    <input type="text" class="form-control" id="address" name = "address" placeholder="Enter address" disabled="true" value="<%=employee.address%>">
+                                                </div>
+                                                <div class = "col mb-3">
+                                                    <label for="paddress" class="form-label">Permanent Address</label>
+                                                    <input type="text" class="form-control" id="paddress" name = "paddress" placeholder="Enter Permanent Address" disabled="true" value="<%=employee.paddress%>">
+                                                </div>
+                                            </div>
+
                                             <div class="mb-3">
                                                 <label for="religion" class="form-label">Religion</label>
                                                 <input type="text" class="form-control" id="religion" name = "religion" placeholder="Enter religion" disabled="true" value="<%=employee.religion%>">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="email" class="form-label">Email</label>
-                                                <input type="email" class="form-control" id="email" name = "email" placeholder="Enter email" disabled="True" value=<%=employee.email%>>
+                                                <input type="email" class="form-control" id="email" name = "email" placeholder="Enter email" disabled="True" value="<%=employee.email%>">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="emergencyContact" class="form-label">Person to Notify in Case of Emergency</label>
@@ -804,6 +815,8 @@
                     const contactNumber = document.getElementById('contactNumber');
                     const birthday = document.getElementById('birthday'); 
 
+                    const address = document.getElementById('address');
+                    const paddress = document.getElementById('paddress');
                     const religion = document.getElementById('religion');
                     const email = document.getElementById('email');
                     const emergencyContact = document.getElementById('emergencyContact');
@@ -854,6 +867,9 @@
                     nickname.disabled = !isChecked;
                     gender.disabled = !isChecked;
                     contactNumber.disabled = !isChecked;
+
+                    address.disabled = !isChecked;
+                    paddress.disabled = !isChecked;
                     religion.disabled = !isChecked;
                     email.disabled = !isChecked;
                     emergencyContact.disabled = !isChecked;
