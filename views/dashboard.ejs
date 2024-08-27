@@ -16,6 +16,13 @@
 
     <!-- ApexCharts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.3/apexcharts.min.js"></script>
+    <style>
+       
+        a, u {
+            text-decoration: none;
+    }   
+
+    </style>
 </head>
 <body>
     <div class="grid-container">
@@ -100,25 +107,31 @@
             </div>
             <div class="main-cards">
                 <div class="card">
-                    <div class="card-inner">
-                        <p class="text-primary">Total Employees</p>
-                        <span class="material-icons-outlined text-blue">groups</span>
-                    </div>
-                    <span class="text-primary font-weight-bold"> <%= TotalEmployees %></span>
+                    <a href = "/seeemployee" target="_self">
+                        <div class="card-inner">
+                            <p class="text-primary">Total Employees</p>
+                            <span class="material-icons-outlined text-blue">groups</span>
+                        </div>
+                        <span class="text-primary font-weight-bold"> <%= TotalEmployees %></span>
+                    </a>
                 </div>
                 <div class="card">
-                    <div class="card-inner">
-                        <p class="text-primary"> Active Employees </p>
-                        <span class="material-icons-outlined text-orange">boy</span>
-                    </div>
-                    <span class="text-primary font-weight-bold"> <%= activeCount %></span>
+                    <a href="/see-active" target="_self">
+                        <div class="card-inner">
+                            <p class="text-primary"> Active Employees </p>
+                            <span class="material-icons-outlined text-orange">boy</span>
+                        </div>
+                        <span class="text-primary font-weight-bold"> <%= activeCount %></span>
+                    </a>
                 </div>
                 <div class="card">
-                    <div class="card-inner">
-                        <p class="text-primary"> Inactive Employees </p>
-                        <span class="material-icons-outlined text-green">directions_run</span>
-                    </div>
-                    <span class="text-primary font-weight-bold"> <%= inactiveCount %> </span>
+                    <a href="/see-inactive" target="_self">
+                        <div class="card-inner">
+                            <p class="text-primary"> Inactive Employees </p>
+                            <span class="material-icons-outlined text-green">directions_run</span>
+                        </div>
+                        <span class="text-primary font-weight-bold"> <%= inactiveCount %> </span>
+                    </a>
                 </div>
                 <div class="card">
                     <div class="card-inner">

@@ -79,6 +79,9 @@ app.get('/seeemployee',  (req, res) => {
 app.get('/see-inactive', (req, res) => {
     res.render(path.join(__dirname, 'views', 'see-inactive.ejs'));
 })
+app.get('/see-active', (req,res) => {
+    res.render(path.join(__dirname, 'views', 'see-active.ejs'));
+})
 
 
 app.post('/submit', (req, res) => {
@@ -451,6 +454,26 @@ app.get('/api/inactive-employees', (req, res) => {
     });
 });
 
+// =================================See ACTIVE EMPLOYEEs==================================
+
+
+app.get('/api/active-employees', (req, res) => {
+    const query = `
+        SELECT \`#\`, \`EMP ID #.\`, \`Name\`, \`Middle Name\`, \`Surname\`, \`Designation\`, \`Job Grade\`, \`Status\` 
+        FROM \`masterlist\` 
+        WHERE \`Status\` = 'Active'
+    `;
+    
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Error fetching employees:', err.message);
+            res.status(500).json({ error: 'Server Error', details: err.message });
+            return;
+        }
+        
+        res.json(results); // Send the results as JSON
+    });
+});
 
 
 
