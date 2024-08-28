@@ -250,9 +250,6 @@ body {
     will-change: transform, box-shadow; 
   }
   
-  #chart1{
-    background-color: ;
-  }
   
   .card > span {
     font-size: 20px;
@@ -401,4 +398,9 @@ body {
 }
 .card-container a:visited {
   color: inherit; /* Keeps the color the same for visited links */
+}
+
+/* CHART CSS */
+#lineChartCanvas{
+    max-width: min-content;
 }
