@@ -384,6 +384,31 @@ app.get('/data', (req, res) => {
 });
 
 
+function formatDataForApexCharts(data){
+    const departments = [...new Set(data.map(item => item.Department))];
+    const series = [
+        {
+            name: 'Regular',
+            data: departments.map(dept => {
+                const record = data.find(item => item.Department === dept && item.employment_status === 'Regular');
+                return record ? record.count : 0;
+            })
+        },
+        {
+            name: 'Probationary',
+            data: departments.map(dept => {
+                const record = data.find(item => item.Department === dept && item.employment_status === 'Probationary');
+                return record ? record.count : 0;
+            })
+        }
+    ];
+  
+    return {
+        categories: departments,
+        series: series
+    };
+  }
+
 
 //                             ------------------ SEE EMPLOYEE DETAILS in SEE Data FUNCTION ----------
 app.get('/api/allemployees', (req, res) => {

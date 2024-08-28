@@ -404,3 +404,7 @@ body {
 #lineChartCanvas{
     max-width: min-content;
 }
+#chart2{
+    max-width: min-content;
+    align-content: center;
+}

@@ -22,31 +22,36 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    
     <style>
         .chart-container1{
           
             height: 250px;
             border-color: black;
             border: 2px ;
+            align-items: center;
         }
         .chart-container2{
-            background-color: black;
+            align-items: center;
             height: 250px;
         }
         .chart-container3{
-           
+            align-items: center;
             height: 250px;
         }
         .chart-container4{
             height: 250px;
+            align-items: center;
         }
         .chart-container5{
-            background-color: aquamarine;
-            height: 250px;
+          
+            height: 400px;
+            
         }
         .chart-container6{
-            background-color: blueviolet;
-            height: 250px;
+          
+            height: 400px;
+            align-items: center;
         }
 
     </style>
@@ -134,9 +139,9 @@
                     </div>
                 </div>
                 <div class = "col-md-4">
-                    <div class="chart-container2">
+                    <div class="card chart-container2">
                         <header1 class = "caption"> Department Distribution</header1>
-                        <canvas id="chart123214214"></canvas>
+                        <canvas id="lengthOfServiceChart"></canvas>
                     </div>
                 </div>
                 <div class = "col-md-4">
@@ -150,18 +155,48 @@
                 <div class="card col-12 xl-6 pt-5">
                     <canvas id="lineChartCanvas"></canvas>
                 </div>
-                
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <div class="chart-container5">Container 4</div>
+                    <div class="card chart-container5">
+                        <div id="employmentStatusChart"></div>
+                    </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="chart-container6">Container 5</div>
+                    <div class="card chart-container6">
+                        <header class="caption"> # of Employees per Department </header>
+                        <canvas id = "chart2"></canvas>
+                    </div>
                 </div>
             </div>
         </main>
         <!-- End Main -->
+        <script>
+            function renderChart(chartId, containerId) {
+                fetch(`/data?chartId=${chartId}`)
+                    .then(response => response.json())
+                    .then(chartData => {
+                        var options = {
+                            chart: {
+                                type: 'bar',
+                                height: 350
+                            },
+                            series: chartData.series,
+                            xaxis: {
+                                categories: chartData.categories
+                            }
+                        };
+                        var chart = new ApexCharts(document.querySelector(`#${containerId}`), options);
+                        chart.render();
+                    });
+            }
+    
+            // Render the employment status chart
+            renderChart('employmentStatus', 'employmentStatusChart');
+        </script>
+        
+      
+    
 
     </div>
 
