@@ -82,7 +82,9 @@ app.get('/see-inactive', (req, res) => {
 app.get('/see-active', (req,res) => {
     res.render(path.join(__dirname, 'views', 'see-active.ejs'));
 })
-
+app.get('/see-chart', (req, res) => {
+    res.render(path.join(__dirname, 'views', 'see-chart.ejs' ));
+})
 
 app.post('/submit', (req, res) => {
     const {
@@ -280,48 +282,106 @@ app.post('/logout', (req, res) => {
 app.get('/data', (req, res) => {
     const chartId = req.query.chartId;
     let query = '';
-
-    if (chartId === 'chart3') {
-        query = `
-            SELECT 
-                YEAR(\`Commencement of Work\`) AS year,
-                COUNT(*) AS number_of_employees
-            FROM 
-                geninfolist
-            WHERE 
-                \`Commencement of Work\` IS NOT NULL 
-                AND \`Commencement of Work\` != ''
-                AND \`Commencement of Work\` REGEXP '^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$'
-            GROUP BY 
-                YEAR(\`Commencement of Work\`)
-            ORDER BY 
-                year;
-        `;
-    } else if (chartId === 'chart5') {
-        query = `
-            SELECT 
-                \`length of service\` AS service_length,
-                COUNT(*) AS number_of_employees
-            FROM 
-                geninfolist
-            WHERE 
-                \`length of service\` IS NOT NULL 
-                AND \`length of service\` != ''
-            GROUP BY 
-                \`length of service\`
-            ORDER BY 
-                service_length;
-        `;
-    }
-
+  
+    if (chartId === 'chart1') {
+      query = `
+        SELECT 
+          CASE
+            WHEN age BETWEEN 20 AND 24 THEN '20-24'
+            WHEN age BETWEEN 25 AND 29 THEN '25-29'
+            WHEN age BETWEEN 30 AND 34 THEN '30-34'
+            WHEN age BETWEEN 35 AND 39 THEN '35-39'
+            WHEN age BETWEEN 40 AND 44 THEN '40-44'
+            WHEN age BETWEEN 45 AND 49 THEN '45-49'
+            WHEN age BETWEEN 50 AND 54 THEN '50-54'
+            WHEN age BETWEEN 55 AND 59 THEN '55-59'
+            ELSE '60+'
+          END as age_range, 
+          COUNT(*) as count 
+        FROM geninfolist 
+        GROUP BY age_range
+      `;
+    } else if (chartId === 'chart2') {
+      query = `
+        SELECT 
+          department, 
+          COUNT(*) as count 
+        FROM geninfolist 
+        WHERE department IN ('admin', 'engineering', 'FEME', 'manufacturing', 'QA', 'R&D', 'Sales', 'Top Management', 'IT')
+        GROUP BY department
+      `;
+    } else if (chartId === 'chart3') {
+      query = `
+        SELECT 
+          YEAR(\`Commencement of Work\`) AS year,
+          COUNT(*) AS number_of_employees
+        FROM 
+          geninfolist
+        WHERE 
+          \`Commencement of Work\` IS NOT NULL 
+          AND \`Commencement of Work\` != ''
+          AND \`Commencement of Work\` REGEXP '^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$'
+        GROUP BY 
+          YEAR(\`Commencement of Work\`)
+        ORDER BY 
+          year;
+      `;
+    } else if (chartId === 'chart4') {
+      query = `
+        SELECT 
+          department,
+          gender,
+          COUNT(*) as count 
+        FROM 
+          geninfolist 
+        GROUP BY 
+          department, gender 
+        ORDER BY 
+          department, gender;
+      `;
+    } else if (chartId === "chart5"){
+      query = `
+      SELECT 
+        \`length of service\` AS service_length,
+        COUNT(*) AS number_of_employees
+      FROM 
+        geninfolist
+      WHERE 
+        \`length of service\` IS NOT NULL 
+        AND \`length of service\` != ''
+      GROUP BY 
+        \`length of service\`
+      ORDER BY 
+        \`number_of_employees\`;
+    `;
+    } else if (chartId === 'employmentStatus') {
+      query = `
+          SELECT 
+              Department, 
+              \`Employment Status6\` as employment_status, 
+              COUNT(*) as count 
+          FROM masterlist 
+          WHERE \`Employment Status6\` IN ('Regular', 'Probationary')
+          GROUP BY Department, employment_status
+      `;
+  }
+  
     db.query(query, (error, results) => {
-        if (error) throw error;
-        res.json(results);
+      if (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+        return;
+      }
+      console.log(results);
+  
+      if (chartId === 'employmentStatus'){
+        const chartData = formatDataForApexCharts(results);
+        res.json(chartData);
+      } else{
+      res.json(results);
+      }
     });
 });
-
-
-
 
 
 

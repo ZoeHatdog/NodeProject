@@ -38,6 +38,9 @@
             transform: translateY(-10px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
+        a {
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
@@ -137,11 +140,13 @@
                         </div>
                     </div>
                     <div class="card square-card">
-                        <div class="card-body">
-                            <span class="material-icons-outlined delete-employee-icon">query_stats</span>
-                            <h5 class="card-title">See Demo Stat</h5>
-                            <p class="card-text">See graphs in Demo Stat.</p>
-                        </div>
+                        <a href="/see-chart" target="_self">
+                            <div class="card-body">
+                                <span class="material-icons-outlined delete-employee-icon">query_stats</span>
+                                <h5 class="card-title">See Demo Stat</h5>
+                                <p class="card-text">See graphs in Demo Stat.</p>
+                            </div>
+                        </a>
                     </div>
                     <div class="card square-card">
                         <div class="card-body">
