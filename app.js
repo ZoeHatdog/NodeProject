@@ -85,9 +85,7 @@ app.get('/see-active', (req,res) => {
 app.get('/see-chart', (req, res) => {
     res.render(path.join(__dirname, 'views', 'see-chart.ejs' ));
 })
-app.get('/see-per-chart', (req, res) => {
-    res.render(path.join(__dirname, 'views', 'see-per-chart.ejs'));
-})
+
 
 app.post('/submit', (req, res) => {
     const {
@@ -413,50 +411,58 @@ function formatDataForApexCharts(data){
     };
   }
 
-app.get('/per-chart-data', (req, res) => {
 
+
+
+
+
+  app.get('/per-chart-data', (req, res) => {
     const query = `
-    SELECT
-      Department, 
-      \`Educational Attainment\` as educational_attainment, 
-      COUNT(*) as count 
-    FROM masterlist 
-    GROUP BY department, educational_attainment;
+      SELECT
+        Department, 
+        \`Educational Attainment\` as educational_attainment, 
+        COUNT(*) as count 
+      FROM masterlist 
+      GROUP BY department, educational_attainment
+      ORDER BY department;
     `;
-
-    db.query(query, (err, result) =>{
-    if (error) {
-            console.error(error);
-            res.status(500).send('Internal Server Error');
-            return;
-        }
-        const departments = {};
-    
-    results.forEach(row => {
-      if (!departments[row.department]) {
-        departments[row.department] = {};
+  
+    db.query(query, (err, results) => {
+      if (err) throw err;
+  
+      // Process the results and send to frontend
+      const chartData = processChartData(results);
+      
+      // Render the chart page with the data
+      res.render('see-per-chart', { chartData: JSON.stringify(chartData) });
+    });
+  });
+  
+  function processChartData(data) {
+    const departments = [];
+    const series = {};
+  
+    data.forEach(row => {
+      if (!departments.includes(row.Department)) {
+        departments.push(row.Department);
       }
-      departments[row.department][row.educational_attainment] = row.count;
+  
+      if (!series[row.educational_attainment]) {
+        series[row.educational_attainment] = [];
+      }
+  
+      series[row.educational_attainment].push(row.count);
     });
-
-    const chartData = {
-      series: [],
-      categories: Object.keys(departments)
+  
+    return {
+      categories: departments,
+      series: Object.keys(series).map(key => ({
+        name: key,
+        data: series[key]
+      }))
     };
-
-    const educationalAttainments = [...new Set(results.map(row => row.educational_attainment))];
-
-    educationalAttainments.forEach(attainment => {
-      chartData.series.push({
-        name: attainment,
-        data: chartData.categories.map(dept => departments[dept][attainment] || 0)
-      });
-    });
-
-    res.json(chartData);
-  });   
-})
-
+  }
+  
 
   
 

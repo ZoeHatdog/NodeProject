@@ -102,6 +102,7 @@
         <main class="main-container">
           <div class = "row">
                 <div class = "card">
+                    <div id = "chart"></div>
                     
                 </div>
           </div>
@@ -119,6 +120,26 @@
 
     <!-- Custom JS -->
     <script src="/js/scripts.js"></script>
+    <script>
+        // Parse the data passed from the backend
+        const chartData = <%- chartData %>;
     
+        const options = {
+          chart: {
+            type: 'bar'
+          },
+          series: chartData.series,
+          xaxis: {
+            categories: chartData.categories
+          },
+          title: {
+            text: 'Department by Educational Attainment',
+            align: 'center'
+          }
+        };
+    
+        const chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+      </script>
 </body>
 </html>
