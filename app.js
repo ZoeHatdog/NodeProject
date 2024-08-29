@@ -85,6 +85,9 @@ app.get('/see-active', (req,res) => {
 app.get('/see-chart', (req, res) => {
     res.render(path.join(__dirname, 'views', 'see-chart.ejs' ));
 })
+app.get('/see-per-chart', (req, res) => {
+    res.render(path.join(__dirname, 'views', 'see-per-chart.ejs'));
+})
 
 app.post('/submit', (req, res) => {
     const {
@@ -384,6 +387,7 @@ app.get('/data', (req, res) => {
 });
 
 
+
 function formatDataForApexCharts(data){
     const departments = [...new Set(data.map(item => item.Department))];
     const series = [
@@ -408,6 +412,53 @@ function formatDataForApexCharts(data){
         series: series
     };
   }
+
+app.get('/per-chart-data', (req, res) => {
+
+    const query = `
+    SELECT
+      Department, 
+      \`Educational Attainment\` as educational_attainment, 
+      COUNT(*) as count 
+    FROM masterlist 
+    GROUP BY department, educational_attainment;
+    `;
+
+    db.query(query, (err, result) =>{
+    if (error) {
+            console.error(error);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+        const departments = {};
+    
+    results.forEach(row => {
+      if (!departments[row.department]) {
+        departments[row.department] = {};
+      }
+      departments[row.department][row.educational_attainment] = row.count;
+    });
+
+    const chartData = {
+      series: [],
+      categories: Object.keys(departments)
+    };
+
+    const educationalAttainments = [...new Set(results.map(row => row.educational_attainment))];
+
+    educationalAttainments.forEach(attainment => {
+      chartData.series.push({
+        name: attainment,
+        data: chartData.categories.map(dept => departments[dept][attainment] || 0)
+      });
+    });
+
+    res.json(chartData);
+  });   
+})
+
+
+  
 
 
 //                             ------------------ SEE EMPLOYEE DETAILS in SEE Data FUNCTION ----------
