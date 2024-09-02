@@ -70,6 +70,14 @@ body {
   cursor: pointer;
   position: relative;
   font-size: 36px;
+  color: #ff6f00;
+  
+}
+a{
+  text-decoration: none;
+}
+a:hover{
+  text-decoration: none;
 }
 
 /* Initially hide the dropdown menu */
@@ -128,8 +136,8 @@ body {
   #sidebar {
     grid-area: sidebar;
     height: 100%;
-    background-color: #21232d;
-    color: #9799ab;
+    background: rgb(0,23,40);
+    background: linear-gradient(90deg, rgba(0,23,40,1) 0%, rgba(0,43,63,1) 35%, rgba(0,58,81,1) 100%);
     overflow-y: auto;
     transition: all 0.5s;
     -webkit-transition: all 0.5s;
@@ -163,6 +171,7 @@ body {
     font-size: 20px;
     font-weight: 700;
     transition: color 0.3s, transform 0.3s;
+    color: #ff6f00;
   }
 
   .sidebar-brand:hover {
