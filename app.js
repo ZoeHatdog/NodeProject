@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs');
 const session = require('express-session');
 const flash = require('connect-flash');
 const path = require('path');
-const { Console } = require('console');
+const { Console, error } = require('console');
 const port = 3000;
 
 const app = express();
@@ -84,6 +84,9 @@ app.get('/see-active', (req,res) => {
 })
 app.get('/see-chart', (req, res) => {
     res.render(path.join(__dirname, 'views', 'see-chart.ejs' ));
+})
+app.get('/see-per-chart', (req, res) => {
+    res.render(path.join(__dirname, 'views', 'see-per-chart.ejs'));
 })
 
 
@@ -409,59 +412,126 @@ function formatDataForApexCharts(data){
         categories: departments,
         series: series
     };
-  }
+}
+
+
+app.get('/per-chart-data', (req, res) => {
+    const chartID = req.query.chartID;
+    console.log('Received chartID:', chartID); // Debugging line
+    
+    if (!chartID) {
+        res.status(400).send('Invalid or missing chartID');
+        return;
+    }
+
+    let query = '';
+    if (chartID === 'chart1') {
+        query = `
+        SELECT
+            Department, 
+            \`Educational Attainment\` as educational_attainment, 
+            COUNT(*) as count 
+        FROM masterlist 
+        GROUP BY department, educational_attainment
+        ORDER BY department;
+        `;
+    } else if (chartID === 'chart2') {
+        query = `
+        SELECT
+            Department, 
+            \`Job Grade\` as job_grade, 
+            COUNT(*) as count 
+        FROM masterlist 
+        GROUP BY job_grade, department;
+        `;
+    } else {
+        res.status(400).send('Invalid chartID');
+        return;
+    }
+
+    db.query(query, (error, results) => {
+        if (error) {
+            res.status(500).send('QUERY ERROR');
+            console.error(error);
+            return;
+        }
+        console.log('Query results:', results);
+        res.json(results);
+    });
+});
 
 
 
 
-
+/* --------------------------------------------------- PERFORMANCE CHART --------------------------------------
 
   app.get('/per-chart-data', (req, res) => {
-    const query = `
-      SELECT
-        Department, 
-        \`Educational Attainment\` as educational_attainment, 
-        COUNT(*) as count 
-      FROM masterlist 
-      GROUP BY department, educational_attainment
-      ORDER BY department;
-    `;
+    const chartId = req.query.chartId;
   
+    let query = '';
+    if (chartId === '1') {
+        query = `
+        SELECT
+            Department, 
+            \`Educational Attainment\` as educational_attainment, 
+            COUNT(*) as count 
+        FROM masterlist 
+        GROUP BY department, educational_attainment
+        ORDER BY department;
+        `;
+    } else if (chartId === '2') {
+        query = `
+        SELECT
+            Department, 
+            \`Job Grade\` as job_grade, 
+            COUNT(*) as count 
+        FROM masterlist 
+        GROUP BY job_grade, department;
+        `;
+    } else {
+        return res.status(400).json({ error: 'Invalid chartId' });
+    }
+
     db.query(query, (err, results) => {
-      if (err) throw err;
-  
-      // Process the results and send to frontend
-      const chartData = processChartData(results);
-      
-      // Render the chart page with the data
-      res.render('see-per-chart', { chartData: JSON.stringify(chartData) });
+        if (err) throw err;
+        console.log(chartData);
+        const chartData = processChartData(results, chartId);
+        res.json(chartData);
+    
     });
-  });
-  
-  function processChartData(data) {
+});
+
+    function processChartData(data, chartId) {
     const departments = [];
     const series = {};
-  
+
     data.forEach(row => {
-      if (!departments.includes(row.Department)) {
+        if (!departments.includes(row.Department)) {
         departments.push(row.Department);
-      }
-  
-      if (!series[row.educational_attainment]) {
-        series[row.educational_attainment] = [];
-      }
-  
-      series[row.educational_attainment].push(row.count);
+        }
+
+        if (chartId === '1') {
+        if (!series[row.educational_attainment]) {
+            series[row.educational_attainment] = [];
+        }
+        series[row.educational_attainment].push(row.count);
+        } else if (chartId === '2') {
+        if (!series[row.job_grade]) {
+            series[row.job_grade] = [];
+        }
+        series[row.job_grade].push(row.count);
+        }
     });
-  
+
     return {
-      categories: departments,
-      series: Object.keys(series).map(key => ({
+        categories: departments,
+        series: Object.keys(series).map(key => ({
         name: key,
         data: series[key]
-      }))
+        }))
     };
-  }
+    }
+*/
   
 
   

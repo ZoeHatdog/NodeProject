@@ -1,6 +1,10 @@
 /* Custom styles for the HR Dashboard */
+
+
+
 body {
-    background-color: #F4F1EB;
+    background: rgb(0,23,40);
+    background: linear-gradient(90deg, rgba(0,23,40,1) 0%, rgba(0,43,63,1) 35%, rgba(0,58,81,1) 100%);
     height: 100vh;
     margin: 0;
   }
@@ -9,6 +13,21 @@ body {
   .navbar-brand {
     font-size: 1.5rem;
     font-weight: bold;
+    color: #9a9d9e;
+  }
+
+  .navbar-brand-two{
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #9a9d9e;
+  }
+
+  .navbar-brand:hover{
+    color: white;
+  }
+
+  .navbar-brand-two:hover{
+    color: white;
   }
   
   .display-4 {
@@ -27,15 +46,46 @@ body {
   footer {
     background-color: #343a40;
   }
+
+  .navbar{
+    background-color: #202529;
+  }
+
+  #start_button {
+    background-color: #ff6f00;
+    border-color: white;
+    color: white;
+  }
+
+#start_button:hover {
+    background-color: #e65c00;
+    color: white;
+  }
+
+
+
+  .head{
+    color: #ff6f00;
+  }
+  
+
+  .lead{
+    color: #ffff;
+  }
   
   footer p {
     margin-bottom: 0;
   }
-  .login-button{
-    border-radius: 20px;
-    background-color: black;
-    
+  #login-button{
+    background-color: #ff6f00;
+    border-color: white;
+    color: white;
   }
+  #login-button:hover {
+    background-color: #e65c00;
+    color: white;
+  }
+
   .login-card{
     background-color: #A2A2A2;
     border-radius: 40px;
@@ -61,7 +111,8 @@ body {
     border-radius: 20px;
   }
   .login-label{
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+    
+
   }
   .foot-card{
    
