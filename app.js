@@ -152,6 +152,34 @@ app.post('/submit', (req, res) => {
         
     ];
 
+    //Check Parameters
+    const requiredFields = [
+        { field: firstName, name: 'First Name' },
+        { field: lastName, name: 'Last Name' },
+        { field: employeeNumber, name: 'Employee Number' },
+        { field: employeeID, name: 'Employee ID' },
+        { field: birthday, name: 'Birthday'},
+        { field: commencement, name: 'Commencement of Work'}
+    ];
+    
+    let missingFields = [];
+    
+    for (const { field, name } of requiredFields) {
+        if (!field) {
+            missingFields.push(name);
+        }
+    }
+    
+    if (missingFields.length > 0) {
+        return res.json({
+            success: false,
+            message: `The following required fields must be filled out: ${missingFields.join(', ')}`
+        });
+    }
+    
+    // Continue processing if all fields are filled
+    
+
     // SQL insert statement
     const insertSql = `
     INSERT INTO masterlist (
@@ -172,7 +200,8 @@ app.post('/submit', (req, res) => {
             console.error('Error inserting data:', insertErr);
             return res.status(500).send('Internal Server Error');
         }
-        res.redirect('/success'); // Redirect to a success page or another route
+        res.json({ success: true });
+     // Redirect to a success page or another route
     });
 });
 

@@ -1,4 +1,12 @@
 document.addEventListener('DOMContentLoaded', function() {
+    loadEmployees(); // Load employee data when the page is ready
+
+    // Event listener for filter input
+    document.getElementById('searchInput').addEventListener('keyup', filterTable);
+});
+
+// Function to load employee data and populate the table
+function loadEmployees() {
     fetch('/api/employees')
         .then(response => {
             if (!response.ok) {
@@ -30,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.delete-btn').forEach(button => {
                 button.addEventListener('click', function() {
                     const empId = this.getAttribute('data-id');
-                    deleteEmployee(empId);
+                    confirmDelete(empId);
                 });
             });
         })
@@ -38,7 +46,24 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Error fetching employees:', error);
             alert('There was an error fetching the employee data. Please try again later.');
         });
-});
+}
+
+// Function to show SweetAlert2 confirmation and handle employee deletion
+function confirmDelete(empId) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            deleteEmployee(empId);
+        }
+    });
+}
 
 // Function to handle employee deletion
 function deleteEmployee(empId) {
@@ -56,12 +81,22 @@ function deleteEmployee(empId) {
         return response.json();
     })
     .then(data => {
-        alert('Employee deleted successfully');
-        location.reload(); // Reload the page to reflect changes
+        if (data.success) {
+            Swal.fire(
+                'Deleted!',
+                'Employee has been deleted.',
+                'success'
+            ).then(() => {
+                // Reload the table data
+                location.reload();
+            });
+        } else {
+            Swal.fire('Error!', data.message, 'error');
+        }
     })
     .catch(error => {
         console.error('Error deleting employee:', error);
-        alert('There was an error deleting the employee. Please try again later.');
+        Swal.fire('Error!', 'There was an error deleting the employee. Please try again later.', 'error');
     });
 }
 
@@ -88,6 +123,3 @@ function filterTable() {
         rows[i].style.display = rowContainsSearchTerm ? '' : 'none';
     }
 }
-
-// Attach the filterTable function to the search input's keyup event
-document.getElementById('searchInput').addEventListener('keyup', filterTable);
