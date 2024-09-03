@@ -7,71 +7,95 @@ async function fetchChartData(chartID) {
         }
         const data = await response.json();
 
-        let seriesData = [];
-        let categories = [];
+        let labels = [];
+        let datasets = [];
 
         if (chartID === 'chart1') {
             const groupedData = data.reduce((acc, item) => {
-                acc[item.Department] = acc[item.Department] || [];
-                acc[item.Department].push({ x: item.educational_attainment, y: item.count });
+                if (!acc[item.Department]) {
+                    acc[item.Department] = [];
+                }
+                acc[item.Department].push(item.count);
                 return acc;
             }, {});
 
-            seriesData = Object.keys(groupedData).map(department => ({
-                name: department,
-                data: groupedData[department]
+            labels = [...new Set(data.map(item => item.educational_attainment))];
+            datasets = Object.keys(groupedData).map(department => ({
+                label: department,
+                data: groupedData[department],
+                backgroundColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.5)`
             }));
-            categories = [...new Set(data.map(item => item.educational_attainment))];
         } else if (chartID === 'chart2') {
             const groupedData = data.reduce((acc, item) => {
-                acc[item.Department] = acc[item.Department] || [];
-                acc[item.Department].push({ x: item.job_grade, y: item.count });
+                if (!acc[item.Department]) {
+                    acc[item.Department] = [];
+                }
+                acc[item.Department].push(item.count);
                 return acc;
             }, {});
 
-            seriesData = Object.keys(groupedData).map(department => ({
-                name: department,
-                data: groupedData[department]
+            labels = [...new Set(data.map(item => item.job_grade))];
+            datasets = Object.keys(groupedData).map(department => ({
+                label: department,
+                data: groupedData[department],
+                backgroundColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.5)`
             }));
-            categories = [...new Set(data.map(item => item.job_grade))];
+        } else if (chartID === 'chart3') {
+            const groupedData = data.reduce((acc, item) => {
+                if (!acc[item.Department]) {
+                    acc[item.Department] = [];
+                }
+                acc[item.Department].push(item.count);
+                return acc;
+            }, {});
+
+            labels = [...new Set(data.map(item => item.job_lvl))];
+            datasets = Object.keys(groupedData).map(department => ({
+                label: department,
+                data: groupedData[department],
+                backgroundColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.5)`
+            }));
         }
 
-        createChart(chartID, seriesData, categories);
+        createChart(chartID, labels, datasets);
     } catch (error) {
         console.error('Error fetching chart data:', error);
     }
 }
 
-// Function to create a chart using ApexCharts
-function createChart(chartID, seriesData, categories) {
-    const options = {
-        chart: {
-            type: 'bar',
-            height: chartID === 'chart1' ? 300 : 400, // Adjust height for chart1
-            width: chartID === 'chart1' ? '80%' : '100%', // Adjust width for chart1
-            zoom: {
-                enabled: chartID === 'chart1' // Enable zoom for chart1
+// Function to create a chart using Chart.js
+function createChart(chartID, labels, datasets) {
+    const ctx = document.getElementById(chartID).getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: datasets
+        },
+        options: {
+            scales: {
+                x: {
+                    beginAtZero: true
+                },
+                y: {
+                    beginAtZero: true
+                }
+            },
+            maintainAspectRatio: chartID === 'chart1' ? false : true, // Adjust aspect ratio for chart1
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: chartID === 'chart1' ? 'Educational Attainment by Department (Zoomed Out)' : 
+                           chartID === 'chart2' ? 'Job Grade by Department' :
+                           'Job Level Classification by Department'
+                }
             }
-        },
-        series: seriesData,
-        xaxis: {
-            categories: categories
-        },
-        plotOptions: {
-            bar: {
-                horizontal: false,
-                columnWidth: chartID === 'chart1' ? '60%' : '70%' // Adjust column width for chart1
-            }
-        },
-        title: {
-            text: chartID === 'chart1' ? 'Educational Attainment by Department (Zoomed Out)' : 'Job Grade by Department'
         }
-    };
-
-    const chart = new ApexCharts(document.querySelector(`#${chartID}`), options);
-    chart.render();
+    });
 }
 
 // Fetch and render charts
 fetchChartData('chart1');
 fetchChartData('chart2');
+fetchChartData('chart3');

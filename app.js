@@ -472,6 +472,17 @@ app.get('/per-chart-data', (req, res) => {
             COUNT(*) as count 
         FROM masterlist 
         GROUP BY job_grade, department;
+
+        `;
+    } else if (chartID === 'chart3') {
+        query = `
+        SELECT
+            Department, 
+            \`Job Level Classification\` as job_lvl, 
+            COUNT(*) as count 
+        FROM masterlist 
+        GROUP BY job_lvl, department
+        ORDER BY job_lvl;
         `;
     } else {
         res.status(400).send('Invalid chartID');
@@ -488,6 +499,7 @@ app.get('/per-chart-data', (req, res) => {
         res.json(results);
     });
 });
+
 
 
 
