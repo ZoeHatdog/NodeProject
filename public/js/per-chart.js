@@ -1,4 +1,3 @@
-// Function to fetch data and create a chart
 async function fetchChartData(chartID) {
     try {
         const response = await fetch(`/per-chart-data?chartID=${chartID}`);
@@ -10,58 +9,54 @@ async function fetchChartData(chartID) {
         let labels = [];
         let datasets = [];
 
+        // Initialize the data structure for grouping
+        let groupedData = {};
+        let allLabels = new Set();
+
         if (chartID === 'chart1') {
-            const groupedData = data.reduce((acc, item) => {
-                if (!acc[item.Department]) {
-                    acc[item.Department] = [];
+            data.forEach(item => {
+                if (!groupedData[item.Department]) {
+                    groupedData[item.Department] = {};
                 }
-                acc[item.Department].push(item.count);
-                return acc;
-            }, {});
-
-            labels = [...new Set(data.map(item => item.educational_attainment))];
-            datasets = Object.keys(groupedData).map(department => ({
-                label: department,
-                data: groupedData[department],
-                backgroundColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.5)`
-            }));
+                groupedData[item.Department][item.educational_attainment] = item.count;
+                allLabels.add(item.educational_attainment);
+            });
+            labels = Array.from(allLabels);
         } else if (chartID === 'chart2') {
-            const groupedData = data.reduce((acc, item) => {
-                if (!acc[item.Department]) {
-                    acc[item.Department] = [];
+            data.forEach(item => {
+                if (!groupedData[item.Department]) {
+                    groupedData[item.Department] = {};
                 }
-                acc[item.Department].push(item.count);
-                return acc;
-            }, {});
-
-            labels = [...new Set(data.map(item => item.job_grade))];
-            datasets = Object.keys(groupedData).map(department => ({
-                label: department,
-                data: groupedData[department],
-                backgroundColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.5)`
-            }));
+                groupedData[item.Department][item.job_grade] = item.count;
+                allLabels.add(item.job_grade);
+            });
+            labels = Array.from(allLabels);
         } else if (chartID === 'chart3') {
-            const groupedData = data.reduce((acc, item) => {
-                if (!acc[item.Department]) {
-                    acc[item.Department] = [];
+            data.forEach(item => {
+                if (!groupedData[item.Department]) {
+                    groupedData[item.Department] = {};
                 }
-                acc[item.Department].push(item.count);
-                return acc;
-            }, {});
-
-            labels = [...new Set(data.map(item => item.job_lvl))];
-            datasets = Object.keys(groupedData).map(department => ({
-                label: department,
-                data: groupedData[department],
-                backgroundColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.5)`
-            }));
+                groupedData[item.Department][item.job_lvl] = item.count;
+                allLabels.add(item.job_lvl);
+            });
+            labels = Array.from(allLabels);
         }
+
+        // Create the datasets for the chart
+        datasets = Object.keys(groupedData).map(department => {
+            return {
+                label: department,
+                data: labels.map(label => groupedData[department][label] || 0), // Set to 0 if the label is missing
+                backgroundColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.5)`
+            };
+        });
 
         createChart(chartID, labels, datasets);
     } catch (error) {
         console.error('Error fetching chart data:', error);
     }
 }
+
 
 // Function to create a chart using Chart.js
 function createChart(chartID, labels, datasets) {
