@@ -27,8 +27,7 @@
         .chart-container1{
           
             height: 250px;
-            border-color: black;
-            border: 2px ;
+            
             align-items: center;
         }
         .chart-container2{
@@ -106,7 +105,7 @@
                     </a>
                 </li>
                 <li class="sidebar-list-item">
-                    <a href="#" target="_blank">
+                    <a href="/seeemployee" target="_self">
                         <span class="material-icons-outlined">add_shopping_cart</span> Update Employee
                     </a>
                 </li>
@@ -134,19 +133,19 @@
             <div class = "row">
                 <div class = "col-md-4">
                     <div class="card chart-container1">
-                        <header1 class = "caption"> Age Distribution </header1>
+                        <header1 class = "caption" style="align-self: center; font-weight: bold;"> Age Distribution </header1>
                         <canvas id="chart1"></canvas>
                     </div>
                 </div>
                 <div class = "col-md-4">
                     <div class="card chart-container2">
-                        <header1 class = "caption"> Department Distribution</header1>
+                        <header1 class = "caption" style="align-self: center; font-weight: bold;"> Department Distribution</header1>
                         <canvas id="lengthOfServiceChart"></canvas>
                     </div>
                 </div>
                 <div class = "col-md-4">
                     <div class="card chart-container3">
-                        <header1 class = "caption"> Department by Gender </header1>
+                        <header1 class = "caption" style="align-self: center; font-weight: bold;"> Department by Gender </header1>
                         <canvas id="barChartCanvas"></canvas>
                     </div>
                 </div>
@@ -159,13 +158,13 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="card chart-container5">
-                        <header class = "caption" style="align-self: center;"> Employment Status per Department</header>
+                        <header class = "caption" style="align-self: center; font-weight: bold;"> Employment Status per Department</header>
                         <div id="employmentStatusChart"></div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="card chart-container6">
-                        <header class="caption"> # of Employees per Department </header>
+                        <header class="caption" style="align-self: center; font-weight: bold;"> # of Employees per Department </header>
                         <canvas id = "chart2"></canvas>
                     </div>
                 </div>

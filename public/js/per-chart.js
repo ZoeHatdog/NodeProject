@@ -1,136 +1,77 @@
-
-
-async function fetchData('chartId') {
+// Function to fetch data and create a chart
+async function fetchChartData(chartID) {
     try {
-        console.log(`Fetching data for ${chartId}`); // Log the chartId being fetched
-        const response = await fetch(`/per-chart-data?chartID=${chartId}`);
+        const response = await fetch(`/per-chart-data?chartID=${chartID}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const data = await response.json();
-        console.log('Fetched Data:', data); // Check if data is fetched correctly
-        return data;
+
+        let seriesData = [];
+        let categories = [];
+
+        if (chartID === 'chart1') {
+            const groupedData = data.reduce((acc, item) => {
+                acc[item.Department] = acc[item.Department] || [];
+                acc[item.Department].push({ x: item.educational_attainment, y: item.count });
+                return acc;
+            }, {});
+
+            seriesData = Object.keys(groupedData).map(department => ({
+                name: department,
+                data: groupedData[department]
+            }));
+            categories = [...new Set(data.map(item => item.educational_attainment))];
+        } else if (chartID === 'chart2') {
+            const groupedData = data.reduce((acc, item) => {
+                acc[item.Department] = acc[item.Department] || [];
+                acc[item.Department].push({ x: item.job_grade, y: item.count });
+                return acc;
+            }, {});
+
+            seriesData = Object.keys(groupedData).map(department => ({
+                name: department,
+                data: groupedData[department]
+            }));
+            categories = [...new Set(data.map(item => item.job_grade))];
+        }
+
+        createChart(chartID, seriesData, categories);
     } catch (error) {
-        console.error(`Error fetching data for ${chartId}:`, error);
-        return [];
+        console.error('Error fetching chart data:', error);
     }
 }
 
-
-async function createEducationalChart(chartId, canvasId, label) {
-    const data = await fetchData(chartId);
-    console.log('Data for Educational Chart:', data);
-  
-    const departments = data.map(item => item.department);
-    const counts = data.map(item => item.count);
-  
-    console.log('Departments:', departments);
-    console.log('Counts:', counts);
-  
-    const ctx = document.getElementById(canvasId).getContext('2d');
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: departments,
-            datasets: [{
-                label: label,
-                data: counts,
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgb(75, 192, 192)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'top',
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function (context) {
-                            const lbl = context.label || '';
-                            const value = context.raw || 0;
-                            return `${lbl}: ${value}`;
-                        }
-                    }
-                }
-            },
-            scales: {
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Department'
-                    }
-                },
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Count'
-                    }
-                }
+// Function to create a chart using ApexCharts
+function createChart(chartID, seriesData, categories) {
+    const options = {
+        chart: {
+            type: 'bar',
+            height: chartID === 'chart1' ? 300 : 400, // Adjust height for chart1
+            width: chartID === 'chart1' ? '80%' : '100%', // Adjust width for chart1
+            zoom: {
+                enabled: chartID === 'chart1' // Enable zoom for chart1
             }
+        },
+        series: seriesData,
+        xaxis: {
+            categories: categories
+        },
+        plotOptions: {
+            bar: {
+                horizontal: false,
+                columnWidth: chartID === 'chart1' ? '60%' : '70%' // Adjust column width for chart1
+            }
+        },
+        title: {
+            text: chartID === 'chart1' ? 'Educational Attainment by Department (Zoomed Out)' : 'Job Grade by Department'
         }
-    });
+    };
+
+    const chart = new ApexCharts(document.querySelector(`#${chartID}`), options);
+    chart.render();
 }
 
-async function createJobGradeChart(chartId, canvasId, label) {
-    const data = await fetchData('chart2');
-    console.log('Data for Job Grade Chart:', data);
-  
-    const jobGrades = data.map(item => item.job_grade);
-    const counts = data.map(item => item.count);
-  
-    console.log('Job Grades:', jobGrades);
-    console.log('Counts:', counts);
-  
-    const ctx = document.getElementById(canvasId).getContext('2d');
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: jobGrades,
-            datasets: [{
-                label: label,
-                data: counts,
-                backgroundColor: 'rgba(255, 159, 64, 0.2)',
-                borderColor: 'rgb(255, 159, 64)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'top',
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function (context) {
-                            const lbl = context.label || '';
-                            const value = context.raw || 0;
-                            return `${lbl}: ${value}`;
-                        }
-                    }
-                }
-            },
-            scales: {
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Job Grade'
-                    }
-                },
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Count'
-                    }
-                }
-            }
-        }
-    });
-}
-document.addEventListener('DOMContentLoaded', function () {
-    createEducationalChart('chart1', 'chart1', 'Educational Attainment by Department');
-    createJobGradeChart('chart2', 'chart2', 'Job Grade by Department');
-});
-
+// Fetch and render charts
+fetchChartData('chart1');
+fetchChartData('chart2');
