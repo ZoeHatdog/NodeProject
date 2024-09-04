@@ -17,6 +17,9 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="/css/forms.css">
     <link rel="stylesheet" type="text/css" href="/css/sample.css">
+
+    <!-- Sweet Alert (This is used for POP-UPS)-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         .rotate-90 {
             transform: rotate(90deg);
@@ -169,7 +172,7 @@
         <main class="main-container">
             <div class="container mt-4" id = "formContainer">
                 <!-- Employee Information Card -->
-                <form action="/submit" method="POST">
+                <form id = "myForm" action="/update" method="POST" novalidate>
                 <div class="card" id="employeeInfoCard">
                     <div class="card-header">
                         <h5 class="mb-0 d-flex justify-content-between align-items-center">
@@ -271,7 +274,7 @@
                                             </div>
                                             <div class="mb-3">
                                                 <label for="email" class="form-label">Email</label>
-                                                <input type="email" class="form-control" id="email" name = "email" placeholder="Enter email" disabled="True" value="<%=employee.email%>">
+                                                <input type="email" class="form-control" id="email" name ="email" placeholder="Enter email" disabled="True" value="<%=employee.email%>">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="emergencyContact" class="form-label">Person to Notify in Case of Emergency</label>
@@ -569,7 +572,7 @@
                             <div class="button-container">
                                 <div class="d-flex justify-content-between mt-3">
                                     <button type="button" id="backBtn" class="btn btn-warning">Back</button>
-                                    <button type="submit" class="btn btn-success">Edit</button>
+                                    <button type="submit" id = "submitBtn" class="btn btn-success">Edit</button>
                                 </div>
                                 <div class="toggle-group mt-2">
                                     <label class="toggle-switch">
@@ -815,6 +818,7 @@
                     const gender = document.getElementById('gender');
                     const contactNumber = document.getElementById('contactNumber');
                     const birthday = document.getElementById('birthday'); 
+                    const age = document.getElementById('age');
 
                     const address = document.getElementById('address');
                     const paddress = document.getElementById('paddress');
@@ -878,6 +882,7 @@
                     educationalAttainment.disabled = !isChecked;
                     course.disabled = !isChecked;
                     birthday.disabled = !isChecked;
+                    age.disabled = !isChecked;
 
                     
                     department.disabled = !isChecked;
@@ -926,7 +931,44 @@
                         switchText.textContent = 'View';
                     }
                 }
-       
+                // POP UP ALERTS
+                document.getElementById('submitBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                const form = document.getElementById('myForm');
+                
+                fetch('/update', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        firstName: form.firstName.value.trim(),
+                        lastName: form.lastName.value.trim(),
+                        employeeNumber: form.employeeNumber.value.trim(),
+                        employeeID: form.employeeID.value.trim(),
+                        commencement: form.commencement.value.trim(),
+                        birthday: form.birthday.value.trim()
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Form updated successfully.',
+                        icon: 'success'
+                    }).then(() => {
+                        // Redirect to another page after success
+                        window.location.href = '/seedata';  // URL AFTER UPDATED
+                    });
+                } else {
+                        Swal.fire('Error!', data.message, 'error');
+                    }
+                })
+                .catch(error => {
+                    Swal.fire('Error!', 'An unexpected error occurred.', 'error');
+                });
+        });
 
         
         </script>
