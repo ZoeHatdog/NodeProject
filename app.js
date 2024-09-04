@@ -765,6 +765,7 @@ app.get('/employee-details', (req, res) => {
                 \`Job Level Classification\` AS job_lvl_classification,
                 \`Classification\` AS classification,
                 \`Commencement of Work\` AS COW,
+                \`Regularization\` as regularization,
 
                 \`TIN number\` AS tin_number,
                 \`SSS number\` AS sss_number,

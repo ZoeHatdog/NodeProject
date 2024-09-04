@@ -383,13 +383,17 @@
                                     </div>
                                     <div class="row">
                                         <div class="col mb-3">
-                                            <label for="Commencement" class="form-label">Commencement of Work</label>
-                                            <input type="date" class="form-control" id="Commencement" name="commencement" placeholder="Enter hire date" onchange="calculateLOS()" disabled = "true" value = "<%=employee.COW%>">
+                                            <label for="Commencement" class="form-label">Commencement of Work*</label>
+                                            <input type="date" class="form-control" id="Commencement" name="commencement" placeholder="Enter hire date" onchange="calculateLOS(),calculateRegularization()" disabled = "true" value = "<%=employee.COW%>">
                                         </div>
                                         <div class="col mb-3">
                                             <label for="LOS" class="form-label">Length of Service (in years)</label>
                                             <input type="text" class="form-control" id="LOS" name="los" placeholder="In years" disabled="true">
                                         </div>
+                                    </div>
+                                    <div class = "mb-3">
+                                        <label for = "regularization" clsas="form-label"> Regularization Date</label>
+                                        <input type = "date" class = "form-control" id="RegularizationDate" name = "RegularizationDate" placeholder=" Date of Regularization" readonly disabled="true" value = "<%=employee.regularization%>">
                                     </div>
                                 </div>
                             </div>
@@ -805,6 +809,28 @@
                 calculateAge();
                 calculateLOS();
             };
+
+
+            function calculateRegularization() {
+                var commencement = document.getElementById('commencement').value;
+                var regularization = document.getElementById('RegularizationDate');
+
+                if (commencement) {
+                    var commencementDate = new Date(commencement);
+                    
+                    // Add 6 months to the commencement date
+                    commencementDate.setMonth(commencementDate.getMonth() + 6);
+                    
+                    // Format the date to 'YYYY-MM-DD' for input field compatibility
+                    var year = commencementDate.getFullYear();
+                    var month = (commencementDate.getMonth() + 1).toString().padStart(2, '0');
+                    var day = commencementDate.getDate().toString().padStart(2, '0');
+                    var regularizationDate = `${year}-${month}-${day}`;
+
+                    // Set the calculated regularization date
+                    regularization.value = regularizationDate;
+                }
+            }
         
                 function toggleEditMode() {
                     const empNumber = document.getElementById('empNumber');
@@ -851,7 +877,7 @@
                     const PAF2021 = document.getElementById('PAF2021');
                     const PAF2022 = document.getElementById('PAF2022');
                     const PAF2023 = document.getElementById('PAF2023');
-                    const PAF2024 = document.getElementById('PAF2018');
+                    const PAF2024 = document.getElementById('PAF2024');
 
                     const rate = document.getElementById('rate');
                     const allowance = document.getElementById('allowanceInput');
@@ -942,12 +968,55 @@
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        firstName: form.firstName.value.trim(),
-                        lastName: form.lastName.value.trim(),
                         employeeNumber: form.employeeNumber.value.trim(),
                         employeeID: form.employeeID.value.trim(),
+                        firstName: form.firstName.value.trim(),
+                        middleName: form.middleName.value.trim(),
+                        lastName: form.lastName.value.trim(),
+                        nickname: form.nickname.value.trim(),
+                        designation: form.designation.value.trim(),
+                        department: form.department.value.trim(),
+                        workSchedule: form.workSchedule.value.trim(),
+                        jobGrade: form.jobGrade.value.trim(),
+                        jobLevel: form.jobLevel.value.trim(),
+                        classification: form.classification.value.trim(),
+                        educationalAttainment: form.educationalAttainment.value.trim(),
+                        course: form.course.value.trim(),
                         commencement: form.commencement.value.trim(),
-                        birthday: form.birthday.value.trim()
+                        isActive: form.isActive.value.trim(),
+                        RegularizationDate: form.RegularizationDate.value.trim(),
+                        SSS: form.SSS.value.trim(),
+                        philhealth: form.philhealth.value.trim(),
+                        taxStatus: form.taxStatus.value.trim(),
+                        tinNumber: form.tinNumber.value.trim(),
+                        pagibig: form.pagibig.value.trim(),
+                        birthday: form.birthday.value.trim(),
+                        age: form.age.value.trim(),
+                        address: form.address.value.trim(),
+                        paddress: form.paddress.value.trim(),
+                        religion: form.religion.value.trim(),
+                        contactNumber: form.contactNumber.value.trim(),
+                        email: form.email.value.trim(),
+                        companyEmail: form.companyEmail.value.trim(),
+                        emergencyContact: form.emergencyContact.value.trim(),
+                        emergencyNumber: form.emergencyNumber.value.trim(),
+                        los: form.los.value.trim(),
+                        gender: form.gender.value.trim(),
+                        pafSchedule: form.pafSchedule.value.trim(),
+                        PAF2018: form.PAF2018.value.trim(),
+                        PAF2019: form.PAF2019.value.trim(),
+                        PAF2020: form.PAF2020.value.trim(),
+                        PAF2021: form.PAF2021.value.trim(),
+                        PAF2022: form.PAF2022.value.trim(),
+                        PAF2023: form.PAF2023.value.trim(),
+                        PAF2024: form.PAF2024.value.trim(),
+                        allowance: form.allowance.value.trim(),
+                        rate: form.rate.value.trim(),
+                        /*                                                           TO BE FIXED TOMORROW 
+                        seperationDate: form.seperationDate.value.trim(),
+                        seperationCategory: form.seperationCategory.value.trim(),
+                        reasonOfSeparation: form.reasonOfSeparation.value.trim()
+                        */
                     })
                 })
                 .then(response => response.json())
