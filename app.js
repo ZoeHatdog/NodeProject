@@ -28,7 +28,7 @@ db.connect((err) => {
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(session({
@@ -92,14 +92,14 @@ app.get('/see-per-chart', (req, res) => {
 
 app.post('/submit', (req, res) => {
     const {
-        employeeNumber, employeeID, firstName, middleName, lastName, nickname, designation, department, workSchedule, jobGrade,
+        employeeNumber, employeeID, firstName, nameMiddle, lastName, nickname, designation, department, workSchedule, jobGrade,
         jobLevel, classification, educationalAttainment, course, commencement, isActive, RegularizationDate, SSS, philhealth,
         taxStatus, tinNumber, pagibig, birthday, age, address, paddress, religion, contactNumber, email, companyEmail, emergencyContact, emergencyNumber,
         los, gender, pafSchedule, PAF2018, PAF2019, PAF2020, PAF2021, PAF2022, PAF2023, PAF2024, allowance, rate, seperationDate,
         seperationCategory, reasonOfSeparation
     } = req.body;
 
-    console.log(reasonOfSeparation, seperationDate, seperationCategory, isActive);
+    console.log(req.body);
     
     // Function to return "-" if value is empty, undefined, or null
     function defaultToDash(value) {
@@ -134,7 +134,7 @@ app.post('/submit', (req, res) => {
 
     // Ensure specific fields default to "-"
     const insertValues = [
-        defaultToDash(employeeNumber), defaultToDash(employeeID), defaultToDash(firstName), defaultToDash(middleName), 
+        defaultToDash(employeeNumber), defaultToDash(employeeID), defaultToDash(firstName), defaultToDash(nameMiddle), 
         defaultToDash(lastName), defaultToDash(nickname), defaultToDash(designation), defaultToDash(department), 
         defaultToDash(workSchedule), defaultToDash(jobGrade), defaultToDash(jobLevel), defaultToDash(classification), 
         defaultToDash(educationalAttainment), defaultToDash(course), defaultToDash(commencement), defaultToDash(isActive), 
@@ -146,13 +146,13 @@ app.post('/submit', (req, res) => {
         defaultToDash(PAF2021), defaultToDash(PAF2022), defaultToDash(PAF2023), defaultToDash(PAF2024), 
         defaultToDash(allowance), defaultToDash(rate), defaultToDash(isActive), 
         defaultToDash(seperationDate), defaultToDash(seperationCategory), defaultToDash(reasonOfSeparation),
-        defaultToDash(employeeNumber), `Q${defaultToDash(employeeID)}`, `${lastName}, ${firstName} ${middleName}`, 
+        defaultToDash(employeeNumber), `Q${defaultToDash(employeeID)}`, `${lastName}, ${firstName} ${nameMiddle}`, 
         defaultToDash(tinNumber), defaultToDash(taxStatus), defaultToDash(RegularizationDate), defaultToDash(commencement), 
         threeMonths(commencement), fiveMonths(commencement), defaultToDash(address), defaultToDash(paddress)
         
     ];
     
-    console.log("This is the middle name", middleName);
+    console.log(insertValues);
 
 
     //Check Parameters
@@ -203,6 +203,7 @@ app.post('/submit', (req, res) => {
             console.error('Error inserting data:', insertErr);
             return res.status(500).send('Internal Server Error');
         }
+        console.log(insertValues);
         res.json({ success: true });
      // Redirect to a success page or another route
     });

@@ -139,15 +139,15 @@
                                             <div class="row">
                                                 <div class="col">
                                                     <label for="firstName" class="form-label">First Name*</label>
-                                                    <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Enter first name">
+                                                    <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Enter first name" required>
                                                 </div>
                                                 <div class="col">
-                                                    <label for="middleName" class="form-label">Middle Name</label>
-                                                    <input type="text" class="form-control" id="middleName" name = "middleName" placeholder="Enter middle name">
+                                                    <label for="nameMiddle" class = "form-label"> Middle NAme</label>
+                                                    <input type="text" class="form-control" id = "nameMiddle" name = "nameMiddle" placeholder="Enter your middle name">
                                                 </div>
                                                 <div class="col">
                                                     <label for="lastName" class="form-label">Last Name*</label>
-                                                    <input type="text" class="form-control" id="lastName"  name ="lastName" placeholder="Enter last name">
+                                                    <input type="text" class="form-control" id="lastName"  name ="lastName" placeholder="Enter last name" required>
                                                 </div>
                                             </div>
                                             <br>
@@ -503,7 +503,7 @@
                             
                             <div  class="d-flex justify-content-between">
                                 <button type="button" id="backBtn" class="btn btn-warning">Back</button>
-                                <button type = "submit" class="btn btn-success btn-success-2" id="submitBtn">Submit</button>
+                                <button type = "submit" class="btn btn-success btn-success-2" id="submitBtn" onsubmit="printMiddleName()">Submit</button>
                             </div>
                             </div>
                         </form>
@@ -524,6 +524,11 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
         <script>
+            function printMiddleName(){
+                const middlename = document.getElementById('middleName').value;
+
+                console.log('Print Middle name', middlename);
+            }
 
             document.getElementById('submitBtn').addEventListener('click', function(e) {
                 e.preventDefault();
@@ -535,13 +540,50 @@
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        firstName: form.firstName.value.trim(),
-                        lastName: form.lastName.value.trim(),
                         employeeNumber: form.employeeNumber.value.trim(),
                         employeeID: form.employeeID.value.trim(),
+                        firstName: form.firstName.value.trim(),
+                        nameMiddle: form.nameMiddle.value.trim(),
+                        lastName: form.lastName.value.trim(),
+                        nickname: form.nickname.value.trim(),
+                        designation: form.designation.value.trim(),
+                        department: form.department.value.trim(),
+                        workSchedule: form.workSchedule.value.trim(),
+                        jobGrade: form.jobGrade.value.trim(),
+                        jobLevel: form.jobLevel.value.trim(),
+                        classification: form.classification.value.trim(),
+                        educationalAttainment: form.educationalAttainment.value.trim(),
+                        course: form.course.value.trim(),
                         commencement: form.commencement.value.trim(),
-                        birthday: form.birthday.value.trim()
-                        
+                        isActive: form.isActive.value.trim(),
+                        RegularizationDate: form.RegularizationDate.value.trim(),
+                        SSS: form.SSS.value.trim(),
+                        philhealth: form.philhealth.value.trim(),
+                        taxStatus: form.taxStatus.value.trim(),
+                        tinNumber: form.tinNumber.value.trim(),
+                        pagibig: form.pagibig.value.trim(),
+                        birthday: form.birthday.value.trim(),
+                        age: form.age.value.trim(),
+                        address: form.address.value.trim(),
+                        paddress: form.paddress.value.trim(),
+                        religion: form.religion.value.trim(),
+                        contactNumber: form.contactNumber.value.trim(),
+                        email: form.email.value.trim(),
+                        companyEmail: form.companyEmail.value.trim(),
+                        emergencyContact: form.emergencyContact.value.trim(),
+                        emergencyNumber: form.emergencyNumber.value.trim(),
+                        los: form.los.value.trim(),
+                        gender: form.gender.value.trim(),
+                        pafSchedule: form.pafSchedule.value.trim(),
+                        PAF2018: form.PAF2018.value.trim(),
+                        PAF2019: form.PAF2019.value.trim(),
+                        PAF2020: form.PAF2020.value.trim(),
+                        PAF2021: form.PAF2021.value.trim(),
+                        PAF2022: form.PAF2022.value.trim(),
+                        PAF2023: form.PAF2023.value.trim(),
+                        PAF2024: form.PAF2024.value.trim(),
+                        allowance: form.allowance.value.trim(),
+                        rate: form.rate.value.trim()
                     })
                 })
                 .then(response => response.json())
