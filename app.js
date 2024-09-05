@@ -57,24 +57,51 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/seedata',  (req, res) => {
-    res.render(path.join(__dirname, 'views', 'see-data.ejs'));
+    if(req.session.loggedin){
+        res.render(path.join(__dirname, 'views', 'see-data.ejs'));
+    } 
+    else {
+        res.redirect('/login');
+    }
 });
 
 app.get('/registration', (req, res) => {
-    res.render('registration.ejs'); // Renders the 'registration.ejs' file
+    if(req.session.loggedin){
+        res.render('registration.ejs'); 
+    }
+    else{
+    
+        return res.redirect('/login');
+    }
 });
 app.get('/add',  (req, res) => {
-    res.render(path.join(__dirname, 'views', 'add.ejs'));
-
+    if (req.session.loggedin){
+        res.render(path.join(__dirname, 'views', 'add.ejs'));}
+    else{
+        return res.redirect('/login');
+    }
 });
 
 app.get('/delete',  (req, res) => {
-    res.render('delete');
+    if(req.session.loggedin){
+        res.render('delete');
+    }
+    else{
+        return res.redirect('/login');
+    }
 });
+
+app.get('/messaging', (req, res) => {
+    if(req.session.loggedin){
+        res.render(path.join(__dirname, 'views', 'messaging.ejs'));
+    }
+    else{
+        return
+    }
+})
 
 app.get('/seeemployee',  (req, res) => {
     res.render(path.join(__dirname, 'views', 'see-employee.ejs'));
-
 });
 app.get('/see-inactive', (req, res) => {
     res.render(path.join(__dirname, 'views', 'see-inactive.ejs'));
@@ -99,11 +126,15 @@ app.post('/submit', (req, res) => {
         seperationCategory, reasonOfSeparation
     } = req.body;
 
-    console.log(req.body);
+    
+
+
+    console.log("ADD - JSON BODY",req.body);
     
     // Function to return "-" if value is empty, undefined, or null
     function defaultToDash(value) {
         return value === undefined || value === null || value === '' ? '-' : value;
+        
     }
 
     // Function to add 3 months to a given date
@@ -114,7 +145,7 @@ app.post('/submit', (req, res) => {
             var year = commencementDate.getFullYear();
             var month = (commencementDate.getMonth() + 1).toString().padStart(2, '0');
             var day = commencementDate.getDate().toString().padStart(2, '0');
-            return `${year}-${month}-${day}`;
+            return `${year}-${month}-${day} 00:00:00`;
         }
         return '-';
     }
@@ -127,9 +158,18 @@ app.post('/submit', (req, res) => {
             var year = commencementDate.getFullYear();
             var month = (commencementDate.getMonth() + 1).toString().padStart(2, '0');
             var day = commencementDate.getDate().toString().padStart(2, '0');
-            return `${year}-${month}-${day}`;
+            return `${year}-${month}-${day} 00:00:00`;
         }
         return '-';
+    }
+    function plusZeroTime(value){
+        if (value){
+            var commencementDate = new Date(value);
+            var year = commencementDate.getFullYear();
+            var month = (commencementDate.getMonth() + 1).toString().padStart(2, '0');
+            var day = commencementDate.getDate().toString().padStart(2, '0');
+            return `${year}-${month}-${day} 00:00:00`;
+        }
     }
 
     // Ensure specific fields default to "-"
@@ -137,7 +177,7 @@ app.post('/submit', (req, res) => {
         defaultToDash(employeeNumber), defaultToDash(employeeID), defaultToDash(firstName), defaultToDash(nameMiddle), 
         defaultToDash(lastName), defaultToDash(nickname), defaultToDash(designation), defaultToDash(department), 
         defaultToDash(workSchedule), defaultToDash(jobGrade), defaultToDash(jobLevel), defaultToDash(classification), 
-        defaultToDash(educationalAttainment), defaultToDash(course), defaultToDash(commencement), defaultToDash(isActive), 
+        defaultToDash(educationalAttainment), defaultToDash(course), plusZeroTime(commencement), defaultToDash(isActive), 
         defaultToDash(RegularizationDate), defaultToDash(SSS), defaultToDash(philhealth), defaultToDash(taxStatus), 
         defaultToDash(tinNumber), defaultToDash(pagibig), defaultToDash(birthday), defaultToDash(age), defaultToDash(religion), 
         defaultToDash(contactNumber), defaultToDash(email), defaultToDash(companyEmail), defaultToDash(emergencyContact), 
@@ -198,15 +238,33 @@ app.post('/submit', (req, res) => {
     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 `;
 
-    db.query(insertSql, insertValues, (insertErr, insertResult) => {
-        if (insertErr) {
-            console.error('Error inserting data:', insertErr);
-            return res.status(500).send('Internal Server Error');
+
+
+    db.beginTransaction((err) =>{
+        if (err){
+            return res.status(500).send('Transaction Error' + err);
         }
-        console.log(insertValues);
-        res.json({ success: true });
-     // Redirect to a success page or another route
-    });
+        db.query(insertSql, insertValues, (insertErr, insertResult) => {
+            if (insertErr) {
+                return db.rollback(() => {
+                    console.error('Error inserting data:', insertErr);
+                    return res.status(500).send('Internal Server Error');
+                });
+            }
+    
+            db.commit((commitErr) => {
+                if (commitErr) {
+                    return db.rollback(() => {
+                        console.error('Error committing transaction:', commitErr);
+                        return res.status(500).send('Internal Server Error');
+                    });
+                }
+                console.log('Transaction Completed');
+                res.json({ success: true });
+            });
+        });
+    })
+    
 });
 
 app.post('/update', (req, res) =>{ 
@@ -218,7 +276,7 @@ app.post('/update', (req, res) =>{
         los, gender, pafSchedule, PAF2018, PAF2019, PAF2020, PAF2021, PAF2022, PAF2023, PAF2024, allowance, rate, seperationDate,
         seperationCategory, reasonOfSeparation
     } = req.body;
-    
+    console.log("UPDATE - JSON BODY",req.body);
     // Function to return "-" if value is empty, undefined, or null
     function defaultToDash(value) {
         return value === undefined || value === null || value === '' ? '-' : value;
@@ -252,7 +310,7 @@ app.post('/update', (req, res) =>{
     
     // Ensure specific fields default to "-"
     const insertValues = [
-        defaultToDash(employeeID), `${lastName}, ${firstName} ${middleName}`, defaultToDash(middleName), 
+        defaultToDash(employeeID), defaultToDash(firstName), defaultToDash(middleName), 
         defaultToDash(lastName), defaultToDash(nickname), defaultToDash(designation), defaultToDash(department), 
         defaultToDash(workSchedule), defaultToDash(jobGrade), defaultToDash(jobLevel), defaultToDash(classification), 
         defaultToDash(educationalAttainment), defaultToDash(course), defaultToDash(commencement), 
@@ -342,13 +400,18 @@ app.get('/dashboard', (req, res) => {
             (SELECT SUM(CASE WHEN \`Status\` = 'inactive' THEN 1 ELSE 0 END) FROM masterlist) AS inactiveCount,
             (SELECT COUNT(*) FROM masterlist) AS TotalEmployees,
             (SELECT COUNT(*) FROM users) AS RegisteredUsers
-    `;
+        `;
+    
         db.query(query, (err, results) => {
             if (err) {
-                return res.send('Error fetching data'); // Sending error response
-                // No return here, which can lead to multiple sends
+                return res.send('Error fetching data');
             }
+    
             const { activeCount, inactiveCount, TotalEmployees, RegisteredUsers } = results[0];
+    
+            // Disable caching
+            res.set('Cache-Control', 'no-store');
+    
             res.render('dashboard', { 
                 username: req.session.username, 
                 activeCount, 
@@ -356,11 +419,11 @@ app.get('/dashboard', (req, res) => {
                 TotalEmployees, 
                 RegisteredUsers 
             });
-
         });
     } else {
         res.redirect('/login');
     }
+    
 });
 
 app.get('/api/username', (req, res) => {
@@ -458,7 +521,7 @@ app.get('/data', (req, res) => {
             ELSE '60+'
           END as age_range, 
           COUNT(*) as count 
-        FROM geninfolist 
+        FROM masterlist 
         GROUP BY age_range
       `;
     } else if (chartId === 'chart2') {
@@ -466,7 +529,7 @@ app.get('/data', (req, res) => {
         SELECT 
           department, 
           COUNT(*) as count 
-        FROM geninfolist 
+        FROM masterlist 
         WHERE department IN ('admin', 'engineering', 'FEME', 'manufacturing', 'QA', 'R&D', 'Sales', 'Top Management', 'IT')
         GROUP BY department
       `;
@@ -476,11 +539,7 @@ app.get('/data', (req, res) => {
           YEAR(\`Commencement of Work\`) AS year,
           COUNT(*) AS number_of_employees
         FROM 
-          geninfolist
-        WHERE 
-          \`Commencement of Work\` IS NOT NULL 
-          AND \`Commencement of Work\` != ''
-          AND \`Commencement of Work\` REGEXP '^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$'
+          masterlist
         GROUP BY 
           YEAR(\`Commencement of Work\`)
         ORDER BY 
@@ -493,7 +552,7 @@ app.get('/data', (req, res) => {
           gender,
           COUNT(*) as count 
         FROM 
-          geninfolist 
+          masterlist 
         GROUP BY 
           department, gender 
         ORDER BY 
@@ -505,7 +564,7 @@ app.get('/data', (req, res) => {
         \`length of service\` AS service_length,
         COUNT(*) AS number_of_employees
       FROM 
-        geninfolist
+        masterlist
       WHERE 
         \`length of service\` IS NOT NULL 
         AND \`length of service\` != ''

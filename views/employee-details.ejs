@@ -546,8 +546,8 @@
                                             <label for="isActive" class="form-label mb-0 font-weight-bold">Is Active</label>
                                             <select name="isActive" class="form-select" id="Active" onchange="toggleSeparationFields()" disabled="true">
                                                 
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
+                                                <option value="Active">Yes</option>
+                                                <option value="Inactive">No</option>
                                             </select>
                                         </div>
                                        
@@ -952,6 +952,7 @@
                     if (isChecked) {
                         container.classList.add('container-edit-mode');
                         switchText.textContent = 'Edit';
+                        
                     } else {
                         container.classList.remove('container-edit-mode');
                         switchText.textContent = 'View';
@@ -961,13 +962,18 @@
                 document.getElementById('submitBtn').addEventListener('click', function(e) {
                 e.preventDefault();
                 const form = document.getElementById('myForm');
-                
+                const Edit = document.getElementById('switchText').textContent;
+                console.log("edit",Edit);
+
+                if (Edit === 'Edit'){
                 fetch('/update', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
+                    
+                        
                         employeeNumber: form.employeeNumber.value.trim(),
                         employeeID: form.employeeID.value.trim(),
                         firstName: form.firstName.value.trim(),
@@ -1037,6 +1043,13 @@
                 .catch(error => {
                     Swal.fire('Error!', 'An unexpected error occurred.', 'error');
                 });
+            } else{
+                Swal.fire({
+                    title: 'Failed to Edit',
+                    text: 'Form cannot Update, click Edit.',
+                    icon: 'error'
+                })
+            }
         });
 
         
