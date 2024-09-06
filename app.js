@@ -6,9 +6,17 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const path = require('path');
 const { Console, error } = require('console');
-const port = 3000;
+
 
 const app = express();
+
+const http = require('http');
+const { Server } = require('socket.io');
+const server = http.createServer(app);
+const io = new Server(server);
+const port = 3000;
+
+
 
 // MySQL connection
 const db = mysql.createConnection({
@@ -963,7 +971,74 @@ app.post('/delete-employee', express.json(), (req, res) => {
 });
 
 
-app.listen(port, () => {
+
+// -------------------------->     FOR MESSAGING APP <----------------------------------------
+
+
+// DATABASE FOR MESSAGES 
+const messageDB = mysql.createConnection({
+    host: 'localhost',
+    user: 'root', // Use your MySQL username
+    password: 'welcome.2024', // Use your MySQL password
+    database: 'chatgroup'
+});
+
+messageDB.connect((err) => {
+    if (err) {
+        console.error('Error connecting to the database:', err);
+        return;
+    }
+    console.log('Connected to the MySQL database');
+});
+
+io.on('connection', (socket) => {
+    // Notify all clients that a new user has joined
+    io.emit('chat message', 'A new user has joined the chat.');
+  
+    // Fetch previous messages from MySQL and send them to the newly connected client
+    messageDB.query('SELECT * FROM messages ORDER BY timestamp ASC LIMIT 100', (err, results) => {
+        if (err) {
+            console.error('Error fetching messages:', err);
+            return;
+        }
+        // Send the fetched messages to the connected client
+        socket.emit('load previous messages', results);
+    });
+  
+    // Handle new incoming message
+    socket.on('chat message', (msg) => {
+        // Insert the new message into the MySQL database
+        messageDB.query('INSERT INTO messages (message) VALUES (?)', [msg], (err, result) => {
+            if (err) {
+                console.error('Error saving message:', err);
+                return;
+            }
+            // Broadcast the new message to all connected clients
+            io.emit('chat message', msg);
+        });
+    });
+  
+    // Handle message clearing event
+    socket.on('clear messages', () => {
+        // Clear all messages from the MySQL database
+        messageDB.query('DELETE FROM messages', (err) => {
+            if (err) {
+                console.error('Error clearing messages:', err);
+                return;
+            }
+            // Notify all clients to clear their chat windows
+            io.emit('messages cleared');
+        });
+    });
+  
+    // Notify all clients when a user disconnects
+    socket.on('disconnect', () => {
+        io.emit('chat message', 'A user has left the chat.');
+    });
+});
+
+
+server.listen(port, () => {
     console.log(`Server running at http://localhost:${port}/`);
 });
 

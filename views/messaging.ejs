@@ -24,6 +24,29 @@
             text-decoration: none;
     }   
 
+    #chat { 
+        max-height: 300px; 
+        overflow-y: auto; 
+        border: 1px solid #ddd; 
+        padding: 10px;
+    }
+    #message{
+        height: 75px;
+        width: 89%;
+        font-size: larger;
+    }
+    
+    #sendBtn{
+        height: 81px;
+        width: 9%;
+        font-size: larger;
+        font-family: "Montserrat", sans-serif;
+    }
+    
+    button { margin-top: 10px; }
+    ul { list-style-type: none; padding: 0; }
+    li { padding: 5px 0; }
+
     </style>
 </head>
 <body>
@@ -101,13 +124,80 @@
 
         <!-- Main -->
         <main class="main-container">
+            <h1>Chat Group</h1>
+            <ul id="chat"></ul>
+            <div class = "d-flex">
+                <form id="form" action="">
+                    <input class = "flex-fill" id="message" autocomplete="off" placeholder="Type your message here..." />
+                    <button id = "sendBtn">Send</button>
+                </form>
 
+                <!-- Clear Messages Button -->
+                <button id="clearBtn">Clear Messages</button>
+            </div>
         </main>
         <!-- End Main -->
 
     </div>
 
     <!-- Custom JS -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        // Get DOM elements
+        const form = document.getElementById('form');
+        const input = document.getElementById('message');
+        const chat = document.getElementById('chat');
+        const clearBtn = document.getElementById('clearBtn');
+
+        // Load previous messages
+        socket.on('load previous messages', (messages) => {
+            chat.innerHTML = ''; // Clear the chat window
+            messages.forEach((msg) => {
+                const li = document.createElement('li');
+                li.textContent = msg.message;
+                chat.appendChild(li);
+            });
+            chat.scrollTop = chat.scrollHeight; // Auto scroll to the bottom
+        });
+
+        // Listen for form submission
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (input.value) {
+                socket.emit('chat message', input.value); // Send message to server
+                input.value = '';
+            }
+        });
+
+        // Listen for new messages from the server
+        socket.on('chat message', (msg) => {
+            const li = document.createElement('li');
+            li.textContent = msg;
+            chat.appendChild(li);
+            chat.scrollTop = chat.scrollHeight; // Auto scroll to the bottom
+        });
+
+        // Listen for when a user connects
+        socket.on('user connected', (msg) => {
+            const li = document.createElement('li');
+            li.textContent = msg; // Display user connected message
+            li.style.fontStyle = 'italic'; // Optional: Make the message italic
+            chat.appendChild(li);
+            chat.scrollTop = chat.scrollHeight; // Auto scroll to the bottom
+        });
+
+        // Handle "Clear Messages" button click
+        clearBtn.addEventListener('click', () => {
+            socket.emit('clear messages'); // Send a request to clear messages
+        });
+
+        // Handle clearing messages in the chat window
+        socket.on('messages cleared', () => {
+            chat.innerHTML = ''; // Clear the chat window on all clients
+        });
+    </script>
     <script src="/js/scripts.js"></script>
 </body>
 </html>
