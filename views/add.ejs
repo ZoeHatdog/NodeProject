@@ -324,9 +324,19 @@
                                             <input type="text" class="form-control" id="LOS" name="los" placeholder="In years" readonly>
                                         </div>
                                     </div>
-                                    <div class = "mb-3">
-                                        <label for = "regularization" clsas="form-label"> Regularization Date</label>
-                                        <input type = "date" class = "form-control" id="RegularizationDate" name = "RegularizationDate" placeholder=" Date of Regularization" readonly>
+                                    <div class = "row">
+                                        <div class = "col mb-3">
+                                            <label for = "regularization" class="form-label"> Regularization Date</label>
+                                            <input type = "date" class = "form-control" id="RegularizationDate" name = "RegularizationDate" placeholder=" Date of Regularization" readonly>
+                                        </div>
+                                        <div class="col">
+                                            <label for="employmentStatus" class="form-label">Employment Status</label>
+                                            <select id="employmentStatus">
+                                                <option value="Probationary">Probationary</option>
+                                                <option value="Regular">Regular</option>
+                                            </select>
+                                            
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -696,6 +706,17 @@
 
                     // Set the calculated regularization date
                     regularization.value = regularizationDate;
+                    var today = new Date();
+                    today.setHours(0, 0, 0, 0); 
+
+                    
+                    if (commencementDate <= today) {
+                        // If regularization date is before or equal to today, set employment status to 'Regular'
+                        employmentStatus.value = 'Probationary';
+                    } else {
+                        // If regularization date is after today, set employment status to 'Probationary'
+                        employmentStatus.value = 'Regular';
+                    }
                 }
             }
 

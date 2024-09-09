@@ -956,17 +956,23 @@ app.get('/api/employees', (req, res) => {
 
 
 // Endpoint to handle employee deletion
-app.post('/delete-employee', express.json(), (req, res) => {
-    const emp_id = req.body.emp_id;
-    const query = 'DELETE FROM masterlist WHERE `EMP ID #.` = ?';
+app.post('/delete-employee', (req, res) => {
+    const empId = req.body.emp_id;
 
-    db.query(query, [emp_id], (err, results) => {
-        if (err) {
-            console.error('Error deleting employee:', err.message);
-            res.status(500).json({ error: 'Server Error', details: err.message });
-            return;
+    // Assuming you have a function to delete the employee from the database
+    const query = 'DELETE FROM masterlist WHERE `EMP ID #.` = ?';
+    
+    db.query(query, [empId], (error, result) => {
+        if (error) {
+            console.error('Error deleting employee:', error);
+            return res.json({ success: false, message: 'Error deleting employee from the database' });
         }
-        res.json({ message: 'Employee deleted successfully' });
+
+        if (result.affectedRows > 0) {
+            return res.json({ success: true });
+        } else {
+            return res.json({ success: false, message: 'Employee not found' });
+        }
     });
 });
 
