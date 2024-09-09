@@ -186,8 +186,8 @@ app.post('/submit', (req, res) => {
         defaultToDash(lastName), defaultToDash(nickname), defaultToDash(designation), defaultToDash(department), 
         defaultToDash(workSchedule), defaultToDash(jobGrade), defaultToDash(jobLevel), defaultToDash(classification), 
         defaultToDash(educationalAttainment), defaultToDash(course), plusZeroTime(commencement), defaultToDash(isActive), 
-        defaultToDash(RegularizationDate), defaultToDash(SSS), defaultToDash(philhealth), defaultToDash(taxStatus), 
-        defaultToDash(tinNumber), defaultToDash(pagibig), defaultToDash(birthday), defaultToDash(age), defaultToDash(religion), 
+        defaultToDash(plusZeroTime(RegularizationDate)), defaultToDash(SSS), defaultToDash(philhealth), defaultToDash(taxStatus), 
+        defaultToDash(tinNumber), defaultToDash(pagibig), defaultToDash(plusZeroTime(birthday)), defaultToDash(age), defaultToDash(religion), 
         defaultToDash(contactNumber), defaultToDash(email), defaultToDash(companyEmail), defaultToDash(emergencyContact), 
         defaultToDash(emergencyNumber), defaultToDash(los), defaultToDash(gender), 
         defaultToDash(pafSchedule), defaultToDash(PAF2018), defaultToDash(PAF2019), defaultToDash(PAF2020), 
@@ -195,7 +195,7 @@ app.post('/submit', (req, res) => {
         defaultToDash(allowance), defaultToDash(rate), defaultToDash(isActive), 
         defaultToDash(seperationDate), defaultToDash(seperationCategory), defaultToDash(reasonOfSeparation),
         defaultToDash(employeeNumber), `Q${defaultToDash(employeeID)}`, `${lastName}, ${firstName} ${nameMiddle}`, 
-        defaultToDash(tinNumber), defaultToDash(taxStatus), defaultToDash(RegularizationDate), defaultToDash(commencement), 
+        defaultToDash(tinNumber), defaultToDash(taxStatus), defaultToDash(plusZeroTime(RegularizationDate)), defaultToDash(plusZeroTime(commencement)), 
         threeMonths(commencement), fiveMonths(commencement), defaultToDash(address), defaultToDash(paddress)
         
     ];

@@ -685,10 +685,10 @@
                 if (commencement) {
                     var commencementDate = new Date(commencement);
                     
-                    // Add 6 months to the commencement date
+                    // + 6 indicates plus 6 months to the commencement date
                     commencementDate.setMonth(commencementDate.getMonth() + 6);
                     
-                    // Format the date to 'YYYY-MM-DD' for input field compatibility
+                    // Format the date to 'YYYY-MM-DD' 
                     var year = commencementDate.getFullYear();
                     var month = (commencementDate.getMonth() + 1).toString().padStart(2, '0');
                     var day = commencementDate.getDate().toString().padStart(2, '0');
