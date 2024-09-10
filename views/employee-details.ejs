@@ -387,13 +387,23 @@
                                             <input type="date" class="form-control" id="Commencement" name="commencement" placeholder="Enter hire date" onchange="calculateLOS(),calculateRegularization()" disabled = "true" value = "<%=employee.COW%>">
                                         </div>
                                         <div class="col mb-3">
-                                            <label for="LOS" class="form-label">Length of Service (in years)</label>
-                                            <input type="text" class="form-control" id="LOS" name="los" placeholder="In years" disabled="true">
+                                            <label for="los" class="form-label">Length of Service (in years)</label>
+                                            <input type="text" class="form-control" id="los" name="los" placeholder="In years" disabled="true" value="<%=employee.LOS%>">
                                         </div>
                                     </div>
-                                    <div class = "mb-3">
-                                        <label for = "regularization" clsas="form-label"> Regularization Date</label>
-                                        <input type = "date" class = "form-control" id="RegularizationDate" name = "RegularizationDate" placeholder=" Date of Regularization" readonly disabled="true" value = "<%=employee.regularization%>">
+                                    <div class = "row">
+                                        <div class = "col mb-3">
+                                            <label for = "regularization" class="form-label"> Regularization Date</label>
+                                            <input type = "date" class = "form-control" id="regularization" name = "RegularizationDate" placeholder=" Date of Regularization" disabled="true" value = "<%=employee.RegularizationDate%>" readonly>
+                                        </div>
+                                        <div class="col mb-3">
+                                            <label for="employmentStatus" class="form-label">Employment Status</label>
+                                            <select id="employmentStatus" class="form-select" name ="employmentStatus" disabled="true" value = "<%=employee.employmentStatus%>">
+                                                <option value="Probationary">Probationary</option>
+                                                <option value="Regular">Regular</option>
+                                                <option value="Fixed Term">Fixed Term</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -523,18 +533,24 @@
                                         </div>
                                     </div>
             
-                                    
-                                    <div class="mb-3">
-                                        <div class="d-flex align-items-center">
-                                            <label for="allowance" class="form-label font-weight-bold mb-0">Allowance</label>
-                                            <span> (check if applicable)</span>
-                                            <input class="form-check-input ms-2 custom-checkbox" type="checkbox" id="allowanceCheckbox" onclick="toggleAllowanceInput()">
-                                            
+                                    <div class = "row">
+                                        <div class="col mb-3">
+                                            <div class="d-flex align-items-center">
+                                                <label for="allowance" class="form-label font-weight-bold mb-0">Allowance</label>
+                                                <span> (check if applicable)</span>
+                                                <input class="form-check-input ms-2 custom-checkbox" type="checkbox" id="allowanceCheckbox" onclick="toggleAllowanceInput()">
+                                                
+                                            </div>
+                                            <div id="allowanceInputGroup" class="d-none mt-2">
+                                                <input type="text" class="form-control" id="allowanceInput" name = "allowance" placeholder="Enter allowance amount" disabled="true" value ="<%=employee.allowance%>">
+                                            </div>
                                         </div>
-                                        <div id="allowanceInputGroup" class="d-none mt-2">
-                                            <input type="text" class="form-control" id="allowanceInput" name = "allowance" placeholder="Enter allowance amount" disabled="true" value ="<%=employee.allowance%>">
+                                        <div class = "col mb-3">
+                                            <label for="salary" class="form-label font-weight-bold mb-0"> Basic Pay </label>
+                                            <input type="text" class = "form-control" id = "salary" name = "salary" placeholder="Enter Basic Pay" disabled = "true" value="<%=employee.salary%>">
                                         </div>
                                     </div>
+
                                     <div class = "row">
                                         <div class = "col mb-3">
                                             <label for="rate" class="form-label mb-0 font-weight-bold"> Rate </label>
@@ -544,10 +560,10 @@
                                         
                                         <div class="col mb-3">
                                             <label for="isActive" class="form-label mb-0 font-weight-bold">Is Active</label>
-                                            <select name="isActive" class="form-select" id="Active" onchange="toggleSeparationFields()" disabled="true">
-                                                
-                                                <option value="Active">Yes</option>
-                                                <option value="Inactive">No</option>
+                                            <select name="isActive" class="form-select" id="isActive" onchange="toggleSeparationFields()" disabled="true"> <!--NO VALUE (TO BE FIXED)--->
+                                                <option selected><%=employee.status%></option>
+                                                <option value="Active">Active</option>
+                                                <option value="Inactive">Inacive</option>
                                             </select>
                                         </div>
                                        
@@ -881,12 +897,16 @@
 
                     const rate = document.getElementById('rate');
                     const allowance = document.getElementById('allowanceInput');
-                    const active = document.getElementById('Active');
+                    const active = document.getElementById('isActive');
                     const reasonOfSeparation = document.getElementById('reasonOfSeparation');
                     const separationCategory = document.getElementById('separationCategory');
 
+                    const salary = document.getElementById('salary');
+                    const employmentStatus = document.getElementById('employmentStatus');
+                    const RegularizationDate = document.getElementById('regularization');
+                    const los = document.getElementById('los');
 
-
+                    
                     const isChecked = document.getElementById('toggleSwitch').checked;
                     
                     // Toggle the disabled attribute
@@ -942,6 +962,10 @@
                     separationCategory.disabled = !isChecked;
                     reasonOfSeparation.disabled  = !isChecked;
 
+                    salary.disabled = !isChecked;
+                    employmentStatus.disabled = !isChecked;
+                    los.disabled = !isChecked;
+                    RegularizationDate.disabled = !isChecked;
                     
                     
 
@@ -1017,6 +1041,8 @@
                         PAF2023: form.PAF2023.value.trim(),
                         PAF2024: form.PAF2024.value.trim(),
                         allowance: form.allowance.value.trim(),
+                        salary: form.salary.value.trim(),
+                        employmentStatus: employmentStatus.trim(),
                         rate: form.rate.value.trim(),
                         /*                                                           TO BE FIXED TOMORROW 
                         seperationDate: form.seperationDate.value.trim(),

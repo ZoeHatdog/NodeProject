@@ -331,11 +331,11 @@
                                         </div>
                                         <div class="col">
                                             <label for="employmentStatus" class="form-label">Employment Status</label>
-                                            <select id="employmentStatus">
+                                            <select id="employmentStatus" class="form-select" name ="employmentStatus">
                                                 <option value="Probationary">Probationary</option>
                                                 <option value="Regular">Regular</option>
+                                                <option value="Fixed Term">Fixed Term</option>
                                             </select>
-                                            
                                         </div>
                                     </div>
                                 </div>
@@ -465,15 +465,20 @@
                                             </div>
                                         </div>
                                     </div>
-                            
-                                    <div class="mb-3">
-                                        <div class="d-flex align-items-center">
-                                            <label for="allowance" class="form-label font-weight-bold mb-0">Allowance</label>
-                                            <span> (check if applicable)</span>
-                                            <input class="form-check-input ms-2 custom-checkbox" type="checkbox" id="allowanceCheckbox" onclick="toggleAllowanceInput()">
+                                    <div class = "row">
+                                        <div class="col mb-3">
+                                            <div class="d-flex align-items-center">
+                                                <label for="allowance" class="form-label font-weight-bold mb-0">Allowance</label>
+                                                <span> (check if applicable)</span>
+                                                <input class="form-check-input ms-2 custom-checkbox" type="checkbox" id="allowanceCheckbox" onclick="toggleAllowanceInput()">
+                                            </div>
+                                            <div id="allowanceInputGroup" class="d-none mt-2">
+                                                <input type="text" class="form-control" id="allowanceInput" name="allowance" placeholder="Enter allowance amount">
+                                            </div>
                                         </div>
-                                        <div id="allowanceInputGroup" class="d-none mt-2">
-                                            <input type="text" class="form-control" id="allowanceInput" name="allowance" placeholder="Enter allowance amount">
+                                        <div class = "col mb-3">
+                                            <label for="salary" class="form-label font-weight-bold mb-0"> Salary</label>
+                                            <input type="text" class = "form-control" id = "salary" name = "salary" placeholder="Enter Salary">
                                         </div>
                                     </div>
                             
@@ -565,6 +570,7 @@
                         educationalAttainment: form.educationalAttainment.value.trim(),
                         course: form.course.value.trim(),
                         commencement: form.commencement.value.trim(),
+                        employmentStatus: form.employmentStatus.value.trim(),
                         isActive: form.isActive.value.trim(),
                         RegularizationDate: form.RegularizationDate.value.trim(),
                         SSS: form.SSS.value.trim(),
@@ -593,6 +599,7 @@
                         PAF2023: form.PAF2023.value.trim(),
                         PAF2024: form.PAF2024.value.trim(),
                         allowance: form.allowance.value.trim(),
+                        salary: form.salary.value.trim(),
                         rate: form.rate.value.trim(),
                         /*                                                           TO BE FIXED TOMORROW 
                         seperationDate: form.seperationDate.value.trim(),
@@ -711,11 +718,11 @@
 
                     
                     if (commencementDate <= today) {
-                        // If regularization date is before or equal to today, set employment status to 'Regular'
-                        employmentStatus.value = 'Probationary';
-                    } else {
-                        // If regularization date is after today, set employment status to 'Probationary'
+                        // If regularization date is after to today, set employment status to 'Regular'
                         employmentStatus.value = 'Regular';
+                    } else {
+                        // If regularization date is before or equal to today, set employment status to 'Probationary'
+                        employmentStatus.value = 'Probationary';
                     }
                 }
             }

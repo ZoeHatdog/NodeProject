@@ -131,13 +131,13 @@ app.post('/submit', (req, res) => {
         jobLevel, classification, educationalAttainment, course, commencement, isActive, RegularizationDate, SSS, philhealth,
         taxStatus, tinNumber, pagibig, birthday, age, address, paddress, religion, contactNumber, email, companyEmail, emergencyContact, emergencyNumber,
         los, gender, pafSchedule, PAF2018, PAF2019, PAF2020, PAF2021, PAF2022, PAF2023, PAF2024, allowance, rate, seperationDate,
-        seperationCategory, reasonOfSeparation
+        seperationCategory, reasonOfSeparation, employmentStatus, salary
     } = req.body;
 
     
 
 
-    console.log("ADD - JSON BODY",req.body);
+    console.log("ADD - JSON BODY",req.body); // This is just print to know the data values in the form of add.ejs
     
     // Function to return "-" if value is empty, undefined, or null
     function defaultToDash(value) {
@@ -185,7 +185,7 @@ app.post('/submit', (req, res) => {
         defaultToDash(employeeNumber), defaultToDash(employeeID), defaultToDash(firstName), defaultToDash(nameMiddle), 
         defaultToDash(lastName), defaultToDash(nickname), defaultToDash(designation), defaultToDash(department), 
         defaultToDash(workSchedule), defaultToDash(jobGrade), defaultToDash(jobLevel), defaultToDash(classification), 
-        defaultToDash(educationalAttainment), defaultToDash(course), plusZeroTime(commencement), defaultToDash(isActive), 
+        defaultToDash(educationalAttainment), defaultToDash(course), plusZeroTime(commencement), defaultToDash(employmentStatus), 
         defaultToDash(plusZeroTime(RegularizationDate)), defaultToDash(SSS), defaultToDash(philhealth), defaultToDash(taxStatus), 
         defaultToDash(tinNumber), defaultToDash(pagibig), defaultToDash(plusZeroTime(birthday)), defaultToDash(age), defaultToDash(religion), 
         defaultToDash(contactNumber), defaultToDash(email), defaultToDash(companyEmail), defaultToDash(emergencyContact), 
@@ -196,7 +196,7 @@ app.post('/submit', (req, res) => {
         defaultToDash(seperationDate), defaultToDash(seperationCategory), defaultToDash(reasonOfSeparation),
         defaultToDash(employeeNumber), `Q${defaultToDash(employeeID)}`, `${lastName}, ${firstName} ${nameMiddle}`, 
         defaultToDash(tinNumber), defaultToDash(taxStatus), defaultToDash(plusZeroTime(RegularizationDate)), defaultToDash(plusZeroTime(commencement)), 
-        threeMonths(commencement), fiveMonths(commencement), defaultToDash(address), defaultToDash(paddress)
+        threeMonths(commencement), fiveMonths(commencement), defaultToDash(address), defaultToDash(paddress), defaultToDash(employmentStatus), defaultToDash(salary)
         
     ];
     
@@ -242,9 +242,9 @@ app.post('/submit', (req, res) => {
         \`Length of Service\`, \`Gender\`, \`PAF Schedule\`, \`PAF 2018\`, \`PAF 2019\`, \`PAF 2020\`, 
         \`PAF 2021\`, \`PAF 2022\`, \`PAF 2023\`, \`PAF 2024\`, \`Allowance\`, \`Rate\`, \`Status\`,
         \`Date of Separation\`, \`Separation Category\`, \`Reason of Separation\`, \`NO\`, \`EMP ID #.2\`, \`Name3\`, \`TIN#\`, 
-        \`TAX STATUS4\`, \`Regularization5\`, \`Commencement\`, \`3 Months Evaluation\`,\`5 Months Evaluation\`, \`Address\`, \`Permanent Address\`
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-`;
+        \`TAX STATUS4\`, \`Regularization5\`, \`Commencement\`, \`3 Months Evaluation\`,\`5 Months Evaluation\`, \`Address\`, \`Permanent Address\`, \`Employment Status6\`, \`Basic Salary\`
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)
+`;  
 
 
 
@@ -282,7 +282,7 @@ app.post('/update', (req, res) =>{
         jobLevel, classification, educationalAttainment, course, commencement, isActive, RegularizationDate, SSS, philhealth,
         taxStatus, tinNumber, pagibig, birthday, age, address, paddress, religion, contactNumber, email, companyEmail, emergencyContact, emergencyNumber,
         los, gender, pafSchedule, PAF2018, PAF2019, PAF2020, PAF2021, PAF2022, PAF2023, PAF2024, allowance, rate, seperationDate,
-        seperationCategory, reasonOfSeparation
+        seperationCategory, reasonOfSeparation, salary, employmentStatus
     } = req.body;
     console.log("UPDATE - JSON BODY",req.body);
     // Function to return "-" if value is empty, undefined, or null
@@ -298,7 +298,7 @@ app.post('/update', (req, res) =>{
             var year = commencementDate.getFullYear();
             var month = (commencementDate.getMonth() + 1).toString().padStart(2, '0');
             var day = commencementDate.getDate().toString().padStart(2, '0');
-            return `${year}-${month}-${day}`;
+            return `${year}-${month}-${day} 00:00:00`;
         }
         return '-';
     }
@@ -311,9 +311,18 @@ app.post('/update', (req, res) =>{
             var year = commencementDate.getFullYear();
             var month = (commencementDate.getMonth() + 1).toString().padStart(2, '0');
             var day = commencementDate.getDate().toString().padStart(2, '0');
-            return `${year}-${month}-${day}`;
+            return `${year}-${month}-${day} 00:00:00`;
         }
         return '-';
+    }
+    function plusZeroTime(value){
+        if (value){
+            var commencementDate = new Date(value);
+            var year = commencementDate.getFullYear();
+            var month = (commencementDate.getMonth() + 1).toString().padStart(2, '0');
+            var day = commencementDate.getDate().toString().padStart(2, '0');
+            return `${year}-${month}-${day} 00:00:00`;
+        }
     }
     
     // Ensure specific fields default to "-"
@@ -321,9 +330,9 @@ app.post('/update', (req, res) =>{
         defaultToDash(employeeID), defaultToDash(firstName), defaultToDash(middleName), 
         defaultToDash(lastName), defaultToDash(nickname), defaultToDash(designation), defaultToDash(department), 
         defaultToDash(workSchedule), defaultToDash(jobGrade), defaultToDash(jobLevel), defaultToDash(classification), 
-        defaultToDash(educationalAttainment), defaultToDash(course), defaultToDash(commencement), 
-        defaultToDash(isActive), defaultToDash(RegularizationDate), defaultToDash(SSS), defaultToDash(philhealth), 
-        defaultToDash(taxStatus), defaultToDash(tinNumber), defaultToDash(pagibig), defaultToDash(birthday), 
+        defaultToDash(educationalAttainment), defaultToDash(course), plusZeroTime(commencement), 
+        defaultToDash(employmentStatus), plusZeroTime(defaultToDash(RegularizationDate)), defaultToDash(SSS), defaultToDash(philhealth), 
+        defaultToDash(taxStatus), defaultToDash(tinNumber), defaultToDash(pagibig), plusZeroTime(defaultToDash(birthday)), 
         defaultToDash(age), defaultToDash(religion), defaultToDash(contactNumber), defaultToDash(email), 
         defaultToDash(companyEmail), defaultToDash(emergencyContact), defaultToDash(emergencyNumber), 
         defaultToDash(los), defaultToDash(gender), defaultToDash(pafSchedule), defaultToDash(PAF2018), 
@@ -333,7 +342,7 @@ app.post('/update', (req, res) =>{
         defaultToDash(reasonOfSeparation), defaultToDash(employeeNumber), `Q${defaultToDash(employeeID)}`, 
         `${lastName}, ${firstName} ${middleName}`, defaultToDash(tinNumber), defaultToDash(taxStatus), 
         defaultToDash(RegularizationDate), defaultToDash(commencement), threeMonths(commencement), 
-        fiveMonths(commencement), defaultToDash(address), defaultToDash(paddress)
+        fiveMonths(commencement), defaultToDash(address), defaultToDash(paddress),defaultToDash(employmentStatus), defaultToDash(salary)
     ];
     
     // Check for required fields
@@ -381,7 +390,7 @@ app.post('/update', (req, res) =>{
             \`Date of Separation\` = ?, \`Separation Category\` = ?, \`Reason of Separation\` = ?, 
             \`NO\` = ?, \`EMP ID #.2\` = ?, \`Name3\` = ?, \`TIN#\` = ?, \`TAX STATUS4\` = ?, 
             \`Regularization5\` = ?, \`Commencement\` = ?, \`3 Months Evaluation\` = ?, 
-            \`5 Months Evaluation\` = ?, \`Address\` = ?, \`Permanent Address\` = ?
+            \`5 Months Evaluation\` = ?, \`Address\` = ?, \`Permanent Address\` = ?, \`Employment Status6\`, \`Basic Salary\`
         WHERE 
             \`#\` = ?
     `;
@@ -851,7 +860,12 @@ app.get('/employee-details', (req, res) => {
                 \`Rate\` AS rate,
                 \`Date of Separation\` AS separationDate,
                 \`Separation Category\` AS separation_category,
-                \`Reason of Separation\` AS ros
+                \`Reason of Separation\` AS ros,
+                \`Basic Salary\` AS salary,
+                \`Employment Status\` AS employmentStatus,
+                \`Regularization\` as RegularizationDate,
+                \`Status\` as status,
+                \`Length of Service\` as LOS
             FROM 
                 masterlist
         WHERE \`EMP ID #.\` = ?
@@ -875,6 +889,9 @@ app.get('/employee-details', (req, res) => {
         }
         if (employeeData.COW){
             employeeData.COW = new Date (employeeData.COW).toISOString().split('T')[0];
+        }
+        if (employeeData.RegularizationDate){
+            employeeData.RegularizationDate = new Date (employeeData.RegularizationDate).toISOString().split('T')[0];
         }
 
         res.render('employee-details', { employee: employeeData });
@@ -1043,9 +1060,54 @@ io.on('connection', (socket) => {
     });
 });
 
+// AUTO UPDATE OF COMMENCEMENT OF WORK AND LENGTH OF SERVICE
+// Single function to calculate and optionally update "Length of Service"
+function processLengthOfService() {
+    // MySQL query to get "EMP ID #." and "Commencement of Work" from masterlist
+    const query = `SELECT \`EMP ID #.\`, \`Commencement of Work\` FROM masterlist`;
+
+    db.query(query, (err, results) => {
+        if (err) {
+            throw err;
+        }
+
+        results.forEach(row => {
+            const commencementDate = new Date(row['Commencement of Work']);
+            const lengthOfService = calculateYearsOfService(commencementDate);
+
+            // Log the calculated length of service
+            console.log(`EMP ID #: ${row['EMP ID #.']}, Length of Service: ${lengthOfService} years`);
+
+            // Optional: Update the "Length of Service" column in the database
+            const updateQuery = `UPDATE masterlist SET \`Length of Service\` = ? WHERE \`EMP ID #.\` = ?`;
+            db.query(updateQuery, [lengthOfService, row['EMP ID #.']], (updateErr) => {
+                if (updateErr) {
+                    throw updateErr;
+                }
+                console.log(`Updated EMP ID #: ${row['EMP ID #.']} with Length of Service: ${lengthOfService} years`);
+            });
+        });
+    });
+}
+
+// Helper function to calculate the length of service in years
+function calculateYearsOfService(startDate) {
+    const today = new Date();
+    let years = today.getFullYear() - startDate.getFullYear();
+    const monthsDifference = today.getMonth() - startDate.getMonth();
+
+    // Adjust if the month hasn't been reached yet in the current year
+    if (monthsDifference < 0 || (monthsDifference === 0 && today.getDate() < startDate.getDate())) {
+        years--;
+    }
+
+    return years;
+}
 
 server.listen(port, () => {
     console.log(`Server running at http://localhost:${port}/`);
+    console.log("Function Running");
+    processLengthOfService();
 });
 
 
