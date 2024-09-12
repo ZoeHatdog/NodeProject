@@ -551,12 +551,12 @@
                                         
                                         <div class="col mb-3">
                                             <label for="isActive" class="form-label mb-0 font-weight-bold">Is Active</label>
-                                            <select name="isActive" class="form-select" id="isActive" onchange="toggleSeparationFields()" disabled="true"> <!--NO VALUE (TO BE FIXED)--->
-                                                <option selected><%=employee.status%></option>
-                                                <option value="Active">Active</option>
-                                                <option value="Inactive">Inacive</option>
+                                            <select name="isActive" class="form-select" id="isActive" onchange="toggleSeparationFields()" disabled="true">
+                                                <option value="Active" <%= employee.Status === 'Active' ? 'selected' : '' %>>Active</option>
+                                                <option value="Inactive" <%= employee.Status === 'Inactive' ? 'selected' : '' %>>Inactive</option>
                                             </select>
                                         </div>
+                                        
                                        
                                     </div>
                                         
@@ -639,18 +639,26 @@
                 }
             }
             function toggleSeparationFields() {
-                var select = document.getElementById('Active');
+                var select = document.getElementById('isActive');
+                var separationCategory = document.getElementById('separationCategory');
+                var reasonOfSeparation = document.getElementById('reasonOfSeparation');
+                var separationDate = document.getElementById('separationDate');
                 var separationFields = document.getElementById('separationFields');
-
-                console.log(select.value); // Check the value of the dropdown
-
-                if (select.value === 'No') {
+                            
+                // Show or hide separation fields based on the selection
+                if (select.value === 'Inactive') {
                     separationFields.classList.remove('d-none');
                 } else {
                     separationFields.classList.add('d-none');
                 }
-            }
 
+                // If the status is 'Active', reset the separation fields
+                if (select.value === 'Active') {
+                    separationDate.value = "-";
+                    separationCategory.value = "-";
+                    reasonOfSeparation.value = "-";
+                }
+            }
 
             function toggleAllowanceInput() {
                 var checkbox = document.getElementById("allowanceCheckbox");
@@ -664,7 +672,7 @@
             }
             function calculateLOS() {
                 var comm = document.getElementById('Commencement').value;
-                var los = document.getElementById('LOS');
+                var los = document.getElementById('los');
                 if (comm) {
                     var commDate = new Date(comm);
                     var today = new Date();
@@ -797,10 +805,11 @@
 
             window.onload = function() {
                 toggleCheckboxesBasedOnValues();
+                toggleSeparationFields();
                 const status = "<%= employee.Status %>"; // Value returned from the database
                 const rate = "<%=employee.rate%>";
                 const ratebox = document.getElementById('rate');
-                const dropdown = document.getElementById('Active');
+                const dropdown = document.getElementById('isActive');
 
                 if (status === "Active") {
                     dropdown.value = "Yes";
@@ -891,6 +900,7 @@
                     const active = document.getElementById('isActive');
                     const reasonOfSeparation = document.getElementById('reasonOfSeparation');
                     const separationCategory = document.getElementById('separationCategory');
+                    const separationDate = document.getElementById('separationDate');
 
                     const salary = document.getElementById('salary');
                     const employmentStatus = document.getElementById('employmentStatus');
@@ -952,6 +962,7 @@
                     allowance.disabled = !isChecked;
                     separationCategory.disabled = !isChecked;
                     reasonOfSeparation.disabled  = !isChecked;
+                    separationDate.disabled = !isChecked;
 
                     salary.disabled = !isChecked;
                     employmentStatus.disabled = !isChecked;
@@ -1033,13 +1044,11 @@
                         PAF2024: form.PAF2024.value.trim(),
                         allowance: form.allowance.value.trim(),
                         salary: form.salary.value.trim(),
-                        employmentStatus: employmentStatus.trim(),
+                        employmentStatus: employmentStatus.value.trim(),
                         rate: form.rate.value.trim(),
-                        /*                                                           TO BE FIXED TOMORROW 
-                        seperationDate: form.seperationDate.value.trim(),
-                        seperationCategory: form.seperationCategory.value.trim(),
+                        separationDate: form.separationDate.value.trim(),
+                        separationCategory: form.separationCategory.value.trim(),
                         reasonOfSeparation: form.reasonOfSeparation.value.trim()
-                        */
                     })
                 })
                 .then(response => response.json())

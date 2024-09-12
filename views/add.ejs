@@ -483,8 +483,8 @@
                                         <div class="col mb-3">
                                             <label for="isActive" class="form-label mb-0 font-weight-bold">Is Active</label>
                                             <select name="isActive" class="form-select" name = "isActive" id="isActive" onchange="toggleSeparationFields()">
-                                                <option value="Active">Yes</option>
-                                                <option value="Inactive">No</option>
+                                                <option value="Active">Active</option>
+                                                <option value="Inactive">Inactive</option>
                                             </select>
                                         </div>
                                        
@@ -592,11 +592,9 @@
                         allowance: form.allowance.value.trim(),
                         salary: form.salary.value.trim(),
                         rate: form.rate.value.trim(),
-                        /*                                                           TO BE FIXED TOMORROW 
-                        seperationDate: form.seperationDate.value.trim(),
-                        seperationCategory: form.seperationCategory.value.trim(),
+                        separationDate: form.separationDate.value.trim(),
+                        separationCategory: form.separationCategory.value.trim(),
                         reasonOfSeparation: form.reasonOfSeparation.value.trim()
-                        */
                     })
                 })
                 .then(response => response.json())
@@ -645,20 +643,25 @@
                 }
             }
             function toggleSeparationFields() {
-                    var select = document.getElementById('isActive');
-                    var separationCategory = document.getElementById('separationCategory');
-                    var reasonOfSeparation = document.getElementById('reasonOfSeparation');
-                    var separationFields = document.getElementById('separationFields');
-                                
-                    if (select.value === 'No') {
-                        separationFields.classList.remove('d-none');
-                        } else {
+                var select = document.getElementById('isActive');
+                var separationCategory = document.getElementById('separationCategory');
+                var reasonOfSeparation = document.getElementById('reasonOfSeparation');
+                var separationDate = document.getElementById('separationDate');
+                var separationFields = document.getElementById('separationFields');
+                            
+                // Show or hide separation fields based on the selection
+                if (select.value === 'Inactive') {
+                    separationFields.classList.remove('d-none');
+                } else {
                     separationFields.classList.add('d-none');
-                        }
-                    if (select.value === 'Yes'){
-                        separationCategory.value("-");
-                        reasonOfSeparation.value("-");
-                    }
+                }
+
+                // If the status is 'Active', reset the separation fields
+                if (select.value === 'Active') {
+                    separationDate.value = "-";
+                    separationCategory.value = "-";
+                    reasonOfSeparation.value = "-";
+                }
             }
 
             function toggleAllowanceInput() {

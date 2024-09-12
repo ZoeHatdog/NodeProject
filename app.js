@@ -130,8 +130,8 @@ app.post('/submit', (req, res) => {
         employeeNumber, employeeID, firstName, nameMiddle, lastName, nickname, designation, department, workSchedule, jobGrade,
         jobLevel, classification, educationalAttainment, course, commencement, isActive, RegularizationDate, SSS, philhealth,
         taxStatus, tinNumber, pagibig, birthday, age, address, paddress, religion, contactNumber, email, companyEmail, emergencyContact, emergencyNumber,
-        los, gender, pafSchedule, PAF2018, PAF2019, PAF2020, PAF2021, PAF2022, PAF2023, PAF2024, allowance, rate, seperationDate,
-        seperationCategory, reasonOfSeparation, employmentStatus, salary
+        los, gender, pafSchedule, PAF2018, PAF2019, PAF2020, PAF2021, PAF2022, PAF2023, PAF2024, allowance, rate, separationDate,
+        separationCategory, reasonOfSeparation, employmentStatus, salary
     } = req.body;
 
     
@@ -193,7 +193,7 @@ app.post('/submit', (req, res) => {
         defaultToDash(pafSchedule), defaultToDash(PAF2018), defaultToDash(PAF2019), defaultToDash(PAF2020), 
         defaultToDash(PAF2021), defaultToDash(PAF2022), defaultToDash(PAF2023), defaultToDash(PAF2024), 
         defaultToDash(allowance), defaultToDash(rate), defaultToDash(isActive), 
-        defaultToDash(seperationDate), defaultToDash(seperationCategory), defaultToDash(reasonOfSeparation),
+        defaultToDash(separationDate), defaultToDash(separationCategory), defaultToDash(reasonOfSeparation),
         defaultToDash(employeeNumber), `Q${defaultToDash(employeeID)}`, `${lastName}, ${firstName} ${nameMiddle}`, 
         defaultToDash(tinNumber), defaultToDash(taxStatus), defaultToDash(plusZeroTime(RegularizationDate)), defaultToDash(plusZeroTime(commencement)), 
         threeMonths(commencement), fiveMonths(commencement), defaultToDash(address), defaultToDash(paddress), defaultToDash(employmentStatus), defaultToDash(salary)
@@ -281,8 +281,8 @@ app.post('/update', (req, res) =>{
         employeeNumber, employeeID, firstName, middleName, lastName, nickname, designation, department, workSchedule, jobGrade,
         jobLevel, classification, educationalAttainment, course, commencement, isActive, RegularizationDate, SSS, philhealth,
         taxStatus, tinNumber, pagibig, birthday, age, address, paddress, religion, contactNumber, email, companyEmail, emergencyContact, emergencyNumber,
-        los, gender, pafSchedule, PAF2018, PAF2019, PAF2020, PAF2021, PAF2022, PAF2023, PAF2024, allowance, rate, seperationDate,
-        seperationCategory, reasonOfSeparation, salary, employmentStatus
+        los, gender, pafSchedule, PAF2018, PAF2019, PAF2020, PAF2021, PAF2022, PAF2023, PAF2024, allowance, rate, separationDate,
+        separationCategory, reasonOfSeparation, salary, employmentStatus
     } = req.body;
     console.log("UPDATE - JSON BODY",req.body);
     // Function to return "-" if value is empty, undefined, or null
@@ -338,7 +338,7 @@ app.post('/update', (req, res) =>{
         defaultToDash(los), defaultToDash(gender), defaultToDash(pafSchedule), defaultToDash(PAF2018), 
         defaultToDash(PAF2019), defaultToDash(PAF2020), defaultToDash(PAF2021), defaultToDash(PAF2022), 
         defaultToDash(PAF2023), defaultToDash(PAF2024), defaultToDash(allowance), defaultToDash(rate), 
-        defaultToDash(isActive), defaultToDash(seperationDate), defaultToDash(seperationCategory), 
+        defaultToDash(isActive), defaultToDash(separationDate), defaultToDash(separationCategory), 
         defaultToDash(reasonOfSeparation), defaultToDash(employeeNumber), `Q${defaultToDash(employeeID)}`, 
         `${lastName}, ${firstName} ${middleName}`, defaultToDash(tinNumber), defaultToDash(taxStatus), 
         defaultToDash(RegularizationDate), defaultToDash(commencement), threeMonths(commencement), 
@@ -390,7 +390,7 @@ app.post('/update', (req, res) =>{
             \`Date of Separation\` = ?, \`Separation Category\` = ?, \`Reason of Separation\` = ?, 
             \`NO\` = ?, \`EMP ID #.2\` = ?, \`Name3\` = ?, \`TIN#\` = ?, \`TAX STATUS4\` = ?, 
             \`Regularization5\` = ?, \`Commencement\` = ?, \`3 Months Evaluation\` = ?, 
-            \`5 Months Evaluation\` = ?, \`Address\` = ?, \`Permanent Address\` = ?, \`Employment Status6\`, \`Basic Salary\`
+            \`5 Months Evaluation\` = ?, \`Address\` = ?, \`Permanent Address\` = ?, \`Employment Status6\` = ?, \`Basic Salary\` = ?
         WHERE 
             \`#\` = ?
     `;
@@ -808,6 +808,7 @@ app.get('/api/allemployees', (req, res) => {
 
 app.get('/employee-details', (req, res) => {
     const employeeId = req.query.employeeID;
+    
 
     if (!employeeId) {
         return res.status(400).send('Employee ID is required');
@@ -884,6 +885,11 @@ app.get('/employee-details', (req, res) => {
 
         // Format the birthday field to YYYY-MM-DD
         let employeeData = results[0];
+        console.log(employeeData.birthday);
+        console.log(employeeData.COW);
+        console.log(employeeData.RegularizationDate);
+        console.log(employeeData.separationDate);
+        console.log(employeeData.employmentStatus);
         if (employeeData.birthday) {
             employeeData.birthday = new Date(employeeData.birthday).toISOString().split('T')[0];
         }
@@ -892,6 +898,12 @@ app.get('/employee-details', (req, res) => {
         }
         if (employeeData.RegularizationDate){
             employeeData.RegularizationDate = new Date (employeeData.RegularizationDate).toISOString().split('T')[0];
+        }
+        
+        if (employeeData.separationDate){
+            if(employeeData.separationDate != "-"){
+                employeeData.separationDate = new Date (employeeData.RegularizationDate).toISOString().split('T')[0];
+            }
         }
 
         res.render('employee-details', { employee: employeeData });
